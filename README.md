@@ -16,6 +16,8 @@ La materia de Analítica Predictiva en el Posgrado de Analítica de la Universid
 * Regresión logística (logit)
 * Árboles de decisión y regresión (Decision Tree)
 * Bosques aleatorios (Random Forest)
+* K medias (K-means)
+* 
 * Validación cruzada (Cross validation)
 
 El objetivo de este trabajo es entrenar un modelo predictivo que permita encontrar solución a un problema propuesto por los estudiantes.

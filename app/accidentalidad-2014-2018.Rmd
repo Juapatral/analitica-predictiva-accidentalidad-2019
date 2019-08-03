@@ -146,6 +146,8 @@ Unificar datos
 library(data.table)
 library(purrr)
 library(dplyr)
+library(plotly)
+library(tidyr)
 
 # lista archivos
 lista <- list.files(pattern = "*.csv", include.dirs = T, recursive = T)
@@ -159,7 +161,148 @@ acc <- bind_rows(lista_df)
 # ver cabecera del archivo
 head(acc)
 ```
+ 
 
+# Contar número de accidentes por comuna
+```{r}
+acc_comuna <- acc %>% 
+              group_by(COMUNA) %>% 
+              summarize(total_registros = n())
+head(acc_comuna)
+```
+# Accidentes por mes 
+```{r}
+acc_mes <- acc %>% 
+              group_by(MES) %>% 
+              summarize(total_registros = n())
+head(acc_mes)
+```
+
+```{r}
+ggplot(data=acc_mes, aes(x=MES, y=total_registros)) + 
+    geom_bar(stat="identity", position="dodge")
+```
+
+# Accidentalidad por día
+```{r}
+acc_dian <- acc %>% 
+              group_by(DIA_NOMBRE) %>% 
+              summarize(total_registros = n())
+acc_dian <- acc_dian[with(acc_dian, order(c(names(acc_dian$DIA_NOMBRE)))), ] #
+head(acc_dian)
+```
+head(acc_dian)
+view (acc_dian$DIA_NOMBRE)
+
+```{r}
+ggplot(data=acc_dian, aes(x=DIA_NOMBRE, y=total_registros)) + 
+    geom_bar(stat="identity", position="dodge")
+```
+
+
+
+
+# Agrupar Gravedad-Clase
+```{r}
+acc_group_clase<- acc %>% group_by(GRAVEDAD, CLASE) %>% summarize(conteo = n()) %>% spread(GRAVEDAD, conteo, fill=0)
+View(acc_group_clase)
+```
+
+```{r}
+acc_group_clase1<- acc %>% group_by(GRAVEDAD, CLASE) %>% summarize(conteo = n())
+
+ggplot(data=acc_group_clase1, aes(x=GRAVEDAD, y=conteo, fill=CLASE)) + 
+    geom_bar(stat="identity", position="dodge")+
+    scale_fill_manual(values=c("#67001f","#b2182b","#d6604d","#f4a582","#fddbc7","#d1e5f0", "#92c5de","#4393c3","#2166ac", "#053061"))
+```
+
+
+# Agrupar Gravedad-Mes
+```{r}
+acc_group_mes<- acc %>% group_by(GRAVEDAD, MES) %>% summarize(conteo = n()) %>% spread(GRAVEDAD, conteo, fill=0)
+head(acc_group_mes)
+```
+```{r}
+acc_group_mes1<- acc %>% group_by(GRAVEDAD, MES) %>% summarize(conteo = n())
+
+ggplot(data=acc_group_mes1, aes(x=GRAVEDAD, y=conteo, fill=MES)) + 
+    geom_bar(stat="identity", position="dodge")
+```
+
+
+# Agrupar Gravedad-Periodo
+```{r}
+#acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
+acc_group_year<- acc %>% group_by(GRAVEDAD, PERIODO) %>% summarize(conteo = n()) %>% spread(GRAVEDAD, conteo, fill=0)
+head(acc_group_year)
+```
+
+# Gráfica Gravedad-Periodo
+```{r}
+acc_group_year1<- acc %>% group_by(GRAVEDAD, PERIODO) %>% summarize(conteo = n())
+
+ 
+ggplot(data=acc_group_year1, aes(x=GRAVEDAD, y=conteo, fill=PERIODO)) + 
+    geom_bar(stat="identity", position="dodge")+
+    scale_fill_manual(values=c("#d0d1e6", "#bdc9e1","#74a9cf","#2b8cbe","#045a8d"))
+
+```
+
+```{r}
+acc_group_dia<- acc %>% group_by(GRAVEDAD, DIA_NOMBRE) %>% summarize(conteo = n()) %>% spread(GRAVEDAD, conteo, fill=0)
+head(acc_group_dia)
+````
+```{r}
+acc_group_dia1<- acc %>% group_by(GRAVEDAD, DIA_NOMBRE) %>% summarize(conteo = n())
+
+ggplot(data=acc_group_dia1, aes(x=GRAVEDAD, y=conteo, fill=DIA_NOMBRE)) + 
+    geom_bar(stat="identity", position="dodge")+
+    scale_fill_manual(values=c("#67001f","#b2182b","#d6604d","#f4a582","#fddbc7","#d1e5f0", "#92c5de"))
+```
+
+#View(acc_comuna)
+# Contar número de accidentes por año
+acc_year <- acc %>% 
+              group_by(PERIODO) %>% 
+              summarize(total_registros = n())
+acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
+acc_year$total_registros <- as.numeric(acc_year$total_registros)
+View(acc_year)
+
+summary(acc_year)
+
+plot_ly (data = acc_year,
+         x = ~PERIODO,
+         y = ~total_registros,
+         type = "scatter",
+         mode = "lines",
+         line = list(width = 1, color = 'rgb(205, 12, 24)')) %>%
+  layout(title = 'Registros de la accidentalidad en Medellín',
+         xaxis = list(title="Comuna"),
+         yaxis = list(title="Registros"))
+# crear grafico por comuna
+```{r}
+plot_ly (data = acc_comuna,
+         x = ~COMUNA,
+         y = ~total_registros,
+         type = "scatter",
+         mode = "lines",
+         line = list(width = 1, color = 'rgb(205, 12, 24)')) %>%
+  layout(title = 'Registros de la accidentalidad en Medellín',
+         xaxis = list(title="Comuna"),
+         yaxis = list(title="Registros"))
+```
+
+
+
+# Scaterplot Ubicacion```
+```{r}
+plot(acc$X, acc$Y, main="Scatterplot Ubicación")
+```
+
+plot(acc$X, acc$Y, main="Scatterplot Ubicación")
+   
+   
 [Regresar](#tabla-de-contenido)
 
 #### **2.3.3. Datos atípicos o nulos**

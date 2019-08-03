@@ -65,13 +65,18 @@ Por esta razón, los estudiantes de la materia Analítica Predictiva del Posgrad
 
 La materia de Analítica Predictiva en el Posgrado de Analítica de la Universidad Nacional de Colombia enseña algunas técnicas estadísticas para el pronóstico y clasificación de datos, utilizando los conceptos de la estadística descriptiva y probabilística como cálculo de probabilidades, Teorema de Bayes, medidas de tendencia, funciones de distribuciones de probabilidad, pruebas de hipótesis, entre otros. Algunos de los modelos vistos en clase fueron:
 
-* K vecinos cercanos (kNN)
+* K vecinos cercanos (k-nearest-neighbors)
 * Regresión lineal (univariada y multivariada) 
 * Regresión Ridge y Lasso (Casos de multicolinealidad de la regresión lineal)
 * Regresión logística (logit)
+* Árboles de decisión y regresión (Decision Tree)
 * Bosques aleatorios (Random Forest)
-* Árboles de decisión (Decision Tree)
+* K medias (K-means)
+* Agrupamiento jerárquico (cluster)
+* Máquinas de soporte vectorial (SVM)
+* Redes neuronales (Neural Network)
 * Validación cruzada (Cross validation)
+
 
 El objetivo de este trabajo es entrenar un modelo predictivo que permita encontrar solución a un problema propuesto por los estudiantes. Este problema deberá contar con suficiente información para estimar el modelo y este no debe estar sobreentrenado. 
 
@@ -143,11 +148,14 @@ Unificar datos
 
 ```{r lectura_consolidado, message=FALSE, warning=FALSE}
 # cargar librerias
-library(data.table)
-library(purrr)
-library(dplyr)
-library(plotly)
-library(tidyr)
+library(data.table)   # manejo de tablas
+library(purrr)        # optimizacion de bucles
+library(dplyr)        # manejo de tablas
+library(plotly)       # graficos en html
+library(tidyr)        # limpieza de datos
+library(stringr)      # limpieza de texto
+library(lubridate)    # limpieza de fechas
+library(sf)           # manejo de archivos espaciales
 
 # lista archivos
 lista <- list.files(pattern = "*.csv", include.dirs = T, recursive = T)
@@ -161,7 +169,55 @@ acc <- bind_rows(lista_df)
 # ver cabecera del archivo
 head(acc)
 ```
- 
+
+## limpieza de acc
+```{r message=FALSE, warning=FALSE}
+# organizar fecha
+acc$FECHA <- ymd(gsub(pattern = "T.*", replacement = "", acc$FECHA),
+                  "%Y-%M-%D")[1:209426]
+
+# eliminar datos nulos y corregir clase
+acc <- acc[-which(acc$CLASE == ""),]
+acc$CLASE <- iconv(acc$CLASE, from = "UTF-8", to = "ASCII//TRANSLIT")
+acc$CLASE <- gsub("DE ", "", toupper(acc$CLASE))
+
+# eliminar datos nulos y corregir disenio
+acc <- acc[-which(acc$DISENO == ""),]
+acc$DISENO <- iconv(acc$DISENO, from = "UTF-8", to = "ASCII//TRANSLIT")
+acc$DISENO <- gsub("DE ", "", toupper(acc$DISENO))
+
+# corregir tildes de DIA_NOMBRE
+acc$DIA_NOMBRE <- iconv(acc$DIA_NOMBRE, from = "UTF-8", to = "ASCII//TRANSLIT")
+
+# crear columna de comuna_barrio
+acc <- mutate(acc, COMUNA_BARRIO = str_sub(CBML, 1, 4))
+
+```
+
+## archivo espacial de barrios
+```{r}
+# cargar archivo shp de barrios de medellin
+barrio <- read_sf("files/Limite_Barrio_Vereda_Catastral/Limite_Barrio_Vereda_Catastral.shp")
+
+# unir columnas de nombre barrio y comuna
+acc <- inner_join(acc, 
+                  select(barrio, CODIGO, NOMBRE_COM, NOMBRE_BAR),
+                  by = c("COMUNA_BARRIO" = "CODIGO"))
+  
+# limpiar nombre de barrios
+acc$NOMBRE_BAR <- iconv(acc$NOMBRE_BAR, from = "UTF-8", to = "ASCII//TRANSLIT")
+acc$NOMBRE_BAR <- toupper(acc$NOMBRE_BAR)
+
+# eliminar posibles duplicados por errores de union
+acc <- data.table:::unique.data.table(acc, by = "RADICADO")
+
+# eliminar columnas
+acc <- select(acc, -BARRIO, -COMUNA, -OBJECTID, -RADICADO, -DIRECCION_ENC,
+              -DIRECCION, -HORA, -CBML, -TIPO_GEOCOD, -MES_NOMBRE, -geometry)
+
+# renombrar
+names(acc)[12:13] <- c("COMUNA","BARRIO")
+```
 
 # Contar número de accidentes por comuna
 ```{r}
@@ -188,7 +244,7 @@ ggplot(data=acc_mes, aes(x=MES, y=total_registros)) +
 acc_dian <- acc %>% 
               group_by(DIA_NOMBRE) %>% 
               summarize(total_registros = n())
-acc_dian <- acc_dian[with(acc_dian, order(c(names(acc_dian$DIA_NOMBRE)))), ] #
+# acc_dian <- acc_dian[with(acc_dian, order(c(names(acc_dian$DIA_NOMBRE)))), ] #
 head(acc_dian)
 ```
 head(acc_dian)
@@ -365,6 +421,8 @@ plot(acc$X, acc$Y, main="Scatterplot Ubicación")
 + [Pestañas en *Shiny*](https://shiny.rstudio.com/articles/tabsets.html)
 
 + [Incrustar HTML y Markdown en *Shiny*](http://shiny.rstudio.com/gallery/including-html-text-and-markdown-files.html)
+
++ [Lista desplegable en Shiny](https://shiny.rstudio.com/reference/shiny/latest/selectInput.html)
 
 ---
 

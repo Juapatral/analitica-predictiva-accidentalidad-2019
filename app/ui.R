@@ -49,7 +49,7 @@ fluidPage(
                    ),
                  mainPanel(
                    leaflet() %>% 
-                     addPolygons(data = , 
+                     addPolygons(data = barrios, 
                                  color = "black", 
                                  opacity = 0.1, 
                                  fill = T, 

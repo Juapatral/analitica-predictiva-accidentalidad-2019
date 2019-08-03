@@ -25,7 +25,7 @@ El objetivo de este trabajo es entrenar un modelo predictivo que permita encontr
 Los entregables del trabajo son:
 
 1. Código de ejecución del modelo. (disponible [aquí](https://google.com.co))
-2. Reporte que contenga el entendimiento desarrollado en el trabajo, bibliografía de soporte y la metodología seguida debidamente justificada. (disponible [aquí](https://google.com.co))
+2. Reporte que contenga el entendimiento desarrollado en el trabajo, bibliografía de soporte y la metodología seguida debidamente justificada. (disponible [aquí](https://juapatral.github.io/analitica-predictiva-accidentalidad-2019/app/accidentalidad-2014-2018.html))
 3. Aplicativo web que permita visualizar los datos y la predicción del modelo. (disponible [aquí](https://google.com.co))
 4. Video promocional del aplicativo web, explicando su funcionalidad. (disponible [aquí](https://youtube.com)) 
 

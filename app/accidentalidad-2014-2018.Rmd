@@ -199,21 +199,35 @@ head(acc)
 
 **R Markdown**
 
-[Infografía de *Rmarkdown*](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)
++ [Infografía de *Rmarkdown*](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf)
 
-[API de *Rmarkdown*](https://bookdown.org/yihui/rmarkdown/)
++ [API de *Rmarkdown*](https://bookdown.org/yihui/rmarkdown/)
 
 ---
 
 **Plotly**
 
-[API de *Plotly*](https://plot.ly/r/reference/)
++ [API de *Plotly*](https://plot.ly/r/reference/)
+
+---
+
+**Shiny**
+
++ [API de *Shiny*](http://shiny.rstudio.com/articles/basics.html)
+
++ [Incrustar videos en *Shiny*](https://stackoverflow.com/questions/43740470/embed-instagram-youtube-into-shiny-r-app)
+
++ [Rango de fechas en *Shiny*](https://shiny.rstudio.com/gallery/date-and-date-range.html)
+
++ [Pestañas en *Shiny*](https://shiny.rstudio.com/articles/tabsets.html)
+
++ [Incrustar HTML y Markdown en *Shiny*](http://shiny.rstudio.com/gallery/including-html-text-and-markdown-files.html)
 
 ---
 
 **Demás**
 
-[link aquí](https://wikipedia.com)
++ [link aquí](https://wikipedia.com)
 
 ---
 

@@ -24,25 +24,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# **Resultados** {.tabset .tabset-fade}
-
-A continuación puede acceder al trabajo final de la materia *Analítica Predictiva*. 
-
-* En *`Resumen`* encontrará un breve resumen del trabajo.
-
-* En *`Informe`* encontrará el reporte técnico del trabajo. 
-
-* En *`Aplicación`* encontrará visualmente los datos y el pronóstico realizado. 
-
-* En *`Explicación`* encontrará un video sobre el desarrollo del trabajo y explicación de la aplicación.
-
-## **Resumen**
-
-**FALTA RESUMEN**
-
-## **Informe**
-
-### **Tabla de contenido**
+## **Tabla de contenido**
  
 1. [Introducción](#introduccion)
 
@@ -72,16 +54,14 @@ A continuación puede acceder al trabajo final de la materia *Analítica Predict
 
 4. [Bibliografía](#bibliografia)
 
-5. [Contacto](#contacto)
 
-
-### **1. Introducción**
+## **1. Introducción**
 
 Cada día se generan cantidades enormes de datos que reposan en los sistemas de información y bases de datos públicas o privadas. Es de interés para los analístas de datos obtener la mayor cantidad de información valiosa y confiable de estos datos, generando valor agregado a las entidades y así incidir en la toma de decisiones para mejorar los procesos internos y, por ende, los resultados económicos y sociales de la entidad. (**FALTA UNA REFERENCIA**)
 
 Por esta razón, los estudiantes de la materia Analítica Predictiva del Posgrado de Analítica de la Universidad Nacional de Colombia tienen como objetivo identificar y dar solución a un problema utilizando las técnicas estadísticas y de ciencia de datos que consideren óptimas. 
 
-#### **1.1. Motivación**
+### **1.1. Motivación**
 
 La materia de Analítica Predictiva en el Posgrado de Analítica de la Universidad Nacional de Colombia enseña algunas técnicas estadísticas para el pronóstico y clasificación de datos, utilizando los conceptos de la estadística descriptiva y probabilística como cálculo de probabilidades, Teorema de Bayes, medidas de tendencia, funciones de distribuciones de probabilidad, pruebas de hipótesis, entre otros. Algunos de los modelos vistos en clase fueron:
 
@@ -104,7 +84,7 @@ Los entregables del trabajo son:
 
 Para este trabajo se decidió utilizar la información anonimizada de los registros del Impuesto de Industria y Comercio entre los años 2013 y 2018, proporcionada por la Alcaldía de Medellín.
 
-#### **1.2. Metodología**
+### **1.2. Metodología**
 
 Se propone utilizar la metodología [CRISP-DM](https://jdvelasq.github.io/ruta-n-predictiva/_downloads/5731da83c31e211e9b774ae8713246ed/CRISP-DM.pdf) en la que se sigue un flujo de trabajo para la identificación del problema y la propuesta, evaluación e implementación de la solución. Los pasos de la metodología *CRISP-DM* son los siguientes:
 
@@ -122,21 +102,21 @@ Se propone utilizar la metodología [CRISP-DM](https://jdvelasq.github.io/ruta-n
 
 [Regresar](#tabla-de-contenido)
 
-### **2. Desarrollo**
+## **2. Desarrollo**
 
-#### **2.1. Identificación del problema**
-
-**FALTA**
-
-[Regresar](#tabla-de-contenido)
-
-#### **2.2. Identificación de los datos**
+### **2.1. Identificación del problema**
 
 **FALTA**
 
 [Regresar](#tabla-de-contenido)
 
-#### **2.3. Descripción del conjunto de datos**
+### **2.2. Identificación de los datos**
+
+**FALTA**
+
+[Regresar](#tabla-de-contenido)
+
+### **2.3. Descripción del conjunto de datos**
 
 Para el análisis de la información se utilizará el dialecto *Tidyverse* y los paquetes *data.table*, *plotly*, *rmarkdown*, *shiny* y **FALTA PAQUETES MODELO**.
 
@@ -155,13 +135,13 @@ Para el análisis de la información se utilizará el dialecto *Tidyverse* y los
 
 [Regresar](#tabla-de-contenido)
 
-##### **2.3.2. Análisis**
+#### **2.3.2. Análisis**
 
 **FALTA**
 
 Unificar datos
 
-```{r}
+```{r lectura_consolidado, message=FALSE, warning=FALSE}
 # cargar librerias
 library(data.table)
 library(purrr)
@@ -182,38 +162,38 @@ head(acc)
 
 [Regresar](#tabla-de-contenido)
 
-##### **2.3.3. Datos atípicos o nulos**
+#### **2.3.3. Datos atípicos o nulos**
 
 **FALTA**
 
 
 [Regresar](#tabla-de-contenido)
 
-#### **2.4. Modelación de los datos**
+### **2.4. Modelación de los datos**
 
 **FALTA**
 
 [Regresar](#tabla-de-contenido)
 
-#### **2.5. Evaluación del modelo**
+### **2.5. Evaluación del modelo**
 
 **FALTA**
 
 [Regresar](#tabla-de-contenido)
 
-#### **2.6. Implementación**
+### **2.6. Implementación**
 
 **FALTA**
 
 [Regresar](#tabla-de-contenido)
 
-### **3. Conclusiones**
+## **3. Conclusiones**
 
 **FALTA**
 
 [Regresar](#tabla-de-contenido)
 
-### **4. Bibliografía**
+## **4. Bibliografía**
 
 **FALTA**
 
@@ -238,21 +218,3 @@ head(acc)
 ---
 
 [Regresar](#tabla-de-contenido)
-
-
-### **5. Contacto**
-
-* Lina María Grajales Vanegas: lgrajalesv@unal.edu.co  
-* Juan Camilo Agudelo Marín: juagudelom@unal.edu.co
-* Jhon Anderson Londoño Herrera: jalondonh@unal.edu.co
-* Juan Pablo Trujillo Alviz: juanptrujilloalviz@gmail.com
-
-[Regresar](#tabla-de-contenido)
-
-## **Aplicación**
-
-**FALTA**
-
-## **Explicación**
-
-<iframe width="813" height="457" src="https://www.youtube.com/embed/tAA_yWX8ycQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

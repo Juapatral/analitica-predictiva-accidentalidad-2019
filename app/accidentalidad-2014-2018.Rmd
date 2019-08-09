@@ -158,7 +158,7 @@ library(lubridate)    # limpieza de fechas
 library(sf)           # manejo de archivos espaciales
 
 # lista archivos
-lista <- list.files(pattern = "*.csv", include.dirs = T, recursive = T)
+lista <- list.files(pattern = "^Acc.*.csv", include.dirs = T, recursive = T)
 
 # leer todos los archivos
 lista_df <- map(lista, fread, sep = ",", encoding = "UTF-8", colClasses = "c")
@@ -218,6 +218,20 @@ acc <- select(acc, -BARRIO, -COMUNA, -OBJECTID, -RADICADO, -DIRECCION_ENC,
 # renombrar
 names(acc)[12:13] <- c("COMUNA","BARRIO")
 ```
+## ingreso de base de días especiales, limpieza de la base y unión con el archivo de accidentes.
+
+```{r}
+festivos <- fread("files/festivos_y_especiales.csv", header = T)
+festivos[,names(festivos)[-1]] <- festivos%>%transmute_at(c(names(festivos)[-1]),funs(ifelse(. == "X","Si", ifelse(. == "","No",.))))
+festivos$FECHA <- ymd(festivos$FECHA)[1:172]
+```
+
+# Juntar las base de festivos con acc y limpiar NA
+```{r}
+acc <- merge(x=acc,y=festivos, by ="FECHA", all.x = T)
+acc[,names(festivos)[-1]]<-acc%>%transmute_at(c(names(festivos)[-1]),funs(ifelse(is.na(.),"No",.)))
+```
+
 
 # Contar número de accidentes por comuna
 ```{r}

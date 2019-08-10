@@ -417,13 +417,6 @@ ggplot(data=acc_group_festivo, aes(x=CLASE, y=conteo, fill=FESTIVO)) +
     geom_bar(stat="identity", position="dodge")
 ```
 
-
-```{r}
-acc_fecha1 <- acc %>% 
-              group_by(FECHA,CLASE, GRAVEDAD, FESTIVO, MADRE, NAVIDAD, SEMSANTA, BRUJITOS,                       ESCOLAR) >%>
-              summarize()
-```
-
 # Registro de accidentalidad por día
 ```{r}
 acc_fecha <- acc %>% 
@@ -622,16 +615,16 @@ summary(modelo_lm_2)
 ```
 
 #agregandola variable de comunas, vemos que el modelo es menos significativo que e agrupado 1 por lo que optamos por hacer la validacion con el modelo del agrupado 1.
+
+#Modelo Poisson
 ```{r}
 modelo_glm<-glm(ACCIDENTES ~ FECHA + CLASE + DIA_NOMBRE + PERIODO + 
     FESTIVO + NAVIDAD + SEMSANTA + ESCOLAR,data = acc_agrupado_1, 
     subset = (FECHA <= "2017-12-31"),family = "poisson")
-```
-
-```{r}
 summary(modelo_glm)
 ```
 
+# Calculo seudo r para poisson
 
 ```{r}
 y_pred_tr_glm<-predict(modelo_glm,type="response")

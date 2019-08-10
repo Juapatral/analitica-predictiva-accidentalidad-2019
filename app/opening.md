@@ -1,5 +1,5 @@
 # **Trabajo final de Analítica Predictiva**
-## Posgrado en Analítica
+## Posgrado en Ingeniería - Analítica
 ## Universidad Nacional de Colombia, sede Medellín
 ## 2019-08-11
 ---
@@ -29,4 +29,3 @@ A continuación puede acceder al trabajo final de la materia *Analítica Predict
 * Juan Camilo Agudelo Marín: juagudelom@unal.edu.co
 * Jhon Anderson Londoño Herrera: jalondonh@unal.edu.co
 * Juan Pablo Trujillo Alviz: juanptrujilloalviz@gmail.com
-

@@ -31,11 +31,21 @@ Los entregables del trabajo son:
 3. Aplicativo web que permita visualizar los datos y la predicción del modelo. (disponible [aquí](https://google.com.co))
 4. Video promocional del aplicativo web, explicando su funcionalidad. (disponible [aquí](https://youtube.com)) 
 
-Para este trabajo se decidió utilizar la información de la accidentalidad vehicular en el municipio de Medellín para los años 2014 a 2018, disponibles en [este enlace](https://geomedellin-m-medellin.opendata.arcgis.com/search?tags=movilidad)
-
 ## Contexto del conjunto de datos
 
-**PENDIENTE**
+Para este trabajo se decidió utilizar la información de la accidentalidad vehicular en el municipio de Medellín para los años 2014 a 2018, disponibles al público en general en [este enlace.](https://geomedellin-m-medellin.opendata.arcgis.com/datasets/accidentalidad-georreferenciada-2018)
+
+El conjunto de datos se compone de los accidentes de tránsito registrados por la Secretaría de Movilidad de la Alcaldía de Medellín, entre los años especificados. Se entiende por accidente de tránsito: "evento, generalmente involuntario, generado al menos por un  un vehículo en movimiento, que causa daños a personas y bienes involucrados en él, e igualmente afecta la normal circulación de los vehículos que se movilizan por la vía o vías comprendidas en el lugar o dentro de la zona de influencia del hecho". (Ley 769 de 2002 - Código Nacional de Tránsito)
+
+Los conjuntos de datos tienen variables descriptivas del accidente como:
+
++ Fecha y hora.
++ Ubicación exacta (coordenadas planas MAGNA Medellín, diferentes a las del sistema internacional `wgs84`).
++ Ubicación general (barrio, comuna y lote).
++ Tipo de accidente: choque, caída de pasajero, incendio, entre otros.
++ Gravedad del accidente: herido, muerto, entre otros. 
+
+El objetivo es pronosticar la cantidad de accidentes para una fecha determinada de acuerdo con su tipo de accidente.  
 
 ## Metodología
 
@@ -47,4 +57,3 @@ Para el desarrollo de este trabajo se utilizarán los softwares libres *R* y *R-
 * Juan Camilo Agudelo Marín: juagudelom@unal.edu.co
 * Jhon Anderson Londoño Herrera: jalondonh@unal.edu.co
 * Juan Pablo Trujillo Alviz: juanptrujilloalviz@gmail.com
-

@@ -1,3 +1,4 @@
+### ---- carga de librerias ----
 # cargar libreria de markdown
 library(markdown)
 
@@ -5,6 +6,7 @@ library(markdown)
 library(leaflet)
 library(sf)
 
+### ---- carga de archivos ----
 # vector de posibles accidentes
 accidentes <- c("TODOS", "ATROPELLO", "CAIDA OCUPANTE", "CHOQUE", "INCENDIO", 
                 "VOLCAMIENTO", "OTRO")  
@@ -12,7 +14,8 @@ accidentes <- c("TODOS", "ATROPELLO", "CAIDA OCUPANTE", "CHOQUE", "INCENDIO",
 # mapa de barrios y comunas
 barrios <- read_sf("files/Limite_Barrio_Vereda_Catastral/Limite_Barrio_Vereda_Catastral.shp")
 comunas <- c("TODAS", levels(factor(barrios$NOMBRE_COM)))
-  
+
+### ---- iniciar ui ----  
 # iniciar pagina
 fluidPage(
   
@@ -25,16 +28,16 @@ fluidPage(
   # crear pestania principal
       tabsetPanel( 
         
-        # pestania de inicio
+        ### ---- pestania de inicio ----
         tabPanel("Inicio", includeMarkdown("opening.md")),
         
-        # pestania de resumen
+        ### ---- pestania de resumen ----
         tabPanel("Resumen", includeMarkdown("resumen.md")),
 
-        # pestania de informe
+        ### ---- pestania de informe ----
         #tabPanel("Informe", includeHTML("accidentalidad-2014-2018.html")),
         
-        # pestania de mapa
+        ### ---- pestania de mapa ----
         tabPanel("Mapa",
 
                  # crear barra lateral
@@ -47,7 +50,7 @@ fluidPage(
                    img(src = 'MoviliApp.png', height = "165px"),
 
                    # titulo
-                   titlePanel("Filtros:"),
+                   titlePanel("Resumen y filtros:"),
 
                    # texto
                    textOutput("texto_mapa"),
@@ -85,7 +88,7 @@ fluidPage(
 
                  ),
         
-        # pestania de aplicacion
+        ### ---- pestania de aplicacion ---- 
         tabPanel("App",
 
                  # crear barra lateral
@@ -98,7 +101,7 @@ fluidPage(
                    img(src = 'MoviliApp.png', height = "165px"),
 
                    # titulo
-                   titlePanel("Filtros:"),
+                   titlePanel("Resumen y filtros:"),
 
                    # texto
                    textOutput("texto_descriptivo"),
@@ -143,7 +146,7 @@ fluidPage(
                    )
         ),
 
-        # pestania de video
+        ### ---- pestania de video ----
         tabPanel("Video explicativo", HTML('<iframe width="813" height="457" src="https://www.youtube.com/embed/tAA_yWX8ycQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'))
       )
     )

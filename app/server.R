@@ -1,12 +1,11 @@
 function(input, output) {
-    
-    # lectura de datos
-    # CREAR FUNCION DE LECTURA CUANDO SE TENGA
-    datos2019 <- datos2019
-    
-    # cargar libreria de mapas
+    ### ---- cargar liberias ----
     library(leaflet)
     library(sf)
+    
+    ### ---- cargar archivos    
+    # CREAR FUNCION DE LECTURA CUANDO SE TENGA
+    datos2019 <- datos2019
     
     # vector de posibles accidentes
     accidentes <- c("TODOS", "ATROPELLO", "CAIDA OCUPANTE", "CHOQUE", "INCENDIO", 
@@ -15,6 +14,7 @@ function(input, output) {
     # mapa de comunas
     barrio <- read_sf("files/Limite_Barrio_Vereda_Catastral/Limite_Barrio_Vereda_Catastral.shp")
     
+    ### ---- crear outputs ----
     # crear grafico 2019
     output$prueba <- renderPlotly({
         
@@ -189,7 +189,7 @@ function(input, output) {
     # crear texto app
     output$texto_descriptivo <- renderText({
         
-        "Se presentan los accidentes de movilidad entre el 2014 y 2018, y sus valores pronosticados para el 2019."
+        "Se presentan los accidentes de movilidad entre 2014 y 2018 y sus valores pronosticados para el 2019. Seleccione rango de fechas, tipo de fecha y tipo de accidente."
         
     })
     
@@ -337,7 +337,7 @@ function(input, output) {
     # crear texto mapa
     output$texto_mapa <- renderText({
         
-        "Se presenta el mapa de los accidentes de movilidad entre el 2014 y 2018."
+        "Se presenta el mapa de los accidentes de movilidad entre 2014 y 2018 por barrio, comuna y tipo de accidente. Seleccione los periodos, comuna y tipo de accidente."
         
     })
     

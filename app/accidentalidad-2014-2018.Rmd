@@ -235,6 +235,34 @@ acc[,names(festivos)[-1]]<-acc%>%transmute_at(c(names(festivos)[-1]),funs(ifelse
 head(acc)
 ```
 
+## Guardar archivo
+```{r}
+# convertir a utf8
+acc[,2:27] <- map(.x = acc[,2:27], .f = enc2utf8)
+
+# guardar archivo
+fwrite(acc, "files/accidentalidad_georreferenciada_completa.csv", sep = ",")
+
+# eliminar archivo y limpiar memoria
+rm(acc)
+gc(reset = T)
+```
+
+**Nota:** para algunos equipos y versiones puede que la limpieza no funcione correctamente, por lo que se recomienda volver a cargar el archivo a partir de este punto y no ejecutar el código anterior
+
+```{r}
+# volver a cargar el archivo
+acc <- fread("files/accidentalidad_georreferenciada_completa.csv",
+             sep = ",",
+             encoding = "UTF-8")
+
+# organizar fecha
+acc$FECHA <- ymd(acc$FECHA)
+
+# visualizar
+head(acc)
+```
+
 Primero realizaremos un análisis descriptivo univariado de las variables por el número de accidentes registrados 
 # Accidentes por comuna
 ```{r}

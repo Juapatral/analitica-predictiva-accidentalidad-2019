@@ -111,7 +111,12 @@ Se propone utilizar la metodología [CRISP-DM](https://jdvelasq.github.io/ruta-n
 
 ### **2.1. Identificación del problema**
 
-**FALTA**
+La accidentalidad vial en las ciudades se ha ido posicionando año tras año como uno de los problemas que más costos sociales y económicos genera, hasta llegar a denominarse como “pandemia”. Medellín no ha sido la excepción y en la actualidad buena parte de las políticas públicas se movilizan para mitigar este fenómeno.
+Se estima que anualmente los costos totales por accidentalidad solo para Medellín son cerca de $ 1,8 billones, así que este es un problema cuya minimización puede dejar muchas ganancias.
+Una herramienta importante y base para la toma de decisiones es una estimación precisa que explique el problema y que permita predecir cuando y donde puede suceder determinado tipo de accidente.   
+Esta estimación es útil para diferentes actores. Los hacedores de políticas podrán determinar qué zonas son susceptibles de reestructuración de la malla vial, donde deben enfocar los esfuerzos de capacitación, en qué lugares deben disponer de más servidores para la prevención y atención de los accidentes. Para el público en general le resultará de interés para tomar decisiones de movilidad, cuando transitar y en qué; o en decisiones de vivienda, que sectores se deben evitar cuando se tienen hijos, por ejemplo.
+Nuestro trabajo pretende responder a estas preguntas y brindarle a la ciudad a través de una única plataforma la posibilidad visibilizar riesgos y con ello mitigarlos.
+
 
 [Regresar](#tabla-de-contenido)
 

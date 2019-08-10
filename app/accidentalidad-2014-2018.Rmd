@@ -542,6 +542,84 @@ acc_agrupado_2$PERIODO <- as.integer(acc_agrupado_2$PERIODO)
 ```
 
 
+# agrupamiento de datos para el modelado
+```{r}
+acc_agrupado_0 <- acc%>%group_by(FECHA,CLASE,DISENO,DIA_NOMBRE,DIA,PERIODO,FESTIVO,MADRE,NAVIDAD,BRUJITOS,SEMSANTA,ESCOLAR)%>%summarise(ACCIDENTES=n())%>%arrange(CLASE,FECHA)
+acc_agrupado_0$DIA <- as.integer(acc_agrupado_0$DIA)
+acc_agrupado_0$PERIODO <- as.integer(acc_agrupado_0$PERIODO)
+
+
+acc_agrupado_1<-acc%>%group_by(FECHA,CLASE,DIA_NOMBRE,DIA,PERIODO,FESTIVO,MADRE,NAVIDAD,BRUJITOS,SEMSANTA,ESCOLAR)%>%summarise(ACCIDENTES=n())%>%arrange(CLASE,FECHA)
+acc_agrupado_1$DIA <- as.integer(acc_agrupado_1$DIA)
+acc_agrupado_1$PERIODO <- as.integer(acc_agrupado_1$PERIODO)
+
+acc_agrupado_2 <-acc%>%group_by(FECHA,DIA_NOMBRE,PERIODO,CLASE,MES,DIA,COMUNA,FESTIVO,MADRE,NAVIDAD,BRUJITOS,SEMSANTA,ESCOLAR)%>%summarise(ACCIDENTES=n())%>%arrange(CLASE,FECHA)
+acc_agrupado_2$DIA <- as.integer(acc_agrupado_2$DIA)
+acc_agrupado_2$PERIODO <- as.integer(acc_agrupado_2$PERIODO)
+```
+
+
+#Elección del modelo de regresion
+
+
+```{r}
+#acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
+modelo_lm_0<-lm(ACCIDENTES~FECHA+CLASE+DISENO+DIA_NOMBRE+PERIODO+FESTIVO+MADRE+NAVIDAD+BRUJITOS+SEMSANTA+ESCOLAR,data=acc_agrupado_0, subset = (FECHA<="2017-12-31"))
+summary(modelo_lm)
+```
+
+
+```{r}
+#acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
+modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+DIA+PERIODO+FESTIVO+MADRE+NAVIDAD+BRUJITOS+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
+summary(modelo_lm_1)
+```
+#al verificar los valores P, se opta por retirar la variable brujitos
+```{r}
+#acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
+modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+DIA+PERIODO+FESTIVO+MADRE+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
+summary(modelo_lm_1)
+```
+#No se observa nigun cambio en el R cuadrado ajustado. se opta por quitar DIA. 
+```{r}
+#acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
+modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+MADRE+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
+summary(modelo_lm_1)
+```
+#No se observa nigun cambio en el R cuadrado ajustado. se opta por quitar MADRE. 
+
+```{r}
+#acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
+modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
+summary(modelo_lm_1)
+```
+#No se observa nigun cambio en el R cuadrado ajustado. se opta por quitar ESCOLAR. 
+#acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
+
+```{r}
+modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+NAVIDAD+SEMSANTA,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
+summary(modelo_lm_1)
+```
+#dado que al quitar la variable anterior el R cuadrado ajustado bajo 0.0001, por lo cual se opta por dejar el modelo con la variable ESCOLAR.
+
+
+```{r}
+#acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
+modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
+summary(modelo_lm_1)
+```
+
+#Se escoge el agrupado 2 para determinar si este tiene un mejor ajuste.
+
+```{r}
+#acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
+modelo_lm_2<-lm(ACCIDENTES~FECHA+DIA_NOMBRE+PERIODO+CLASE+MES+DIA+COMUNA+FESTIVO+MADRE+NAVIDAD+BRUJITOS+SEMSANTA+ESCOLAR,data=acc_agrupado_2, subset = (FECHA<="2017-12-31"))
+summary(modelo_lm_2)
+```
+
+#agregandola variable de comunas, vemos que el modelo es menos significativo que e agrupado 1 por lo que optamos por hacer la validacion con el modelo del agrupado 1.
+
+
 
 
 

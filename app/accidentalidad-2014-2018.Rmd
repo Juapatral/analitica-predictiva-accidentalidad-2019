@@ -603,23 +603,46 @@ summary(modelo_lm_2)
 
 #agregandola variable de comunas, vemos que el modelo es menos significativo que e agrupado 1 por lo que optamos por hacer la validacion con el modelo del agrupado 1.
 
-#Modelo Poisson
+
+
+#Calculo de $R^2$ Manual de la regresion para comprobar con el función 
 ```{r}
-modelo_glm<-glm(ACCIDENTES ~ FECHA + CLASE + DIA_NOMBRE + PERIODO + 
-    FESTIVO + NAVIDAD + SEMSANTA + ESCOLAR,data = acc_agrupado_1, 
-    subset = (FECHA <= "2017-12-31"),family = "poisson")
-summary(modelo_glm)
+y0_tr<-mean(acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"])
+r0_tr<-acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"]-y0_tr
+R0_tr<-mean(r0_tr^2)
+y_pred_tr_lm<-predict(modelo_lm_1)
+r_tr_lm<-acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"]-y_pred_tr_lm
+R_tr_lm<-mean(r_tr_lm^2)
+R2_lm<-1-R_tr_lm/R0_tr
+
+print(R2_lm)
 ```
+#este da igual.
 
-# Calculo seudo r para poisson
+
+#se procede a hacer un ajuste del modelo Poisson, para esto de calcula un Pseudo $R^2$
 
 ```{r}
+
 y_pred_tr_glm<-predict(modelo_glm,type="response")
 r_tr_glm<-acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"]-y_pred_tr_glm
 R_tr_glm<-mean(r_tr_glm^2)
 R2_tr_glm<-1-R_tr_glm/R0_tr
 print(R2_tr_glm)
+
 ```
+#este modelo muestra un $R^2$ superior por lo cuál se usará para hacer las comparaciones de modelos.
+
+#Se elabora un DataFrame para poder graficar predichos y observados de los modelos
+
+```{r}
+resultados_lm_glm<-data.frame(FECHA=  acc_agrupado_1$FECHA[acc_agrupado_1$FECHA<="2017-12-31"],ACCIDENTES=acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"],
+                              pred_lm=y_pred_tr_lm,
+                              pred_glm=y_pred_tr_glm,
+                            res_lm=r_tr_lm,
+                            res_glm=r_tr_glm)
+```
+
 
 #Modelo Random Forest
 ```{r}

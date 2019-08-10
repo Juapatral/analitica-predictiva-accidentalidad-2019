@@ -111,12 +111,7 @@ Se propone utilizar la metodología [CRISP-DM](https://jdvelasq.github.io/ruta-n
 
 ### **2.1. Identificación del problema**
 
-La accidentalidad vial en las ciudades se ha ido posicionando año tras año como uno de los problemas que más costos sociales y económicos genera, hasta llegar a denominarse como “pandemia”. Medellín no ha sido la excepción y en la actualidad buena parte de las políticas públicas se movilizan para mitigar este fenómeno.
-Se estima que anualmente los costos totales por accidentalidad solo para Medellín son cerca de $ 1,8 billones, así que este es un problema cuya minimización puede dejar muchas ganancias.
-Una herramienta importante y base para la toma de decisiones es una estimación precisa que explique el problema y que permita predecir cuando y donde puede suceder determinado tipo de accidente.   
-Esta estimación es útil para diferentes actores. Los hacedores de políticas podrán determinar qué zonas son susceptibles de reestructuración de la malla vial, donde deben enfocar los esfuerzos de capacitación, en qué lugares deben disponer de más servidores para la prevención y atención de los accidentes. Para el público en general le resultará de interés para tomar decisiones de movilidad, cuando transitar y en qué; o en decisiones de vivienda, que sectores se deben evitar cuando se tienen hijos, por ejemplo.
-Nuestro trabajo pretende responder a estas preguntas y brindarle a la ciudad a través de una única plataforma la posibilidad visibilizar riesgos y con ello mitigarlos.
-
+**FALTA**
 
 [Regresar](#tabla-de-contenido)
 
@@ -240,34 +235,6 @@ acc[,names(festivos)[-1]]<-acc%>%transmute_at(c(names(festivos)[-1]),funs(ifelse
 head(acc)
 ```
 
-## Guardar archivo
-```{r}
-# convertir a utf8
-acc[,2:27] <- map(.x = acc[,2:27], .f = enc2utf8)
-
-# guardar archivo
-fwrite(acc, "files/accidentalidad_georreferenciada_completa.csv", sep = ",")
-
-# eliminar archivo y limpiar memoria
-rm(acc)
-gc(reset = T)
-```
-
-**Nota:** para algunos equipos y versiones puede que la limpieza no funcione correctamente, por lo que se recomienda volver a cargar el archivo a partir de este punto y no ejecutar el código anterior
-
-```{r}
-# volver a cargar el archivo
-acc <- fread("files/accidentalidad_georreferenciada_completa.csv",
-             sep = ",",
-             encoding = "UTF-8")
-
-# organizar fecha
-acc$FECHA <- ymd(acc$FECHA)
-
-# visualizar
-head(acc)
-```
-
 Primero realizaremos un análisis descriptivo univariado de las variables por el número de accidentes registrados 
 # Accidentes por comuna
 ```{r}
@@ -290,7 +257,7 @@ El mayor número de accidentes ocurre en La candelaria, seguido por Laureles y C
 acc_mes <- acc %>% 
               group_by(MES) %>% 
               summarize(total_registros = n())
-ggplot(data=acc_mes, aes(x=MES, y=total_registros)) + 
+p1 <- ggplot(data=acc_mes, aes(x=MES, y=total_registros)) + 
     geom_bar(stat="identity", position="dodge", fill = "blue3", color = "grey48", alpha = 
     .8)+
     xlab("Mes")+ # eje x
@@ -306,7 +273,7 @@ acc_nombredia <- acc %>%
               summarize(total_registros = n())
 acc_nombredia$DIA_NOMBRE<-ordered(acc_nombredia$DIA_NOMBRE,levels=c( "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO","DOMINGO"))
 
-ggplot(data=acc_nombredia, aes(x=DIA_NOMBRE, y=total_registros)) + 
+p2 <- ggplot(data=acc_nombredia, aes(x=DIA_NOMBRE, y=total_registros)) + 
     geom_bar(stat="identity", position="dodge", fill = "blue3", color = "grey48", alpha = 
     .8)+
     xlab("Días")+ # eje x
@@ -321,7 +288,7 @@ Los viernes son los días que mayor accidentalidad presenta y el día con menos 
 acc_ano <- acc %>% 
               group_by(PERIODO) %>% 
               summarize(total_registros = n())
-ggplot(data=acc_ano, aes(x=PERIODO, y=total_registros)) + 
+p3 <- ggplot(data=acc_ano, aes(x=PERIODO, y=total_registros)) + 
     geom_bar(stat="identity", position="dodge", fill = "blue3", color = "grey48", alpha = 
     .8)+
     xlab("Año")+ # eje x
@@ -335,7 +302,7 @@ El año 2016 fue el año con mayor accidentalidad mientras que 2018 tuvo menos a
 acc_clase <- acc %>% 
               group_by(CLASE) %>% 
               summarize(total_registros = n())
-ggplot(data=acc_clase, aes(x=CLASE, y=total_registros)) + 
+p4 <- ggplot(data=acc_clase, aes(x=CLASE, y=total_registros)) + 
     geom_bar(stat="identity", position="dodge", fill = "blue3", color = "grey48", alpha = 
     .8)+
     xlab("Tipo de accidente")+ # eje x
@@ -343,6 +310,9 @@ ggplot(data=acc_clase, aes(x=CLASE, y=total_registros)) +
     ggtitle("Número de accidentes por tipo de accidente") #título del gráfico
 ```
 El menor número de accidentes ocurre por incendio mientras que los choques son los que generan mayores accidentes de tránsito.
+
+
+
 
 # Accidentes por gravedad
 ```{r}
@@ -418,6 +388,13 @@ acc_group_festivo<- acc %>% group_by(CLASE, FESTIVO) %>% summarize(conteo = n())
 
 ggplot(data=acc_group_festivo, aes(x=CLASE, y=conteo, fill=FESTIVO)) + 
     geom_bar(stat="identity", position="dodge")
+```
+
+
+```{r}
+acc_fecha1 <- acc %>% 
+              group_by(FECHA,CLASE, GRAVEDAD, FESTIVO, MADRE, NAVIDAD, SEMSANTA, BRUJITOS,                       ESCOLAR) >%>
+              summarize()
 ```
 
 # Registro de accidentalidad por día

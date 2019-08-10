@@ -595,9 +595,24 @@ summary(modelo_lm_2)
 ```
 
 #agregandola variable de comunas, vemos que el modelo es menos significativo que e agrupado 1 por lo que optamos por hacer la validacion con el modelo del agrupado 1.
+```{r}
+modelo_glm<-glm(ACCIDENTES ~ FECHA + CLASE + DIA_NOMBRE + PERIODO + 
+    FESTIVO + NAVIDAD + SEMSANTA + ESCOLAR,data = acc_agrupado_1, 
+    subset = (FECHA <= "2017-12-31"),family = "poisson")
+```
+
+```{r}
+summary(modelo_glm)
+```
 
 
-
+```{r}
+y_pred_tr_glm<-predict(modelo_glm,type="response")
+r_tr_glm<-acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"]-y_pred_tr_glm
+R_tr_glm<-mean(r_tr_glm^2)
+R2_tr_glm<-1-R_tr_glm/R0_tr
+print(R2_tr_glm)
+```
 
 
 

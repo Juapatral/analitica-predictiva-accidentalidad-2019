@@ -5,10 +5,10 @@
 ---
 
 ## Título del trabajo
-*Análisis y pronóstico de la información accidentalidad vehicular en el municipio de Medellín para los años 2014 a 2018*
+*Análisis y pronóstico de la información accidentalidad vehicular en el municipio de Medellín para entre 2014 y 2018*
 
 ## Corta descripción
-La materia de Analítica Predictiva en el Posgrado de Analítica de la Universidad Nacional enseña algunas técnicas estadísticas para el pronóstico (*forecast*) y clasificación (*clusters*) de datos, utilizando los conceptos de la estadística descriptiva y probabilística como cálculo de probabilidades, Teorema de Bayes, medidas de tendencia, funciones de distribuciones de probabilidad, pruebas de hipótesis, entre otros. Algunos de los modelos vistos en clase fueron:
+La materia de Analítica Predictiva en el Posgrado de Analítica de la Universidad Nacional enseña algunas técnicas estadísticas para el pronóstico (*forecast*) y clasificación (*clusters*) de datos, utilizando los conceptos de la estadística descriptiva y probabilística como cálculo de probabilidades, Teorema de Bayes, medidas de  tendencia, funciones de distribuciones de probabilidad, pruebas de hipótesis, entre otros. Algunos de los modelos vistos en clase fueron:
 
 * K vecinos cercanos (k-nearest-neighbors)
 * Regresión lineal (univariada y multivariada) 

@@ -1,15 +1,33 @@
 function(input, output) {
     ### ---- cargar liberias ----
-    library(leaflet)
-    library(sf)
+    require(leaflet, quietly = T)
+    require(sf, quietly = T)
+    require(data.table, quietly = T)
+    require(dplyr, quietly = T)
+    require(shiny, quietly = T)
     
-    ### ---- cargar archivos    
+    ### ---- cargar archivos ----
+    
+    # datos historicos
+    acc <- fread("files/accidentalidad_georreferenciada_completa.csv",
+             sep = ",",
+             encoding = "UTF-8")
+    
+    # agrupar datos
+    acc_totales <- group_by(acc, 
+                            FECHA, DIA_NOMBRE, DIA, MES, PERIODO, FESTIVO, 
+                            MADRE, NAVIDAD, BRUJITOS, SEMSANTA, ESCOLAR, 
+                            CLASE) %>% 
+                   summarize(total_accidentes = n()) %>%
+                   mutate(SEMANA = week(FECHA))
+
+    
     # CREAR FUNCION DE LECTURA CUANDO SE TENGA
     datos2019 <- datos2019
     
     # vector de posibles accidentes
-    accidentes <- c("TODOS", "ATROPELLO", "CAIDA OCUPANTE", "CHOQUE", "INCENDIO", 
-                    "VOLCAMIENTO", "OTRO")  
+    accidentes <- c("TODOS", "ATROPELLO", "CAIDA OCUPANTE", "CHOQUE", 
+                    "INCENDIO", "VOLCAMIENTO", "OTRO")  
     
     # mapa de comunas
     barrio <- read_sf("files/Limite_Barrio_Vereda_Catastral/Limite_Barrio_Vereda_Catastral.shp")
@@ -21,15 +39,22 @@ function(input, output) {
         # definir nuevas variables
         clase <- input$tipo_accidente
         fecha <- input$tipo_fecha
-            
+        
+        # crear nuevos datos si se eligen todos los accidentes    
         if(clase == "TODOS"){
+            # agrupar por fecha, filtrar por rango de fechas y agregar por 
+            # total de accidentes
             datos_grafico <- group_by(.data = datos2019, 
                                       .dots = fecha) %>%
                              filter(FECHA >= input$dateRange[1] &
                                         FECHA <= input$dateRange[2]) %>%
                              summarize(accidentes = sum(total_accidentes))
+            
+        # crear nuevos datos si se elige un accidente particular    
         } else {
             
+            # agrupar por fecha, filtrar por rango de fechas, clase y 
+            # agregar por total de accidentes
             datos_grafico <- group_by(.data = datos2019, 
                                       .dots = fecha) %>%
                              filter(FECHA >= input$dateRange[1] &
@@ -38,25 +63,24 @@ function(input, output) {
                              summarize(accidentes = sum(total_accidentes))
         }
         
+        # parametrizar grafico
         if(fecha == "PERIODO" | fecha == "DIA_NOMBRE"){
             
-            tipo <- "bar"
-            modo <- NULL
-            llenado <- NULL
+            tipo <- "bar"   # tipo grafico
+            modo <- NULL    # modo especial del grafico
+            llenado <- NULL # llenar colores del grafico
         
         }else{
             
-            tipo <- "scatter"
-            modo <- "lines"
-            llenado <- "tozeroy"
+            tipo <- "scatter"       # tipo grafico
+            modo <- "lines"         # modo especial del grafico
+            llenado <- "tozeroy"    # llenar colores del grafico
         }
         
+        # parametrizar visibilidad del eje
         visible <- ifelse(fecha == "FECHA", F, T)
         
-        clase_acc <- ifelse(input$tipo_accidente2 == "s",
-                            datos_grafico["CLASE"], 
-                            F)
-        
+        # ordenar nombre del dia 
         if(fecha == "DIA_NOMBRE"){
             datos_grafico[fecha][[1]] <- factor(datos_grafico[fecha][[1]],
                                                 levels = c("LUNES", "MARTES",
@@ -66,10 +90,12 @@ function(input, output) {
             datos_grafico <- datos_grafico %>% arrange(DIA_NOMBRE)
         }
         
+        # ajustar titulo del grafico
         titulo <- paste("Total de accidentes entre", 
                         paste(input$dateRange, collapse = " y ")
                         )
         
+        # ajustar parametros del eje x
         eje_x <- paste("Tipo de fecha:", switch(fecha,
                                         "FECHA" = "Diario",
                                         "DIA_NOMBRE" = "Dia de la semana",
@@ -78,32 +104,30 @@ function(input, output) {
                                         "PERIODO" = "Anual"
                                         ))
         
+        # ajustar parametros del eje y
         eje_y <- "Cantidad de accidentes"
         
-        plot_ly(data = datos_grafico,
+        # crear grafico
+        plot_ly(data = datos_grafico,      
                 x = datos_grafico[fecha],
                 y = ~accidentes,
                 type = tipo,
                 mode = modo,
                 fill = llenado,
                 line = list(width = 1),
+                # ajustar descripcion emergente
                 hoverinfo = "text+y",
                 hovertext = as.character(datos_grafico[fecha][[1]]),
                 color = "red") %>%
             layout(title = titulo,
                    xaxis = list(visible = visible,
                                 title = eje_x,
-                                #categoryorder = "array",
-                                #categoryarray = as.character(datos_grafico[fecha][[1]]),
-                                #type = "date",
                                 tickmode = "array",
                                 tickvals = 0:nrow(datos_grafico[fecha]),
                                 ticktext = datos_grafico[fecha][[1]]
                                 ),
                    yaxis = list(title = eje_y,
                                 rangemode = "nonnegative")
-                   
-                  
                    )
     })
     
@@ -114,6 +138,7 @@ function(input, output) {
         clase <- input$tipo_accidente
         fecha <- input$tipo_fecha
         
+        # crear nuevos datos si se eligen todos los accidentes    
         if(clase == "TODOS"){
             datos_grafico <- group_by(.data = acc_totales, 
                                       .dots = fecha) %>%
@@ -126,21 +151,24 @@ function(input, output) {
                              summarize(accidentes = sum(total_accidentes))
         }
         
+        # parametrizar grafico
         if(fecha == "PERIODO" | fecha == "DIA_NOMBRE"){
             
-            tipo <- "bar"
-            modo <- NULL
-            llenado <- NULL
+            tipo <- "bar"   # tipo grafico
+            modo <- NULL    # modo especial del grafico
+            llenado <- NULL # llenar colores del grafico
             
         }else{
             
-            tipo <- "scatter"
-            modo <- "lines"
-            llenado <- "tozeroy"
+            tipo <- "scatter"       # tipo grafico
+            modo <- "lines"         # modo especial del grafico
+            llenado <- "tozeroy"    # llenar colores del grafico
         }
         
+        # parametrizar visibilidad del eje
         visible <- ifelse(fecha == "FECHA", F, T)
         
+        # ordenar nombre del dia 
         if(fecha == "DIA_NOMBRE"){
             datos_grafico[fecha][[1]] <- factor(datos_grafico[fecha][[1]],
                                                 levels = c("LUNES", "MARTES",
@@ -150,8 +178,10 @@ function(input, output) {
             datos_grafico <- datos_grafico %>% arrange(DIA_NOMBRE)
         }
         
+        # ajustar titulo del grafico
         titulo <- paste("Total de accidentes entre 2014 y 2018")
         
+        # ajustar parametros del eje x
         eje_x <- paste("Tipo de fecha:", switch(fecha,
                                         "FECHA" = "Diario",
                                         "DIA_NOMBRE" = "Dia de la semana",
@@ -160,8 +190,10 @@ function(input, output) {
                                         "PERIODO" = "Anual"
                                         ))
         
+        # ajustar parametros del eje y
         eje_y <- "Cantidad de accidentes"
         
+        # crear grafico
         plot_ly(data = datos_grafico,
                 x = datos_grafico[fecha],
                 y = ~accidentes,
@@ -169,14 +201,12 @@ function(input, output) {
                 mode = modo,
                 fill = llenado,
                 line = list(width = 1),
+                # ajustar descripcion emergente
                 hoverinfo = "text+y",
                 hovertext = as.character(datos_grafico[fecha][[1]]))%>%
             layout(title = titulo,
                    xaxis = list(visible = visible,
                                 title = eje_x,
-                                #categoryorder = "array",
-                                #categoryarray = as.character(datos_grafico[fecha][[1]]),
-                                #type = "date",
                                 tickmode = "array",
                                 tickvals = 0:nrow(datos_grafico[fecha]),
                                 ticktext = datos_grafico[fecha][[1]]
@@ -196,110 +226,70 @@ function(input, output) {
     # crear mapa
     output$mapa <- renderLeaflet({
         
+        # crear variables
         tipo_accidente_mapa <- input$tipo_accidente_mapa
         comuna_mapa <- input$comuna_mapa
         
+        # crear nueva base dependiendo de las opciones elegidas
         if(tipo_accidente_mapa == "TODOS" & comuna_mapa == "TODAS"){
             
+            # se filtra por el periodo elegido, se agrupa por comuna,
+            # se calcula el total de accidentes
             nueva_base <- acc %>%
                 filter(PERIODO >= input$anio_mapa[1] & 
                            PERIODO <= input$anio_mapa[2]) %>%
                 group_by(COMUNA_BARRIO) %>%
                 summarize(accidentes = n()) %>%   
-                ungroup() %>%
-                mutate(categoria_accidentes = ifelse(accidentes <= 10,
-                                                     "0-10",
-                                              ifelse(accidentes <= 25,
-                                                     "11-25",
-                                              ifelse(accidentes <= 50,
-                                                     "26-50",
-                                              ifelse(accidentes <= 75,
-                                                     "51-75",
-                                              ifelse(accidentes <= 100,
-                                                     "76-100",
-                                              ifelse(accidentes <= 250,
-                                                     "101-250",
-                                                     "+250"
-                                              )))))))
+                ungroup()
             
+            # se unen las tablas
             nuevo_mapa <- inner_join(barrio, nueva_base,
                                      by = c("CODIGO" = "COMUNA_BARRIO"))
+            
         }else if(comuna_mapa == "TODAS"){
             
+            # se filtra por el periodo elegido, se agrupa por comuna y 
+            # tipo de accidente, se calcula el total de accidentes
             nueva_base <- acc %>%
                       filter(PERIODO >= input$anio_mapa[1] & 
                                  PERIODO <= input$anio_mapa[2],
                              CLASE == tipo_accidente_mapa) %>%
                       group_by(COMUNA_BARRIO) %>%
                       summarize(accidentes = n()) %>%
-                                      ungroup() %>%
-                mutate(categoria_accidentes = ifelse(accidentes <= 10,
-                                                     "0-10",
-                                              ifelse(accidentes <= 25,
-                                                     "11-25",
-                                              ifelse(accidentes <= 50,
-                                                     "26-50",
-                                              ifelse(accidentes <= 75,
-                                                     "51-75",
-                                              ifelse(accidentes <= 100,
-                                                     "76-100",
-                                              ifelse(accidentes <= 250,
-                                                     "101-250",
-                                                     "+250"
-                                              )))))))
+                      ungroup() 
             
+            # se unen las tablas
             nuevo_mapa <- inner_join(barrio, nueva_base,
                                      by = c("CODIGO" = "COMUNA_BARRIO"))
+            
         }else if(tipo_accidente_mapa == "TODOS"){
             
+            # se filtra por el periodo elegido, se agrupa por comuna,
+            # se calcula el total de accidentes
             nueva_base <- acc %>%
                       filter(PERIODO >= input$anio_mapa[1] & 
                                  PERIODO <= input$anio_mapa[2]) %>%
                       group_by(COMUNA_BARRIO) %>%
                       summarize(accidentes = n()) %>%
-                                      ungroup() %>%
-                mutate(categoria_accidentes = ifelse(accidentes <= 10,
-                                                     "0-10",
-                                              ifelse(accidentes <= 25,
-                                                     "11-25",
-                                              ifelse(accidentes <= 50,
-                                                     "26-50",
-                                              ifelse(accidentes <= 75,
-                                                     "51-75",
-                                              ifelse(accidentes <= 100,
-                                                     "76-100",
-                                              ifelse(accidentes <= 250,
-                                                     "101-250",
-                                                     "+250"
-                                              )))))))
+                      ungroup()
             
+            # se unen las tablas y se filtra por comuna
             nuevo_mapa <- inner_join(barrio, nueva_base,
                                      by = c("CODIGO" = "COMUNA_BARRIO")) %>%
                           filter(NOMBRE_COM == comuna_mapa)
         }else{
             
+            # se filtra por el periodo elegido, se agrupa por comuna y por 
+            # tipo de accidente, se calcula el total de accidentes
             nueva_base <- acc %>%
                       filter(PERIODO >= input$anio_mapa[1] & 
                                  PERIODO <= input$anio_mapa[2],
                              CLASE == tipo_accidente_mapa) %>%
                       group_by(COMUNA_BARRIO) %>%
                       summarize(accidentes = n()) %>%
-                                      ungroup() %>%
-                mutate(categoria_accidentes = ifelse(accidentes <= 10,
-                                                     "0-10",
-                                              ifelse(accidentes <= 25,
-                                                     "11-25",
-                                              ifelse(accidentes <= 50,
-                                                     "26-50",
-                                              ifelse(accidentes <= 75,
-                                                     "51-75",
-                                              ifelse(accidentes <= 100,
-                                                     "76-100",
-                                              ifelse(accidentes <= 250,
-                                                     "101-250",
-                                                     "+250"
-                                              )))))))
+                      ungroup()
             
+            # se unen las tablas y se filtra por comuna
             nuevo_mapa <- inner_join(barrio, nueva_base,
                                      by = c("CODIGO" = "COMUNA_BARRIO"))%>%
                           filter(NOMBRE_COM == comuna_mapa)
@@ -316,17 +306,28 @@ function(input, output) {
             addPolygons(data = nuevo_mapa,
                         color = "grey",
                         opacity = 0.9,
-                        #fill = ~categoria_accidentes,
+                        weight = 1, # grosor de la linea
                         fillColor = ~mypal(nuevo_mapa$accidentes),
                         fillOpacity = 0.6,
-                        weight = 1,
                         label = ~NOMBRE_BAR,
+                        # ajustar sombreado de seleccion
                         highlightOptions = highlightOptions(color = "black",
-                                      weight = 3, bringToFront = T, opacity = 1),
-                        popup = paste("Barrio: ", nuevo_mapa$NOMBRE_BAR, "<br>",
-                                      "Accidentes: ", nuevo_mapa$accidentes, "<br>")
+                                                            weight = 3, 
+                                                            bringToFront = T, 
+                                                            opacity = 1),
+                        # ajustar descripcion emergente al darle click
+                        popup = paste("Barrio: ", 
+                                      nuevo_mapa$NOMBRE_BAR, 
+                                      "<br>",
+                                      "Accidentes: ", 
+                                      nuevo_mapa$accidentes, 
+                                      "<br>")
                         ) %>%
+            
+            #establecer mapa de fondo
             addProviderTiles(providers$Wikimedia) %>%
+            
+            # agregar leyenda
             addLegend(position = "bottomright", 
                       pal = mypal, 
                       values = nuevo_mapa$accidentes,

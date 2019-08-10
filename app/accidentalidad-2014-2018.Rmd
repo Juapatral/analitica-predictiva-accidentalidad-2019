@@ -524,6 +524,28 @@ plot_ly (data=subset(acc_fecha,subset = (Fecha<="2018-12-31")),
 [Regresar](#tabla-de-contenido)
 
 ### **2.4. Modelación de los datos**
+#se escogen tres agruoamientos para verificar el modelo.
+
+```{r}
+acc_agrupado_0 <- acc%>%group_by(FECHA,CLASE,DISENO,DIA_NOMBRE,DIA,PERIODO,FESTIVO,MADRE,NAVIDAD,BRUJITOS,SEMSANTA,ESCOLAR)%>%summarise(ACCIDENTES=n())%>%arrange(CLASE,FECHA)
+acc_agrupado_0$DIA <- as.integer(acc_agrupado_0$DIA)
+acc_agrupado_0$PERIODO <- as.integer(acc_agrupado_0$PERIODO)
+
+
+acc_agrupado_1<-acc%>%group_by(FECHA,CLASE,DIA_NOMBRE,DIA,PERIODO,FESTIVO,MADRE,NAVIDAD,BRUJITOS,SEMSANTA,ESCOLAR)%>%summarise(ACCIDENTES=n())%>%arrange(CLASE,FECHA)
+acc_agrupado_1$DIA <- as.integer(acc_agrupado_1$DIA)
+acc_agrupado_1$PERIODO <- as.integer(acc_agrupado_1$PERIODO)
+
+acc_agrupado_2 <-acc%>%group_by(FECHA,DIA_NOMBRE,PERIODO,CLASE,MES,DIA,COMUNA_BARRIO,COMUNA,BARRIO,FESTIVO,MADRE,NAVIDAD,BRUJITOS,SEMSANTA,ESCOLAR)%>%summarise(ACCIDENTES=n())%>%arrange(CLASE,FECHA)
+acc_agrupado_2$DIA <- as.integer(acc_agrupado_2$DIA)
+acc_agrupado_2$PERIODO <- as.integer(acc_agrupado_2$PERIODO)
+```
+
+
+
+
+
+
 
 **FALTA**
 

@@ -374,129 +374,157 @@ ESCOLAR|Indicador de si el día pertenece a la época de vacaciones escolares o 
 
 #### **2.3.2. Análisis**
 
-Primero realizaremos un análisis descriptivo univariado de las variables por el número de accidentes registrados 
+Realizaremos un análisis descriptivo para buscar identificar las variables asociadas a la accidentalidad vial en la ciudad de Medellín a través del análisis y la interpretación de las cifras de accidentes registrados en la Secretaría de Movilidad.
 
-##### Accidentes por comuna
+##### Accidentalidad por día, mes y año
+La siguiente gráfica muestra el registro de accidentes por día, mes y año
+
 ```{r}
-acc_comuna <- acc %>% 
-              group_by(COMUNA) %>% 
-              summarize(total_registros = n())
-ggplot(data=acc_comuna, aes(x=COMUNA, y=total_registros)) + 
-    geom_bar(stat="identity", position="dodge", fill = "blue3", color = "grey48", alpha = .8)+
-    xlab("Comuna")+ # eje x
-    ylab("Total registros")+ # eje y
-    ggtitle("Número de accidentes por comuna")+ #título del gráfico
-    coord_flip()
+#Para realizar la un gráfico con subgráficos creamos la función multiplots así:
+library(ggplot2)
+library(grid)
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
 
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
 ```
 
-El mayor número de accidentes ocurre en La candelaria, seguido por Laureles y Castilla.
-
-##### Número de accidentes por mes
-```{r}
-acc_mes <- acc %>% 
-              group_by(MES) %>% 
-              summarize(total_registros = n())
-p1 <- ggplot(data=acc_mes, aes(x=MES, y=total_registros)) + 
-    geom_bar(stat="identity", position="dodge", fill = "blue3", color = "grey48", alpha = 
-    .8)+
-    xlab("Mes")+ # eje x
-    ylab("Total registros")+ # eje y
-    ggtitle("Número de accidentes por mes") #título del gráfico
-
-p1
-```
-
-En el mes donde mayor cantidad de accidentes ocurre es en Agosto.
-
-##### Accidentalidad por día
 ```{r}
 acc_nombredia <- acc %>% 
               group_by(DIA_NOMBRE) %>% 
               summarize(total_registros = n())
 acc_nombredia$DIA_NOMBRE<-ordered(acc_nombredia$DIA_NOMBRE,levels=c( "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO","DOMINGO"))
-
+# Gráfico día
 p2 <- ggplot(data=acc_nombredia, aes(x=DIA_NOMBRE, y=total_registros)) + 
-    geom_bar(stat="identity", position="dodge", fill = "blue3", color = "grey48", alpha = 
+    geom_bar(stat="identity", position="dodge", fill = "dodgerblue3", color = "grey48", alpha = 
     .8)+
     xlab("Días")+ # eje x
     ylab("Total registros")+ # eje y
+    theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5))+ # Girar label eje x
     ggtitle("Número de accidentes por días de la semana") #título del gráfico
-
-p2
-```
-
-Los viernes son los días que mayor accidentalidad presenta y el día con menos accidentalidad es el domingo.
-
-##### Accidentalidad por año
-```{r}
+#Gráfico mes
+acc_mes <- acc %>% 
+              group_by(MES) %>% 
+              summarize(total_registros = n())
+p1 <- ggplot(data=acc_mes, aes(x=MES, y=total_registros)) + 
+    geom_bar(stat="identity", position="dodge", fill = "dodgerblue3", color = "grey48", alpha = 
+    .8)+
+    xlab("Mes")+ # eje x
+    ylab("Total registros")+ # eje y
+    ggtitle("Número de accidentes por mes") #título del gráfico
+#Gráfico año
 acc_ano <- acc %>% 
               group_by(PERIODO) %>% 
               summarize(total_registros = n())
 p3 <- ggplot(data=acc_ano, aes(x=PERIODO, y=total_registros)) + 
-    geom_bar(stat="identity", position="dodge", fill = "blue3", color = "grey48", alpha = 
+    geom_bar(stat="identity", position="dodge", fill = "dodgerblue3", color = "grey48", alpha = 
     .8)+
     xlab("Año")+ # eje x
     ylab("Total registros")+ # eje y
     ggtitle("Número de accidentes por año") #título del gráfico
 
-p3
+multiplot(p1, p2, p3, cols=2)
+
+```
+En está gráfica podemos observar que la mayor accidentalidad se presenta los días viernes, durante el mes de gasto también hay un mayor número de accidentes y en el 2016 fue el año con más accidentes durante el periodo de análisi 2014-2018, mientras que los días domingo, el mes de enero y en el año 2018 se registra una accidentalidad menor.
+
+##### Accidentalidad por comuna y tipo de vía
+```{r}
+
+# Accidentes por comuna
+acc_comuna <- acc %>% 
+              group_by(COMUNA) %>% 
+              summarize(total_registros = n())
+p4 <- ggplot(data=acc_comuna, aes(x=COMUNA, y=total_registros)) + 
+    geom_bar(stat="identity", position="dodge", fill = "dodgerblue3", color = "grey48", alpha = .8)+
+    xlab("Comuna")+ # eje x
+    ylab("Total registros")+ # eje y
+    ggtitle("Comuna")+ #título del gráfico
+    coord_flip()
+
+# accidente por diseño de via
+acc_diseno <- acc %>% 
+              group_by(DISENO) %>% 
+              summarize(total_registros = n())
+p5 <- ggplot(data=acc_diseno, aes(x=DISENO, y=total_registros)) + 
+    geom_bar(stat="identity", position="dodge", fill = "dodgerblue3", color = "grey48", alpha = 
+    .8)+
+    xlab("Diseño de la vía")+ # eje x
+    ylab("Total registros")+ # eje y
+    ggtitle("Tipo de vía")+ #título del gráfico
+    coord_flip()
+multiplot(p4, p5, cols = 2)
 ```
 
-El año 2016 fue el año con mayor accidentalidad mientras que 2018 tuvo menos accidentes.
+El mayor número de accidentes ocurre en La candelaria, seguido por Laureles y Castilla.
+Los tramos en la vía es donde se presentan la mayor parte de los accidentes seguidos por las intersecciones.
 
 ##### Accidentalidad por tipo de accidente
 ```{r}
 acc_clase <- acc %>% 
               group_by(CLASE) %>% 
               summarize(total_registros = n())
-p4 <- ggplot(data=acc_clase, aes(x=CLASE, y=total_registros)) + 
-    geom_bar(stat="identity", position="dodge", fill = "blue3", color = "grey48", alpha = 
+p6 <- ggplot(data=acc_clase, aes(x=CLASE, y=total_registros)) + 
+    geom_bar(stat="identity", position="dodge", fill = "dodgerblue3", color = "grey48", alpha = 
     .8)+
     xlab("Tipo de accidente")+ # eje x
     ylab("Total registros")+ # eje y
     ggtitle("Número de accidentes por tipo de accidente") #título del gráfico
-
-p4
+p6
 ```
 
-El menor número de accidentes ocurre por incendio mientras que los choques son los que generan mayores accidentes de tránsito.
+Notamos que la principal causa de los accidentes viales es debido a choques y son pocos los accidentes donde se  termina con volcamiento de los vehículos.
 
-##### Accidentes por gravedad
+##### Accidentalidad por gravedad de
 ```{r}
 acc_gravedad <- acc %>% 
               group_by(GRAVEDAD) %>% 
               summarize(total_registros = n())
-ggplot(data=acc_gravedad, aes(x=GRAVEDAD, y=total_registros)) + 
-    geom_bar(stat="identity", position="dodge", fill = "blue3", color = "grey48", alpha = 
+p7 <- ggplot(data=acc_gravedad, aes(x=GRAVEDAD, y=total_registros)) + 
+    geom_bar(stat="identity", position="dodge", fill = "dodgerblue3", color = "grey48", alpha = 
     .8)+
     xlab("Gravedad del accidente")+ # eje x
     ylab("Total registros")+ # eje y
     ggtitle("Número de accidentes por gravedad del accidente") #título del gráfico
+p7
 ```
 
 Desde el 2014 hasta el 2018 se tuvieron un número mayor de heridos que de daños.
 
-##### Accidentes por diseño
-```{r}
-acc_diseno <- acc %>% 
-              group_by(DISENO) %>% 
-              summarize(total_registros = n())
-ggplot(data=acc_diseno, aes(x=DISENO, y=total_registros)) + 
-    geom_bar(stat="identity", position="dodge", fill = "blue3", color = "grey48", alpha = 
-    .8)+
-    xlab("Diseño de la vía")+ # eje x
-    ylab("Total registros")+ # eje y
-    ggtitle("Número de accidentes por tipo de vía")+ #título del gráfico
-    coord_flip()
-```
-
-La mayor cantidad de accidentes se presentan en los tramos de vía seguidos por las intersecciones.
 
 ##### **Ahora analizaremos las variables agrupadas por la clase de accidente.**
 
-##### Agrupar Clase-Gravedad
+##### Gráfico de gravedad de acuerdo al tipo de accidente
 ```{r}
 acc_group_clase<- acc %>% group_by(CLASE, GRAVEDAD) %>% summarize(conteo = n())
 
@@ -504,46 +532,50 @@ ggplot(data=acc_group_clase, aes(x=CLASE, y=conteo, fill=GRAVEDAD)) +
     geom_bar(stat="identity", position="dodge")+
     coord_flip()
 ```
-
 De acuerdo al tipo de accidente, vemos que los choques generan una mayor cantidad de daños y la mayor cantidad de heridos.
 
-##### Agrupar clase-Mes
+##### Clasificación de los tipos de accidentes por meses.
 ```{r}
 acc_group_mes<- acc %>% group_by(MES,CLASE) %>% summarize(conteo = n()) 
 ggplot(data=acc_group_mes, aes(x=CLASE, y=conteo, fill=MES)) + 
     geom_bar(stat="identity", position="dodge")
 ```
-
 La mayor cantidad de choques se presenta en agosto.
 
-##### Agrupar Clase-Periodo
+##### Agrupación de tipo de accidente por año
 ```{r}
 acc_group_year<- acc %>% group_by(CLASE, PERIODO) %>% summarize(conteo = n()) 
-ggplot(data=acc_group_year, aes(x=CLASE, y=conteo, fill=as.factor(PERIODO))) + 
+acc_group_year$PERIODO<- as.factor(acc_group_year$PERIODO)
+ggplot(data=acc_group_year, aes(x=CLASE, y=conteo, fill=PERIODO)) + 
     geom_bar(stat="identity", position="dodge")+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5))+
     scale_fill_manual(values=c("#d0d1e6", "#bdc9e1","#74a9cf","#2b8cbe","#045a8d"))
 
 ```
 
-##### Gráfica Clase-Periodo
+##### Agrupación de tipo de accidente por día de la semana.
 ```{r}
 acc_group_dia<- acc %>% group_by(CLASE, DIA_NOMBRE) %>% summarize(conteo = n()) 
 
 ggplot(data=acc_group_dia, aes(x=CLASE, y=conteo, fill=DIA_NOMBRE)) + 
     geom_bar(stat="identity", position="dodge")+
-    scale_fill_manual(values=c("#67001f","#b2182b","#d6604d","#f4a582","#fddbc7","#d1e5f0", "#92c5de"))+
+    scale_fill_manual(values=c("#eff3ff", "#c6dbef", "#9ecae1", "#6baed6", "#4292c6", "#2171b5", "#084594"))+
   coord_flip()
 ```
 
-##### Gráfica Clase-festivo
+##### Tipo de accidente ocurrido en los días festivos.
 ```{r}
 acc_group_festivo<- acc %>% group_by(CLASE, FESTIVO) %>% summarize(conteo = n()) 
 
 ggplot(data=acc_group_festivo, aes(x=CLASE, y=conteo, fill=FESTIVO)) + 
     geom_bar(stat="identity", position="dodge")
 ```
+Se observa que los accidentes ocurridos se presentan en los días ordinarios y que la accidentalidad en los días festivos es baja.
 
-##### Registro de accidentalidad por día
+#### Series temporales 
+Para guiar el análisis de la información resulta útil representar gráficamente los datos o una muestra de los mismos. En este caso, como la variable a predecir es el número de accidentes viales registrados diariamente en la secretaría de movilidad y esta variable depende del tiempo, se desea representarla como una serie temporal.
+
+##### Serie temporal de accidentalidad por día
 ```{r}
 acc_fecha <- acc %>% 
               group_by(FECHA) %>% 
@@ -560,7 +592,7 @@ plot_ly (data=subset(acc_fecha,subset = (FECHA<="2018-12-31")),
 
 ```
 
-##### Accidentalidad por año
+##### Serie temporal de accidentalidad por año
 ```{r}
 acc_fecha$year<-format(acc_fecha$FECHA,"%Y")
 plot_ly (data=subset(acc_fecha,subset = (FECHA<="2018-12-31")),
@@ -574,16 +606,15 @@ plot_ly (data=subset(acc_fecha,subset = (FECHA<="2018-12-31")),
          yaxis=list(title="Total registros"))
 ```
    
-##### Utilicemos la función aggregate para obtener el promedio diario para cada año de registros de accidentes:
+##### Usando la función aggregate obtenemos el promedio diario para cada año de registros de accidentes:
 ```{r}
 aggregate(total_registros~year,data=acc_fecha,FUN=mean)
 ```
 
-##### Ahora obtengamos el promedio diario para cada mes y cada año: **OJO CON ESTO**
+##### Ahora obtenemos el promedio diario para cada mes y cada año: 
 ```{r}
 acc_fecha$Fecha<-as.Date(acc_fecha$FECHA,"%d/%m/%Y")
 acc_fecha$mes<-format(acc_fecha$Fecha,"%m")
-with(acc_fecha, month.abb[mes])
 acc_fecha$mes<-strftime(acc_fecha$Fecha, format = "%B")
 acc_fecha$mes<-ordered(acc_fecha$mes,levels=c( "enero", "febrero", "marzo", 
 "abril", "mayo", "junio","julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"))
@@ -599,6 +630,8 @@ aggregate(total_registros~year*mes,data=acc_fecha,FUN=mean)%>%
 ```
 
 ##### Ahora utilicemos el diagrama de caja y bigotes para explorar relaciones:
+
+#### Diagrama de caja y bigotes de número de accidentes por año:
 ```{r}
 plot_ly (data=subset(acc_fecha,subset = (Fecha<="2018-12-31")),
          x = ~year,
@@ -609,9 +642,9 @@ plot_ly (data=subset(acc_fecha,subset = (Fecha<="2018-12-31")),
          yaxis=list(title="Total registros"))
 ```
 
-Ahora, hacemos algo similar a lo anterior para los meses del año y los días de la semana:
 
-##### Veamos el diagrama de caja y bigotes para cada mes:
+
+##### Diagrama de caja y bigotes para cada mes:
 ```{r}
 acc_fecha$diames<-format(acc_fecha$Fecha,"%d")
 plot_ly (data=subset(acc_fecha,subset = (Fecha<="2018-12-31")),
@@ -623,7 +656,7 @@ plot_ly (data=subset(acc_fecha,subset = (Fecha<="2018-12-31")),
          yaxis=list(title="Total registros"))
 ```
 
-##### Para cada día de la semana:
+##### Diagrama de caja y bigotes para cada día de la semana:
 ```{r}
 acc_fecha$dia_semana<-weekdays(acc_fecha$Fecha)
 acc_fecha$dia_semana<-ordered(acc_fecha$dia_semana,levels=c( "lunes", "martes", "miércoles", "jueves", "viernes", "sábado","domingo"))
@@ -635,6 +668,7 @@ plot_ly (data=subset(acc_fecha,subset = (Fecha<="2018-12-31")),
          xaxis=list(title="Mes"),
          yaxis=list(title="Total registros"))
 ```
+
 [Regresar](#tabla-de-contenido)
 
 #### **2.3.3. Datos atípicos o nulos**

@@ -1065,9 +1065,6 @@ plot_ly (data=comparacion_vl,
 ```
 
 
-
-
-
 #Comparación con los (pseudo) R2:
 
 ```{r}
@@ -1090,6 +1087,26 @@ ResultadosR2
 [Regresar](#tabla-de-contenido)
 
 ### **2.6. Implementación**
+#Se prepara el modelo para hacer la prediccion del año 2019, se importa el correspondiente archivo de entrada para ser la predicción.
+
+```{r}
+matriz_2019 <- fread("files/matriz-2019-pronostico.csv",sep = ";",colClasses = "character")
+matriz_2019$FECHA <- as.Date(matriz_2019$FECHA)
+matriz_2019$PERIODO <- as.numeric(matriz_2019$PERIODO)
+```
+
+#Se crea el nuevo vector de predicciones
+```{r}
+ACCIDENTES_PRED <- predict(modelo_glm, newdata = matriz_2019, type = "response")
+```
+
+se guarda junto alconjunto de datos nuevo para ser visualizado en la aplicacio´pm
+```{r}
+ACCIDENTES_PRED <- matriz_2019%>%mutate(ACCIDENTES= round(predict(modelo_glm, newdata = matriz_2019, type = "response"),0))
+
+fwrite(ACCIDENTES_PRED,"files/matriz-2019-pronosticada.csv", sep = ";")
+```
+
 
 **FALTA**
 

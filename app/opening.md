@@ -1,31 +1,33 @@
-# **Trabajo final de Analítica Predictiva**
+# ***Análisis y pronóstico de la información accidentalidad vehicular en el municipio de Medellín para los años 2014 a 2018***
+## Analítica Predictiva
 ## Posgrado en Ingeniería - Analítica
 ## Universidad Nacional de Colombia, sede Medellín
 ## 2019-08-11
 ---
 
-## **Título del trabajo**
-### *Análisis y pronóstico de la información accidentalidad vehicular en el municipio de Medellín para los años 2014 a 2018*
+## **Resultados**
+
+A continuación puede acceder a los resultados trabajo final de la materia *Analítica Predictiva* a través de las diferentes pestañas:
+
+* En *`Resumen`* encontrará un breve resumen del informe técnico.
+
+    * El *`informe`* puede ser consultado [aquí.](https://juapatral.github.io/analitica-predictiva-accidentalidad-2019/app/accidentalidad-2014-2018.html)
+
+* En *`Mapa`* encontrará un mapa de Medellín interactivo con información histórica sobre los accidentes. 
+
+* En *`App`* encontrará visualmente los datos y el pronóstico realizado. 
+
+* En *`Video Explicativo`* encontrará un video sobre el desarrollo del trabajo y explicación de la aplicación.
 
 ---
 
-## **Resultados**
-
-A continuación puede acceder al trabajo final de la materia *Analítica Predictiva*. 
-
-* En *`Resumen`* encontrará un breve resumen del trabajo.
-
-* En *`Informe`* encontrará el reporte técnico del trabajo. 
-
-* En *`Aplicación`* encontrará visualmente los datos y el pronóstico realizado. 
-
-* En *`Explicación`* encontrará un video sobre el desarrollo del trabajo y explicación de la aplicación.
+Para más información, visite el *GitHub* principal [aquí.](https://juapatral.github.io/analitica-predictiva-accidentalidad-2019/)
 
 ---
 
 ## **Contacto**
 
-* Lina María Grajales Vanegas: lgrajalesv@unal.edu.co
 * Juan Camilo Agudelo Marín: juagudelom@unal.edu.co
+* Lina María Grajales Vanegas: lgrajalesv@unal.edu.co
 * Jhon Anderson Londoño Herrera: jalondonh@unal.edu.co
 * Juan Pablo Trujillo Alviz: juanptrujilloalviz@gmail.com

@@ -1,14 +1,14 @@
-# Trabajo final de Analítica Predictiva
-## Posgrado en Analítica
+# **Informe técnico de Analítica Predictiva**
+## Posgrado en Ingeniería - Analítica
 ## Universidad Nacional de Colombia, sede Medellín
 ## 2019-08-11
 ---
 
-## Título del trabajo
+## **Título del informe**
 *Análisis y pronóstico de la información accidentalidad vehicular en el municipio de Medellín para entre 2014 y 2018*
 
-## Corta descripción
-La materia de Analítica Predictiva en el Posgrado de Analítica de la Universidad Nacional enseña algunas técnicas estadísticas para el pronóstico (*forecast*) y clasificación (*clusters*) de datos, utilizando los conceptos de la estadística descriptiva y probabilística como cálculo de probabilidades, Teorema de Bayes, medidas de  tendencia, funciones de distribuciones de probabilidad, pruebas de hipótesis, entre otros. Algunos de los modelos vistos en clase fueron:
+## **Descripción**
+La materia de Analítica Predictiva en el Posgrado de Ingeniería - Analítica de la Universidad Nacional enseña algunas técnicas estadísticas para el pronóstico (*forecast*), clasificación (*classification*) y agrupación (*clusters*) de datos, utilizando los conceptos de la estadística descriptiva y probabilística como cálculo de probabilidades, Teorema de Bayes, medidas de  tendencia, funciones de distribuciones de probabilidad, pruebas de hipótesis, entre otros. Algunos de los modelos vistos en clase fueron:
 
 * K vecinos cercanos (k-nearest-neighbors)
 * Regresión lineal (univariada y multivariada) 
@@ -31,7 +31,7 @@ Los entregables del trabajo son:
 3. Aplicativo web que permita visualizar los datos y la predicción del modelo. (disponible [aquí](https://google.com.co))
 4. Video promocional del aplicativo web, explicando su funcionalidad. (disponible [aquí](https://youtube.com)) 
 
-## Contexto del conjunto de datos
+## **Contexto del conjunto de datos**
 
 Para este trabajo se decidió utilizar la información de la accidentalidad vehicular en el municipio de Medellín para los años 2014 a 2018, disponibles al público en general en [este enlace.](https://geomedellin-m-medellin.opendata.arcgis.com/datasets/accidentalidad-georreferenciada-2018)
 
@@ -47,13 +47,17 @@ Los conjuntos de datos tienen variables descriptivas del accidente como:
 
 El objetivo es pronosticar la cantidad de accidentes para una fecha determinada de acuerdo con su tipo de accidente.  
 
-## Metodología
+## **Metodología**
 
 Para el desarrollo de este trabajo se utilizarán los softwares libres *R* y *R-Studio* y se seguirá la metodología de [*CRISP-DM*](https://jdvelasq.github.io/ruta-n-predictiva/_downloads/5731da83c31e211e9b774ae8713246ed/CRISP-DM.pdf).
 
-## Contacto
+## **Resumen**
 
-* Lina María Grajales Vanegas: lgrajalesv@unal.edu.co
+>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+## **Contacto**
+
 * Juan Camilo Agudelo Marín: juagudelom@unal.edu.co
+* Lina María Grajales Vanegas: lgrajalesv@unal.edu.co
 * Jhon Anderson Londoño Herrera: jalondonh@unal.edu.co
 * Juan Pablo Trujillo Alviz: juanptrujilloalviz@gmail.com

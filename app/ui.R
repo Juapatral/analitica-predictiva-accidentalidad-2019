@@ -1,6 +1,7 @@
 ### ---- carga de librerias ----
 # cargar libreria de markdown
 library(markdown)
+library(plotly)
 
 # cargar libreria de mapas
 library(leaflet)

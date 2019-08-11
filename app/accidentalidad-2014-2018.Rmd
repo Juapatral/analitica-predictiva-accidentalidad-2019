@@ -933,94 +933,114 @@ plot_ly (data=resultados_lm_glm_val,
          legend = list(x = 0.75, y = 0.9))
 ```
 
-
-
-
-
-##### Modelo Arboles Decision BASE 0
+##### Modelo Arboles Decision BASE 1
+Entrenamiento del árbol
 ```{r}
 library(rpart)
-modelo_rpart_0<-rpart(ACCIDENTES~FECHA+CLASE+DISENO+DIA_NOMBRE+PERIODO+FESTIVO+MADRE+NAVIDAD+BRUJITOS+SEMSANTA+ESCOLAR,data=acc_agrupado_0, subset = (FECHA<="2017-12-31"))
-print(modelo_rpart_0)
+modelo_rpart<-rpart(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
+```
+# Visualización del resultado
+
+```{r}
+print(modelo_rpart)
 ```
 
+Con la función rpart.plot():
 ```{r}
 library(rpart.plot)
-rpart.plot(modelo_rpart_0,tweak = 1.2)
+rpart.plot(modelo_rpart,tweak = 1.1)
 ```
 
+Visualización de la importancia de las variables:
 ```{r}
-summary(modelo_rpart_0)
+summary(modelo_rpart)
 ```
 
+# Cálculo de los $R^2$ de predicción y entrenamiento para el árbol:
 ```{r}
-y0_tr<-mean(acc_agrupado_0$ACCIDENTES[acc_agrupado_0$FECHA<="2017-12-31"])
-r0_tr<-acc_agrupado_0$ACCIDENTES[acc_agrupado_0$FECHA<="2017-12-31"]-y0_tr
-R0_tr<-mean(r0_tr^2)
-
-y_pred_tr_rpart<-predict(modelo_rpart_0)
-r_tr_rpart<-acc_agrupado_0$ACCIDENTES[acc_agrupado_0$FECHA<="2017-12-31"]-y_pred_tr_rpart
+y_pred_tr_rpart<-predict(modelo_rpart)
+y_pred_vl_rpart<-predict(modelo_rpart,newdata = datos_val)
+r_tr_rpart<-acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"]-y_pred_tr_rpart
+r_vl_rpart<-datos_val$ACCIDENTES-y_pred_vl_rpart
 R_tr_rpart<-mean(r_tr_rpart^2)
+R_vl_rpart<-mean(r_vl_rpart^2)
 R2_tr_rpart<-1-R_tr_rpart/R0_tr
+R2_vl_rpart<-1-R_vl_rpart/R0_vl
 print(R2_tr_rpart)
 ```
 
-
-##### Modelo Arboles Decision BASE 1
 ```{r}
-library(rpart)
-modelo_rpart_1<-rpart(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
-print(modelo_rpart_1)
+print(R2_vl_rpart)
 ```
 
+# Comparación de todos los modelos
+Comparación en el entrenamiento
 ```{r}
-library(rpart.plot)
-rpart.plot(modelo_rpart_1,tweak = 1.2)
+comparacion_tr<-data.frame(FECHA=acc_agrupado_1$FECHA[acc_agrupado_1$FECHA<="2017-12-31"],
+                           ACCIDENTES=acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"],
+                           glm=y_pred_tr_glm,
+                           arbol=y_pred_tr_rpart)
 ```
 
+# Gráfica de todas las series en entrenamiento:
 ```{r}
-summary(modelo_rpart_1)
+plot_ly (data=comparacion_tr,
+         x = ~FECHA,
+         y = ~ACCIDENTES,
+         type = "scatter" ,mode = "lines",
+         name='Real',
+         line=list(width=1,color='rgb(205, 12, 24)'))%>%
+  add_trace(y= ~glm,
+            name='Modelo Poisson',
+            line=list(width=1,color='rgb(22, 96, 167)'))%>%
+  add_trace(y= ~arbol,
+            name='Árbol',
+            line=list(width=1,color='rgb(255, 51, 0)'))%>%
+  layout(title='Registros ACCIDENTES (Entrenamiento)',
+         xaxis=list(title="FECHA"),
+         yaxis=list(title="ACCIDENTES"),
+         legend = list(x = 0.75, y = 0.9))
 ```
 
+# Comparación en la validación
 ```{r}
-y0_tr_1<-mean(acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"])
-r0_tr_1<-acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"]-y0_tr_1
-R0_tr_1<-mean(r0_tr_1^2)
-
-y_pred_tr_rpart_1<-predict(modelo_rpart_1)
-r_tr_rpart_1<-acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"]-y_pred_tr_rpart_1
-R_tr_rpart_1<-mean(r_tr_rpart_1^2)
-R2_tr_rpart_1<-1-R_tr_rpart_1/R0_tr_1
-print(R2_tr_rpart_1)
+comparacion_vl<-data.frame(FECHA=datos_val$FECHA,
+                           ACCIDENTES=datos_val$ACCIDENTES,
+                           glm=y_pred_vl_glm,
+                           arbol=y_pred_vl_rpart)
 ```
 
-##### Modelo Arboles Decision BASE 2
+#Gráfica de todas las series en entrenamiento:
 ```{r}
-library(rpart)
-modelo_rpart_2<-rpart(ACCIDENTES~FECHA+DIA_NOMBRE+PERIODO+CLASE+MES+DIA+COMUNA+FESTIVO+MADRE+NAVIDAD+BRUJITOS+SEMSANTA+ESCOLAR,data=acc_agrupado_2, subset = (FECHA<="2017-12-31"))
-print(modelo_rpart_2)
+plot_ly (data=comparacion_vl,
+         x = ~FECHA,
+         y = ~ACCIDENTES,
+         type = "scatter" ,mode = "lines",
+         name='Real',
+         line=list(width=1,color='rgb(205, 12, 24)'))%>%
+  add_trace(y= ~glm,
+            name='Modelo Poisson',
+            line=list(width=1,color='rgb(22, 96, 167)'))%>%
+  add_trace(y= ~arbol,
+            name='Árbol',
+            line=list(width=1,color='rgb(255, 51, 0)'))%>%
+  layout(title='Registros ACCIDENTES (Validación)',
+         xaxis=list(title="FECHA"),
+         yaxis=list(title="ACCIDENTES"),
+         legend = list(x = 0.75, y = 0.9))
 ```
 
-```{r}
-library(rpart.plot)
-rpart.plot(modelo_rpart_2,tweak = 1.5)
-```
+#Comparación con los (pseudo) R2:
 
 ```{r}
-summary(modelo_rpart_2)
+Entrenamiento<-c(R2_lm,R2_tr_glm,R2_tr_rpart)
+Validacion<-c(R2_vl_lm,R2_vl_glm,R2_vl_rpart)
+nombres<-c("lm","glm","árbol")
+ResultadosR2<-data.frame(Entrenamiento=Entrenamiento,Validacion=Validacion)
+rownames(ResultadosR2)<-nombres
+ResultadosR2
 ```
 
-```{r}
-y0_tr_2<-mean(acc_agrupado_2$ACCIDENTES[acc_agrupado_2$FECHA<="2017-12-31"])
-r0_tr_2<-acc_agrupado_2$ACCIDENTES[acc_agrupado_2$FECHA<="2017-12-31"]-y0_tr_2
-R0_tr_2<-mean(r0_tr_2^2)
-
-y_pred_tr_rpart_2<-predict(modelo_rpart_2)
-r_tr_rpart_2<-acc_agrupado_2$ACCIDENTES[acc_agrupado_2$FECHA<="2017-12-31"]-y_pred_tr_rpart_2
-R_tr_rpart_2<-mean(r_tr_rpart_2^2)
-R2_tr_rpart_2<-1-R_tr_rpart_2/R0_tr_2
-print(R2_tr_rpart_2)
-```
 
 **FALTA**
 

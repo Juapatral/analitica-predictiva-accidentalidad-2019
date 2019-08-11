@@ -1035,8 +1035,9 @@ plot_ly (data=comparacion_vl,
 ```{r}
 Entrenamiento<-c(R2_lm,R2_tr_glm,R2_tr_rpart)
 Validacion<-c(R2_vl_lm,R2_vl_glm,R2_vl_rpart)
+MSE_acc <- c(R_vl_lm,R_vl_glm,R_vl_rpart)
 nombres<-c("lm","glm","árbol")
-ResultadosR2<-data.frame(Entrenamiento=Entrenamiento,Validacion=Validacion)
+ResultadosR2<-data.frame(Entrenamiento=Entrenamiento,Validacion=Validacion,MSE=MSE_acc)
 rownames(ResultadosR2)<-nombres
 ResultadosR2
 ```

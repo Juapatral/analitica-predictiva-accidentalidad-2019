@@ -157,7 +157,7 @@ MES_NOMBRE|Nombre del mes de la ocurrencia del accidente|integer|Columna vacía
 
 ### **2.3. Descripción del conjunto de datos**
 
-Para el análisis de la información se utilizará el dialecto *Tidyverse*, los paquetes *data.table*, *plotly*, *rmarkdown*, *shiny* y *leaflet* para lectura y visualización de los datos y **FALTA PAQUETES MODELADO**.
+Para el análisis de la información se utilizará el dialecto *Tidyverse*, los paquetes *data.table*, *plotly*, *rmarkdown*, *shiny* y *leaflet* para lectura y visualización de los datos y *stats*, *rpart* y *rpart.plot* para estimar los modelos.
 
 #### **2.3.1. Limpieza y resumen de los datos**
 ```{r Paquetes, message=FALSE, warning=FALSE}
@@ -167,13 +167,14 @@ Para el análisis de la información se utilizará el dialecto *Tidyverse*, los 
 #install.packages("data.table")   # manejo de tablas
 #install.packages("ggplot2")      # manejo de graficas
 #install.packages("plotly")       # graficas semi-dinamicas
+#install.packages("grid")         # manejo de subgraficas
 #install.packages("rmarkdown")    # utilizar rmarkdown
 #install.packages("shiny")        # tableros de control dinamicos
 #install.packages("prettydoc")    # dar formato a rmarkdown
 #install.packages("sf")           # manejo de archivos espaciales (.shp)
 #install.packages("leaflet")      # mapas dinamicos en HTML
-#install.packages("rpart")        # pendiente
-#install.packages("rpart.plot")   # pendiente
+#install.packages("rpart")        # arboles de decisiones
+#install.packages("rpart.plot")   # graficar arboles
 
 # cargar librerias
 library(data.table)   # manejo de tablas
@@ -886,8 +887,8 @@ plot_ly (data=resultados_lm_glm,
             text = ~FECHA,
             name='Modelo lineal Poisson',
             marker=list(size=3,color='rgb(255, 51, 0)'))%>%
-  add_trace(x=c(-500:3500),y=c(-500:3500),
-            mode="lines",text=rep(NA,4001),
+  add_trace(x=c(0:200),y=c(0:200),
+            mode="lines",text=rep(NA,201),
             name="Identidad")%>%
   layout(title='Registros ACCIDENTALIDAD',
          xaxis=list(title="Observados"),
@@ -1082,7 +1083,12 @@ ResultadosR2
 
 ### **2.5. Evaluación del modelo**
 
-#el Modelo ajustado de Poisson es el que menor error cuadratico muestra( ```{r}ResultadosR2[which(ResultadosR2$MSE==min(ResultadosR2$MSE)),-2]```) para los datos estudiados, por lo que a partir de estas evidencias lo escogemos como el modelo màs conveniente para hacer la predicción
+#el Modelo ajustado de Poisson es el que menor error cuadratico muestra:
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+print(ResultadosR2[which(ResultadosR2$MSE==min(ResultadosR2$MSE)),3])
+```
+
+Por lo que a partir de estas evidencias lo escogemos como el modelo más conveniente para hacer la predicción.
 
 [Regresar](#tabla-de-contenido)
 
@@ -1100,7 +1106,7 @@ matriz_2019$PERIODO <- as.numeric(matriz_2019$PERIODO)
 ACCIDENTES_PRED <- predict(modelo_glm, newdata = matriz_2019, type = "response")
 ```
 
-se guarda junto alconjunto de datos nuevo para ser visualizado en la aplicacio´pm
+se guarda junto el conjunto de datos nuevo para ser visualizado en la aplicación
 ```{r}
 ACCIDENTES_PRED <- matriz_2019%>%mutate(ACCIDENTES= round(predict(modelo_glm, newdata = matriz_2019, type = "response"),0))
 

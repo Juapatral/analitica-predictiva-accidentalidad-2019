@@ -15,8 +15,9 @@ accidentes <- c("TODOS", "ATROPELLO", "CAIDA OCUPANTE", "CHOQUE", "INCENDIO",
 # mapa de barrios y comunas
 barrios <- read_sf("files/Limite_Barrio_Vereda_Catastral/Limite_Barrio_Vereda_Catastral.shp")
 comunas <- c("TODAS", levels(factor(barrios$NOMBRE_COM)))
+rm(barrios)
 
-### ---- iniciar ui ----  
+### ---- ui ----  
 # iniciar pagina
 fluidPage(
   
@@ -62,27 +63,27 @@ fluidPage(
                                min = 2014,
                                max = 2018,
                                value = c(2014, 2018)),
-                   
+
                    # seleccion de tipo de accidentes
                    selectInput(inputId = "comuna_mapa",
                                label = "Comuna:",
                                choices = comunas),
-                   
+
                    # seleccion de tipo de accidentes
                    selectInput(inputId = "tipo_accidente_mapa",
                                label = "Tipo de accidente:",
                                choices = accidentes),
-                   
+
                    # version
                    textOutput("version")
-                   
+
                    ),
 
                  mainPanel(
-                   
+
                    # titulo del mapa
                    titlePanel("Mapa de accidentalidad por barrios"),
-                   
+
                    # explicacion del mapa
                    textOutput("texto_mapa_explicacion"),
 
@@ -92,7 +93,7 @@ fluidPage(
                    )
 
                  ),
-        
+
         ### ---- pestania de aplicacion ---- 
         tabPanel("App",
 
@@ -156,11 +157,11 @@ fluidPage(
         ),
 
         ### ---- pestania de video ----
-        tabPanel("Video explicativo", 
-                 
+        tabPanel("Video explicativo",
+
                  # video embebido
                  HTML('<iframe width="813" height="457" src="https://www.youtube.com/embed/tAA_yWX8ycQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'),
-                 
+
                  # version
                  textOutput("version")
                  )

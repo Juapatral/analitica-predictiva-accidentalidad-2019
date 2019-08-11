@@ -5,6 +5,7 @@ function(input, output) {
     require(data.table, quietly = T)
     require(dplyr, quietly = T)
     require(shiny, quietly = T)
+    require(lubridate, quietly = T)
     
     ### ---- cargar archivos ----
     
@@ -23,10 +24,17 @@ function(input, output) {
                    mutate(SEMANA = week(FECHA))
 
     
-    # cargar datos 2019 CAMBIAR A REALES
-    datos2019 <- fread("www/datos2019_prueba.csv", colClasses = "character")
+    # cargar datos 2019, limpiar fechas y total accidentes
+    datos2019 <- fread("files/matriz-2019-pronosticada.csv",
+                       sep = ";", 
+                       colClasses = "character")
+    
     datos2019$FECHA <- as.Date(datos2019$FECHA)
+    names(datos2019)[9] <- "total_accidentes" 
     datos2019$total_accidentes <- as.integer(datos2019$total_accidentes)
+    datos2019$PERIODO <- as.integer(datos2019$PERIODO)
+    datos2019$SEMANA <- week(datos2019$FECHA)
+    datos2019$MES <- month(datos2019$FECHA)
     
     # vector de posibles accidentes
     accidentes <- c("TODOS", "ATROPELLO", "CAIDA OCUPANTE", "CHOQUE", 

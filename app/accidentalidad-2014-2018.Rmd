@@ -1030,6 +1030,10 @@ plot_ly (data=comparacion_vl,
          legend = list(x = 0.75, y = 0.9))
 ```
 
+
+
+
+
 #Comparación con los (pseudo) R2:
 
 ```{r}
@@ -1043,13 +1047,11 @@ ResultadosR2
 ```
 
 
-**FALTA**
-
 [Regresar](#tabla-de-contenido)
 
 ### **2.5. Evaluación del modelo**
 
-**FALTA**
+#el Modelo ajustado de Poisson es el que menor error cuadratico muestra( ```{r}ResultadosR2[which(ResultadosR2$MSE==min(ResultadosR2$MSE)),-2]```) para los datos estudiados, por lo que a partir de estas evidencias lo escogemos como el modelo màs conveniente para hacer la predicción
 
 [Regresar](#tabla-de-contenido)
 

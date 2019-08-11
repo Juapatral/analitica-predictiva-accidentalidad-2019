@@ -23,8 +23,10 @@ function(input, output) {
                    mutate(SEMANA = week(FECHA))
 
     
-    # CREAR FUNCION DE LECTURA CUANDO SE TENGA
-    datos2019 <- datos2019
+    # cargar datos 2019 CAMBIAR A REALES
+    datos2019 <- fread("www/datos2019_prueba.csv", colClasses = "character")
+    datos2019$FECHA <- as.Date(datos2019$FECHA)
+    datos2019$total_accidentes <- as.integer(datos2019$total_accidentes)
     
     # vector de posibles accidentes
     accidentes <- c("TODOS", "ATROPELLO", "CAIDA OCUPANTE", "CHOQUE", 

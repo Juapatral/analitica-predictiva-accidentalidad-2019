@@ -1120,6 +1120,16 @@ fwrite(ACCIDENTES_PRED,"files/matriz-2019-pronosticada.csv", sep = ";")
 
 ## **4. Bibliografía**
 
++ Friedman, J., Hastie, T., & Tibshirani, R. (2001). The elements of statistical learning (Vol. 1, No. 10). New York: Springer series in statistics.
+
++ Hothorn, T., & Everitt, B. S. (2014). A handbook of statistical analyses using R. Chapman and Hall/CRC.
+
++ James, G., Witten, D., Hastie, T., & Tibshirani, R. (2013). An introduction to statistical learning (Vol. 112, p. 18). New York: springer.
+
++ McCullagh, P. (2019). Generalized linear models. Routledge.
+
++ Montgomery, D. C., & Runger, G. C. (2007). Applied statistics and probability for engineers, (With CD). John Wiley & Sons.
+
 **FALTA**
 
 **R Markdown**

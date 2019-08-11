@@ -764,7 +764,7 @@ R2_tr_glm<-1-R_tr_glm/R0_tr
 print(R2_tr_glm)
 ```
 
-Este modelo muestra un $R^2$ superior por lo cuál se usará para hacer las comparaciones de modelos.
+#Este modelo muestra un $R^2$ superior por lo cuál se usará para hacer las comparaciones de modelos.
 
 ## GRAFICA JHON
 # Análisis de predichos versus observados
@@ -798,6 +798,43 @@ plot_ly (data=resultados_lm_glm,
          yaxis=list(title="ACCIDENTES"),
          legend = list(x = 0.75, y = 0.9))
 ```
+
+#Comparacion de modelo lineal y observados
+```{r}
+plot_ly (data=resultados_lm_glm,
+         x = ~FECHA,
+         y = ~ACCIDENTES,
+         type = "scatter" ,mode = "lines",
+         name='Real',
+         line=list(width=1,color='rgb(205, 12, 24)'))%>%
+  add_trace(y= ~pred_lm,
+            name='Modelo lineal general',
+            line=list(width=1,color='rgb(22, 96, 167)'))%>%
+  layout(title='Registros de Accidentes',
+         xaxis=list(title="Fecha"),
+         yaxis=list(title="Accidentes"),
+         legend = list(x = 0.75, y = 0.9))
+```
+
+#Comparacion de modelo Poisson y observados
+```{r}
+plot_ly (data=resultados_lm_glm,
+         x = ~FECHA,
+         y = ~ACCIDENTES,
+         type = "scatter" ,mode = "lines",
+         name='Real',
+         line=list(width=1,color='rgb(205, 12, 24)'))%>%
+  add_trace(y= ~pred_glm,
+            name='Modelo Ajustado Poisson',
+            line=list(width=1,color='rgb(22, 96, 167)'))%>%
+  layout(title='Registros de Accidentes',
+         xaxis=list(title="Fecha"),
+         yaxis=list(title="Accidentes"),
+         legend = list(x = 0.75, y = 0.9))
+```
+
+#se puede observar que los modelos logran describir las observaciones sin observar ningun comportamiento extraño.
+
 # HASTA ACÁ GRÁFICA JHON Y EMPIEZA LINA
 
 

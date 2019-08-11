@@ -731,6 +731,7 @@ summary(modelo_lm_2)
 
 Agregando la variable de comunas, vemos que el modelo es menos significativo que e agrupado 1 por lo que se opta por hacer la validacion con el modelo del agrupado 1.
 
+
 ##### Calculo de $R^2$ Manual de la regresion para comprobar con el función 
 ```{r}
 y0_tr<-mean(acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"])
@@ -746,29 +747,157 @@ print(R2_lm)
 
 este da igual.
 
-
+#Modelo Poisson
+```{r}
+modelo_glm<-glm(ACCIDENTES ~ FECHA + CLASE + DIA_NOMBRE + PERIODO + 
+    FESTIVO + NAVIDAD + SEMSANTA + ESCOLAR,data = acc_agrupado_1, 
+    subset = (FECHA <= "2017-12-31"),family = "poisson")
+summary(modelo_glm)
+```
 ##### se procede a hacer un ajuste del modelo Poisson, para esto de calcula un Pseudo $R^2$
 ```{r}
 # ERROR DE AQUI EN ADELANTE
-#y_pred_tr_glm<-predict(modelo_glm,type="response")
-#r_tr_glm<-acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"]-y_pred_tr_glm
-#R_tr_glm<-mean(r_tr_glm^2)
-#R2_tr_glm<-1-R_tr_glm/R0_tr
-#print(R2_tr_glm)
-
+y_pred_tr_glm<-predict(modelo_glm,type="response")
+r_tr_glm<-acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"]-y_pred_tr_glm
+R_tr_glm<-mean(r_tr_glm^2)
+R2_tr_glm<-1-R_tr_glm/R0_tr
+print(R2_tr_glm)
 ```
 
 Este modelo muestra un $R^2$ superior por lo cuál se usará para hacer las comparaciones de modelos.
 
+## GRAFICA JHON
+# Análisis de predichos versus observados
+Creación de un dataframe para usar con plotly:
 ##### Se elabora un DataFrame para poder graficar predichos y observados de los modelos
 
 ```{r}
-# resultados_lm_glm<-data.frame(FECHA=  acc_agrupado_1$FECHA[acc_agrupado_1$FECHA<="2017-12-31"],ACCIDENTES=acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"],
-#                               pred_lm=y_pred_tr_lm,
-#                               pred_glm=y_pred_tr_glm,
-#                             res_lm=r_tr_lm,
-#                             res_glm=r_tr_glm)
+resultados_lm_glm<-data.frame(FECHA=  acc_agrupado_1$FECHA[acc_agrupado_1$FECHA<="2017-12-31"],ACCIDENTES=acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"],
+                               pred_lm=y_pred_tr_lm,
+                               pred_glm=y_pred_tr_glm,
+                             res_lm=r_tr_lm,
+                             res_glm=r_tr_glm)
 ```
+# Predichos y observados:
+
+```{r}
+plot_ly (data=resultados_lm_glm,
+         x = ~FECHA,
+         y = ~ACCIDENTES,
+         type = "scatter" ,mode = "lines",
+         name='Real',
+         line=list(width=1,color='rgb(205, 12, 24)')) %>%
+  add_trace(y= ~pred_lm,
+            name='Modelo lineal general',
+            line=list(width=1,color='rgb(22, 96, 167)')) %>%
+  add_trace(y= ~pred_glm,
+            name='Modelo Poisson',
+            line=list(width=1,color='rgb(255, 51, 0)')) %>%
+  layout(title='Registros DE ACCIDENTES ',
+         xaxis=list(title="Fecha"),
+         yaxis=list(title="ACCIDENTES"),
+         legend = list(x = 0.75, y = 0.9))
+```
+# HASTA ACÁ GRÁFICA JHON Y EMPIEZA LINA
+
+
+# Predichos vs observados:
+
+```{r}
+plot_ly (data=resultados_lm_glm,
+         x = ~ACCIDENTES,
+         y = ~pred_lm,
+         text = ~FECHA,
+         type = "scatter" ,mode="markers",
+         name='Modelo lineal general',
+         marker=list(size=3,color='rgb(22, 96, 167)'))%>%
+  add_trace(y= ~pred_glm,
+            text = ~FECHA,
+            name='Modelo lineal Poisson',
+            marker=list(size=3,color='rgb(255, 51, 0)'))%>%
+  add_trace(x=c(-500:3500),y=c(-500:3500),
+            mode="lines",text=rep(NA,4001),
+            name="Identidad")%>%
+  layout(title='Registros ACCIDENTALIDAD',
+         xaxis=list(title="Observados"),
+         yaxis=list(title="Predichos"),
+         legend = list(x = 0.75, y = 0.9))
+```
+
+# Residuales vs observados:
+```{r}
+plot_ly (data=resultados_lm_glm,
+         x = ~ACCIDENTES,
+         y = ~res_lm,
+         type = "scatter" ,mode="markers",
+         name='Modelo lineal general',
+         text = ~FECHA,
+         marker=list(size=3,color='rgb(22, 96, 167)'))%>%
+  add_trace(y= ~res_glm,
+            name='Modelo Poisson',
+            text = ~FECHA,
+            marker=list(size=3,color='rgb(255, 51, 0)'))%>%
+  layout(title='Registros ACCIDENTES',
+         xaxis=list(title="Observados"),
+         yaxis=list(title="Residuales"),
+         legend = list(x = 0.75, y = 0.9))
+```
+
+# Predicción del 2018
+Cálculo de las predicciones:
+```{r}
+datos_val<-subset(acc_agrupado_1,subset=(FECHA>="2018-01-01" & FECHA<="2018-12-31"))
+y_pred_vl_lm<-predict(modelo_lm_1,newdata = datos_val)
+y_pred_vl_glm<-predict(modelo_glm,type="response",newdata = datos_val)
+r_vl_lm<-datos_val$ACCIDENTES-y_pred_vl_lm
+r_vl_glm<-datos_val$ACCIDENTES-y_pred_vl_glm
+r0_vl<-datos_val$ACCIDENTES-y0_tr
+```
+
+#Cálculo de los R2 de predicción:
+```{r}
+R_vl_lm<-mean(r_vl_lm^2)
+R_vl_glm<-mean(r_vl_glm^2)
+R0_vl<-mean(r0_vl^2)
+R2_vl_lm<-1-R_vl_lm/R0_vl
+R2_vl_glm<-1-R_vl_glm/R0_vl
+print(R2_vl_lm)
+```
+
+```{r}
+print(R2_vl_glm)
+```
+
+# Gráfico de los residuales en validación:
+```{r}
+resultados_lm_glm_val<-data.frame(FECHA=datos_val$FECHA,                            ACCIDENTES=datos_val$ACCIDENTES,
+                              pred_lm=y_pred_vl_lm,
+                              pred_glm=y_pred_vl_glm,
+                              res_lm=r_vl_lm,
+                              res_glm=r_vl_glm)
+```
+
+```{r}
+plot_ly (data=resultados_lm_glm_val,
+         x = ~FECHA,
+         y = ~ACCIDENTES,
+         type = "scatter" ,mode = "lines",
+         name='Real',
+         line=list(width=1,color='rgb(205, 12, 24)'))%>%
+  add_trace(y= ~pred_lm,
+            name='Modelo lineal general',
+            line=list(width=1,color='rgb(22, 96, 167)'))%>%
+  add_trace(y= ~pred_glm,
+            name='Modelo Poisson',
+            line=list(width=1,color='rgb(255, 51, 0)'))%>%
+  layout(title='Registros ACCIDENTES (Validación)',
+         xaxis=list(title="FECHA"),
+         yaxis=list(title="ACCIDENTES"),
+         legend = list(x = 0.75, y = 0.9))
+```
+
+
+
 
 
 ##### Modelo Arboles Decision BASE 0

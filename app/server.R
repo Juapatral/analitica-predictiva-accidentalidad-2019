@@ -37,7 +37,7 @@ function(input, output) {
     
     ### ---- crear outputs ----
     # crear grafico 2019
-    output$prueba <- renderPlotly({
+    output$pronostico <- renderPlotly({
         
         # definir nuevas variables
         clase <- input$tipo_accidente
@@ -121,7 +121,7 @@ function(input, output) {
                 # ajustar descripcion emergente
                 hoverinfo = "text+y",
                 hovertext = as.character(datos_grafico[fecha][[1]]),
-                color = "red") %>%
+                color = I("#ff3112")) %>%
             layout(title = titulo,
                    xaxis = list(visible = visible,
                                 title = eje_x,
@@ -204,6 +204,7 @@ function(input, output) {
                 mode = modo,
                 fill = llenado,
                 line = list(width = 1),
+                color = I("#084594"),
                 # ajustar descripcion emergente
                 hoverinfo = "text+y",
                 hovertext = as.character(datos_grafico[fecha][[1]]))%>%
@@ -348,5 +349,10 @@ function(input, output) {
     # crear texto mapa explicacion
     output$texto_mapa_explicacion <- renderText({
         "Darle click al mapa para conocer el barrio y el total de accidentes."
+    })
+    
+    # crear texto de version
+    output$version <- renderText({
+        "Version MoviliApp: 2019.08.11"
     })
 }

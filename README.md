@@ -1,32 +1,41 @@
-# **Informe técnico de Analítica Predictiva**
-## Posgrado en Ingeniería - Analítica
-## Universidad Nacional de Colombia, sede Medellín
-## 2019-08-11
+# **Informe técnico de Analítica Predictiva** 
+<font size = "4"> Posgrado en Ingeniería - Analítica
+
+Universidad Nacional de Colombia, sede Medellín
+
+11 de agosto de 2019
+</font>
+
 ---
 
 ## **Título del informe**
+<font size = "3">
+
 ### *Análisis y pronóstico de la información accidentalidad vehicular en el municipio de Medellín entre 2014 y 2018*
 
-## **Descripción**
-La materia de Analítica Predictiva en el Posgrado de Ingeniería - Analítica de la Universidad Nacional enseña algunas técnicas estadísticas del *Aprendizaje de Máquinas* [*Machine Learning*](https://en.wikipedia.org/wiki/Machine_learning) para el pronóstico (*forecast*), clasificación (*classification*) y agrupación (*clusters*) de datos, utilizando los conceptos de la estadística descriptiva y probabilística como cálculo de probabilidades, Teorema de Bayes, medidas de  tendencia, funciones de distribuciones de probabilidad, pruebas de hipótesis, entre otros. Algunos de los modelos vistos en clase fueron:
+</font>
 
-* K vecinos cercanos (k-nearest-neighbors)
+## **Descripción**
+La materia de Analítica Predictiva en el Posgrado de Ingeniería - Analítica de la Universidad Nacional enseña algunas técnicas estadísticas del *Aprendizaje de Máquinas* [*Machine Learning*](https://en.wikipedia.org/wiki/Machine_learning) supervisado, no supervisado y reforzado, para el pronóstico (*forecast*), clasificación (*classification*) y agrupación (*clusters*) de datos, utilizando los conceptos de la estadística descriptiva y probabilística como cálculo de probabilidades, Teorema de Bayes, medidas de  tendencia, funciones de distribuciones de probabilidad, pruebas de hipótesis, entre otros. Algunos de los modelos vistos en clase fueron:
+
+* K vecinos cercanos (*K-Nearest-Neighbors*)
 * Regresión lineal (univariada y multivariada) 
 * Regresión Ridge y Lasso (Casos de multicolinealidad de la regresión lineal)
-* Regresión logística (logit)
-* Árboles de decisión y regresión (Decision Tree)
-* Bosques aleatorios (Random Forest)
-* K medias (K-means)
-* Agrupamiento jerárquico (cluster)
-* Máquinas de soporte vectorial (SVM)
-* Redes neuronales (Neural Network)
-* Validación cruzada (Cross validation)
+* Regresión logística (*logit*)
+* Árboles de decisión y regresión (*Decision Tree*)
+* Bosques aleatorios (*Random Forest*)
+* K medias (*K-means*)
+* Agrupamiento jerárquico (*Hierarchical Clustering*)
+* Máquinas de soporte vectorial (*SVM*)
+* Redes neuronales (*Neural Network*)
+* Validación cruzada (*Cross validation*)
+* Muestreo Bootstrap (*Bootstrappin*)
 
 El objetivo de este trabajo es entrenar un modelo predictivo que permita encontrar solución a un problema propuesto por los estudiantes.
 
 Los entregables del trabajo son:
 
-1. Código de ejecución del modelo. (disponible [aquí](https://google.com.co))
+1. Código de ejecución del modelo. (disponible [aquí](https://juapatral.github.io/analitica-predictiva-accidentalidad-2019/app/accidentalidad-2014-2018.Rmd))
 2. Reporte que contenga el entendimiento desarrollado en el trabajo, bibliografía de soporte y la metodología seguida debidamente justificada. (disponible [aquí](https://juapatral.github.io/analitica-predictiva-accidentalidad-2019/app/accidentalidad-2014-2018.html))
 3. Aplicativo web que permita visualizar los datos y la predicción del modelo. (disponible [aquí](https://google.com.co))
 4. Video promocional del aplicativo web, explicando su funcionalidad. (disponible [aquí](https://youtube.com)) 
@@ -45,11 +54,11 @@ Los conjuntos de datos tienen variables descriptivas del accidente como:
 + Tipo de accidente: choque, caída de pasajero, incendio, entre otros.
 + Gravedad del accidente: herido, muerto, entre otros. 
 
-El objetivo es pronosticar la cantidad de accidentes para una fecha determinada de acuerdo con su tipo de accidente.  
+El objetivo propuesto es pronosticar la cantidad de accidentes para el año 2019 de acuerdo con su tipo de accidente.  
 
 ## **Metodología**
 
-Para el desarrollo de este trabajo se utilizarán los softwares libres *R* y *R-Studio* y se seguirá la metodología de [*CRISP-DM*](https://jdvelasq.github.io/ruta-n-predictiva/_downloads/5731da83c31e211e9b774ae8713246ed/CRISP-DM.pdf).
+Para el desarrollo de este trabajo se utilizarán los softwares libres *R* y *R-Studio* y se seguirá la metodología [*CRISP-DM*](https://jdvelasq.github.io/ruta-n-predictiva/_downloads/5731da83c31e211e9b774ae8713246ed/CRISP-DM.pdf).
 
 ## **Resumen**
 

@@ -71,7 +71,11 @@ fluidPage(
                    # seleccion de tipo de accidentes
                    selectInput(inputId = "tipo_accidente_mapa",
                                label = "Tipo de accidente:",
-                               choices = accidentes)
+                               choices = accidentes),
+                   
+                   # version
+                   textOutput("version")
+                   
                    ),
 
                  mainPanel(
@@ -131,7 +135,11 @@ fluidPage(
                    # seleccion de tipo de accidentes
                    selectInput(inputId = "tipo_accidente",
                                label = "Tipo de accidente:",
-                               choices = accidentes)
+                               choices = accidentes),
+                   
+                   # version
+                   textOutput("version")
+                   
                    ),
 
                  # crear panel principal
@@ -142,13 +150,20 @@ fluidPage(
 
                    # crear grafico
                    div(align = "center",
-                    plotlyOutput("prueba", height = "250px")
+                    plotlyOutput("pronostico", height = "250px")
                          )
                    )
         ),
 
         ### ---- pestania de video ----
-        tabPanel("Video explicativo", HTML('<iframe width="813" height="457" src="https://www.youtube.com/embed/tAA_yWX8ycQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'))
+        tabPanel("Video explicativo", 
+                 
+                 # video embebido
+                 HTML('<iframe width="813" height="457" src="https://www.youtube.com/embed/tAA_yWX8ycQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'),
+                 
+                 # version
+                 textOutput("version")
+                 )
       )
     )
   

@@ -31,3 +31,10 @@ Autores:
 * Lina María Grajales Vanegas: lgrajalesv@unal.edu.co
 * Jhon Anderson Londoño Herrera: jalondonh@unal.edu.co
 * Juan Pablo Trujillo Alviz: juanptrujilloalviz@gmail.com
+
+---
+<font size = "1">
+
+Version *MoviliApp*: 2019.08.11
+
+</font>

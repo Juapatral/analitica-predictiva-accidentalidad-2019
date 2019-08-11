@@ -11,7 +11,8 @@ function(input, output) {
     # datos historicos
     acc <- fread("files/accidentalidad_georreferenciada_completa.csv",
                  sep = ",",
-                 encoding = "UTF-8")
+                 encoding = "UTF-8",
+                 colClasses = "character")
     
     # agrupar datos
     acc_totales <- group_by(acc, 

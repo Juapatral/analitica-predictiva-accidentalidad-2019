@@ -82,28 +82,26 @@ El objetivo de este trabajo es entrenar un modelo predictivo que permita encontr
 
 Los entregables del trabajo son:
 
-1. Código de ejecución del modelo. (disponible [aquí](https://google.com.co))
-2. Reporte que contenga el entendimiento desarrollado en el trabajo, bibliografía de soporte y la metodología seguida debidamente justificada. (disponible [aquí](https://google.com.co))
+1. Código de ejecución del modelo. (disponible [aquí](https://juapatral.github.io/analitica-predictiva-accidentalidad-2019/app/accidentalidad-2014-2018.Rmd))
+2. Reporte que contenga el entendimiento desarrollado en el trabajo, bibliografía de soporte y la metodología seguida debidamente justificada. (disponible [aquí](https://juapatral.github.io/analitica-predictiva-accidentalidad-2019/app/accidentalidad-2014-2018.html))
 3. Aplicativo web que permita visualizar los datos y la predicción del modelo. (disponible [aquí](https://google.com.co)).
 4. Video promocional del aplicativo web, explicando su funcionalidad. (disponible [aquí](https://youtube.com)) 
-
-Para este trabajo se decidió utilizar la información anonimizada de los registros del Impuesto de Industria y Comercio entre los años 2013 y 2018, proporcionada por la Alcaldía de Medellín.
 
 ### **1.2. Metodología**
 
 Se propone utilizar la metodología [CRISP-DM](https://jdvelasq.github.io/ruta-n-predictiva/_downloads/5731da83c31e211e9b774ae8713246ed/CRISP-DM.pdf) en la que se sigue un flujo de trabajo para la identificación del problema y la propuesta, evaluación e implementación de la solución. Los pasos de la metodología *CRISP-DM* son los siguientes:
 
-1. Identificación del problema del negocio (Va en desarrollo, **QUIEN**)
+1. Identificación del problema del negocio.
 
-2. Identificación del problema de datos (Va en desarrollo, **QUIEN**)
+2. Identificación del problema de datos.
 
-3. Preparación de los datos (Estadística descriptiva, **Lina JP**)
+3. Preparación y análisis de los datos.
 
-4. Modelación (Elegir modelo, programar, **QUIEN**)
+4. Modelación.
 
-5. Evaluación (Verificación del modelo, aplicabilidad, **QUIEN**)
+5. Evaluación de los modelos y elección.
 
-6. Implementación (Aplicativo web, video. **Jhon, JC**)
+6. Implementación.
 
 [Regresar](#tabla-de-contenido)
 
@@ -111,47 +109,72 @@ Se propone utilizar la metodología [CRISP-DM](https://jdvelasq.github.io/ruta-n
 
 ### **2.1. Identificación del problema**
 
-**FALTA**
+La accidentalidad vial en las ciudades se ha ido posicionando año tras año como uno de los problemas que más costos sociales y económicos genera hasta llegar a denominarse como “pandemia”. Medellín no ha sido la excepción y en la actualidad buena parte de las políticas públicas se movilizan para mitigar este fenómeno.
+Se estima que anualmente los costos totales por accidentalidad solo para Medellín son cerca de $ 1,8 billones, así que este es un problema cuya minimización puede dejar muchas ganancias.
+
+Una herramienta importante y base para la toma de decisiones es una estimación precisa que explique el problema y que permita predecir cuándo y dónde puede suceder determinado tipo de accidente.   
+
+Esta estimación es útil para diferentes actores. Los hacedores de política podrán determinar cuáles zonas son susceptibles de reestructuración de la malla vial, dónde deben enfocar los esfuerzos de capacitación o en cuáles lugares deben disponer de más servidores para la prevención y atención de los accidentes. Para el público en general le resultará de interés para tomar decisiones de movilidad, cuándo transitar y en qué; o en decisiones de vivienda, que sectores se deben evitar cuando se tienen hijos, por ejemplo.
+
+En este trabajo se pretende responder a estas preguntas y brindarle a la ciudad la posibilidad de visibilizar la información de los accidentes vehiculares, sus riesgos asociados y con ello mitigarlos, a través de una única plataforma pública donde se realice un pronóstico del total de accidentes por tipo de accidente para el año 2019.
 
 [Regresar](#tabla-de-contenido)
 
 ### **2.2. Identificación de los datos**
 
-La accidentalidad vial en las ciudades se ha ido posicionando año tras año como uno de los problemas que más costos sociales y económicos genera, hasta llegar a denominarse como “pandemia”. Medellín no ha sido la excepción y en la actualidad buena parte de las políticas públicas se movilizan para mitigar este fenómeno.
-Se estima que anualmente los costos totales por accidentalidad solo para Medellín son cerca de $ 1,8 billones, así que este es un problema cuya minimización puede dejar muchas ganancias.
-Una herramienta importante y base para la toma de decisiones es una estimación precisa que explique el problema y que permita predecir cuando y donde puede suceder determinado tipo de accidente.   
-Esta estimación es útil para diferentes actores. Los hacedores de políticas podrán determinar qué zonas son susceptibles de reestructuración de la malla vial, donde deben enfocar los esfuerzos de capacitación, en qué lugares deben disponer de más servidores para la prevención y atención de los accidentes. Para el público en general le resultará de interés para tomar decisiones de movilidad, cuando transitar y en qué; o en decisiones de vivienda, que sectores se deben evitar cuando se tienen hijos, por ejemplo.
-Nuestro trabajo pretende responder a estas preguntas y brindarle a la ciudad a través de una única plataforma la posibilidad visibilizar riesgos y con ello mitigarlos.
+Para este trabajo se decidió utilizar la información de la accidentalidad vehicular en el municipio de Medellín para los años 2014 a 2018, disponibles al público en general en [este enlace.](https://geomedellin-m-medellin.opendata.arcgis.com/datasets/accidentalidad-georreferenciada-2018)
 
+El conjunto de datos se compone de los accidentes de tránsito registrados por la Secretaría de Movilidad de la Alcaldía de Medellín, entre los años especificados. Se entiende por accidente de tránsito: "evento, generalmente involuntario, generado al menos por un  un vehículo en movimiento, que causa daños a personas y bienes involucrados en él, e igualmente afecta la normal circulación de los vehículos que se movilizan por la vía o vías comprendidas en el lugar o dentro de la zona de influencia del hecho". (Ley 769 de 2002 - Código Nacional de Tránsito)
+
+La estructura de la tabla es la siguiente:
+
+**Campo**|**Descripción**|**Tipo**|**Observación**
+:--|--------|:-:|--------
+OBJECTID|Identificación del registro (fila)|integer|Sin
+X|Coordenada X (longitud) de la ubicación del accidente|float|Coordenadas en Magna Medellín. Ver nota. 
+Y|Coordenada Y (latitud) de la ubicación del accidente|float|Coordenadas en Magna Medellín. Ver nota. 
+RADICADO|Identificación única del accidente ante la Secretaría de Movilidad|string|Sin
+HORA|Hora aproximada de la ocurrencia del accidente|datetime|Sin
+DIA_NOMBRE|Nombre del día de la semana de la ocurrencia del accidente|string|Sin
+PERIODO|Año de la ocurrencia del accidente|integer|Sin
+CLASE|Tipo de accidente|string|Opciones entre: Atropello, caída del ocupante, choque, incendio, volcamiento y otro.
+DIRECCION|Dirección descriptiva de la ubicación de la ocurrencia del accidente|string|Sin
+DIRECCION_ENC|Dirección encasillada de la ubicación de la ocurrencia del accidente|string|Formato único de direcciones en el sistema de información de la Alcaldía de Medellín
+CBML|Identificación única del lote más cercano a la ubicación de la ocurrencia del accidente|string|Acrónimo de comuna, barrio, manzana, lote
+TIPO_GEOCOD|Tipo de ubicación según información catastral|string|Más información en el geocodificador de la Alcaldía disponible [aquí](https://www.medellin.gov.co/geomedellin/index.hyg#openModal)
+GRAVEDAD|Gravedad del accidente|string|Opciones entre: Herido, muerto y solo daños
+BARRIO|Barrio de la ubicación de la ocurrencia del accidente|string|Sin
+COMUNA|Comuna de la ubicación de la ocurrencia del accidente|string|Sin
+DISENO|Tipo de entramado de la ubicación de la ocurrencia del accidente|string|Opciones entre: ciclo ruta, glorieta. intersección, lote o predio, paso a nivel, paso elevado, paso inferior, pontón, puente, tramo vía, túnel o vía peatonal
+MES|Número del mes de la ocurrencia del accidente|integer|Sin
+DIA|Día del mes de la ocurrencia del accidente|integer|Sin
+FECHA|Fecha de la ocurrencia del accidente|string|Formato [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+MES_NOMBRE|Nombre del mes de la ocurrencia del accidente|integer|Columna vacía
+
+*Nota:* las coordenadas *Magna Medellín* corresponden a una transformación de las coordenadas elípticas internacionales [`wgs84`](https://en.wikipedia.org/wiki/World_Geodetic_System) a coordenadas planas propias establecidas por el Instituto Geográfico Agustín Codazzi (IGAC) en concordancia con el Subsecretaría de Catastro del municipio de Medellín. 
 
 [Regresar](#tabla-de-contenido)
 
 ### **2.3. Descripción del conjunto de datos**
 
-Para el análisis de la información se utilizará el dialecto *Tidyverse* y los paquetes *data.table*, *plotly*, *rmarkdown*, *shiny* y **FALTA PAQUETES MODELO**.
+Para el análisis de la información se utilizará el dialecto *Tidyverse*, los paquetes *data.table*, *plotly*, *rmarkdown*, *shiny* y *leaflet* para lectura y visualización de los datos y **FALTA PAQUETES MODELADO**.
 
+#### **2.3.1. Limpieza y resumen de los datos**
 ```{r Paquetes, message=FALSE, warning=FALSE}
 # se instalan los paquetes necesarios
 
 #install.packages("tidyverse")    # dialecto de ciencia de datos
 #install.packages("data.table")   # manejo de tablas
+#install.packages("ggplot2")      # manejo de graficas
 #install.packages("plotly")       # graficas semi-dinamicas
 #install.packages("rmarkdown")    # utilizar rmarkdown
 #install.packages("shiny")        # tableros de control dinamicos
 #install.packages("prettydoc")    # dar formato a rmarkdown
-```
+#install.packages("sf")           # manejo de archivos espaciales (.shp)
+#install.packages("leaflet")      # mapas dinamicos en HTML
+#install.packages("rpart")        # pendiente
+#install.packages("rpart.plot")   # pendiente
 
-**FALTA**
-
-[Regresar](#tabla-de-contenido)
-
-#### **2.3.2. Análisis**
-
-**FALTA**
-
-Unificar datos
-
-```{r lectura_consolidado, message=FALSE, warning=FALSE}
 # cargar librerias
 library(data.table)   # manejo de tablas
 library(purrr)        # optimizacion de bucles
@@ -161,7 +184,14 @@ library(tidyr)        # limpieza de datos
 library(stringr)      # limpieza de texto
 library(lubridate)    # limpieza de fechas
 library(sf)           # manejo de archivos espaciales
+```
 
+
+De manera inicial se leen los archivos.
+
+**Nota al ejecutador de código:** para algunos sistemas operativos o versiones de paquetes la limpieza no funciona correctamente, por lo que se recomienda volver a cargar el archivo a partir [aquí.](#nueva-lectura)
+
+```{r lectura_consolidado, message=FALSE, warning=FALSE}
 # lista archivos
 lista <- list.files(pattern = "^Acc.*.csv", include.dirs = T, recursive = T)
 
@@ -175,8 +205,18 @@ acc <- bind_rows(lista_df)
 head(acc)
 ```
 
-## limpieza de acc
-```{r message=FALSE, warning=FALSE}
+Se identifica que se deben hacer las siguientes correcciones en la tabla *acc*:
+
+* Organizar la columna *FECHA* en formato [ISO 8601.](https://en.wikipedia.org/wiki/ISO_8601).
+
+* Debido a la naturaleza del trabajo, se eliminan los nulos de la columna *CLASE* y se unifican los tipos de accidente, limpiando tildes y convirtiendo en mayúscula.
+
+* De forma similar, se eliminan los nulos de la columna *DISENO*, se unifican los tipos de diseño, se limpian tildes y se convierte a mayúscula.
+
+* Se eliminan las tildes de los días de la semana en la columna *DIA_NOMBRE*.
+
+* Se crea la columna *COMUNA_BARRIO* a partir de la columna *CBML* con el objetivo de que sirva como clave foránea para la unión con el archivo espacial de barrios, disponible [aquí.](https://geomedellin-m-medellin.opendata.arcgis.com/datasets/limite-barrio-vereda-catastral) 
+```{r primera_limpieza_acc, message=FALSE, warning=FALSE}
 # organizar fecha
 acc$FECHA <- ymd(gsub(pattern = "T.*", replacement = "", acc$FECHA),
                   "%Y-%M-%D")[1:209426]
@@ -197,10 +237,20 @@ acc$DIA_NOMBRE <- iconv(acc$DIA_NOMBRE, from = "UTF-8", to = "ASCII//TRANSLIT")
 # crear columna de comuna_barrio
 acc <- mutate(acc, COMUNA_BARRIO = str_sub(CBML, 1, 4))
 
+# visualizar nueva acc
+head(acc)
 ```
 
-## archivo espacial de barrios
-```{r}
+Se procede a cargar el archivo espacial de barrios para identificar correctamente el barrio y la comuna de la ubicación del accidente. Luego, se realiza una nueva limpieza de la tabla *acc*:
+
+* Se limpian las tildes de la columna barrio y se convierte a mayúscula.
+
+* Se eliminan los registros duplicados generados por la unión. 
+
+* Se eliminan algunas columnas no necesarias para el análisis.
+
+* Se renombran las columnas de *NOMBRE_BAR* y *NOMBRE_COM* por *BARRIO* y *COMUNA* respectivamente.
+```{r union_espacial, message=FALSE, warning=FALSE}
 # cargar archivo shp de barrios de medellin
 barrio <- read_sf("files/Limite_Barrio_Vereda_Catastral/Limite_Barrio_Vereda_Catastral.shp")
 
@@ -222,36 +272,68 @@ acc <- select(acc, -BARRIO, -COMUNA, -OBJECTID, -RADICADO, -DIRECCION_ENC,
 
 # renombrar
 names(acc)[12:13] <- c("COMUNA","BARRIO")
-```
-## ingreso de base de días especiales, limpieza de la base y unión con el archivo de accidentes.
 
-```{r}
+# visualizar acc
+head(acc)
+```
+
+Se realiza la lectura de la tabla de días especiales, se limpia y se realiza unión con la tabla de accidentes. Además, se cambia las columnas tal que si es un día especial tenga la marcación *Si*, de lo contrario será *No*.
+```{r dias_especiales, message=FALSE, warning=FALSE}
+# lectura del archivo
 festivos <- fread("files/festivos_y_especiales.csv", header = T)
-festivos[,names(festivos)[-1]] <- festivos%>%transmute_at(c(names(festivos)[-1]),funs(ifelse(. == "X","Si", ifelse(. == "","No",.))))
+
+# convertir a si o no
+festivos[,names(festivos)[-1]] <- festivos %>%
+                                  transmute_at(c(names(festivos)[-1]),
+                                               funs(ifelse(. == "X",
+                                                           "Si", 
+                                                           ifelse(. == "",
+                                                                  "No",
+                                                                  .)
+                                                           )
+                                                    )
+                                               )
+
+# convetir a formato fecha
 festivos$FECHA <- ymd(festivos$FECHA)[1:172]
 
+# visualizar festivos
+head(festivos)
+```
+
+Se realiza la unión de las tablas y se convierten los datos de los días especiales a *No* en caso de que no haya encontrado coincidencia en la unión.
+```{r union_dias_especiales, message=FALSE, warning=FALSE}
+# union de tablas
+acc <- merge(x = acc, y = festivos, by = "FECHA", all.x = T)
+
+# transformar variables
+acc[,names(festivos)[-1]] <- acc %>%
+                             transmute_at(c(names(festivos)[-1]),
+                                         funs(ifelse(is.na(.),
+                                                     "No",
+                                                     .)
+                                              )
+                                         )
+
+# visualizar acc
 head(acc)
 ```
 
-# Juntar las base de festivos con acc y limpiar NA
-```{r}
-acc <- merge(x=acc,y=festivos, by ="FECHA", all.x = T)
-acc[,names(festivos)[-1]]<-acc%>%transmute_at(c(names(festivos)[-1]),funs(ifelse(is.na(.),"No",.)))
-head(acc)
-```
-
-## Guardar archivo
+Se realiza la conversión a la codificación [*UTF-8*](https://en.wikipedia.org/wiki/UTF-8) y se guarda el nuevo archivo.
 ```{r conversion-guardado, message=FALSE, warning=FALSE}
 # convertir a utf8
-acc[,2:27] <- map(.x = acc[,2:27], .f = enc2utf8)
+acc[,2:length(acc)] <- map(.x = acc[,2:length(acc)], .f = enc2utf8)
+
  # guardar archivo
 fwrite(acc, "files/accidentalidad_georreferenciada_completa.csv", sep = ",")
- # eliminar archivo y limpiar memoria
+
+# eliminar archivo y limpiar memoria
 rm(acc)
 gc(reset = T)
 ```
 
- **Nota:** para algunos equipos y versiones puede que la limpieza no funcione correctamente, por lo que se recomienda volver a cargar el archivo a partir de este punto y no ejecutar el código anterior
+##### Nueva lectura
+**Nota:** para algunos sistemas operativos o versiones de paquetes la limpieza no funciona correctamente, por lo que se recomienda volver a cargar el archivo a partir de este punto y no ejecutar el código anterior. 
 
 ```{r cargar-archivo, message=FALSE, warning=FALSE}
 # volver a cargar el archivo
@@ -266,9 +348,35 @@ acc$FECHA <- ymd(acc$FECHA)
 head(acc)
 ```
 
+Como se observa, la estructura de la tabla resultante es la siguiente:
+
+**Campo**|**Descripción**|**Tipo**|**Observación**
+:--|--------|:-:|--------
+FECHA|Fecha de la ocurrencia del accidente|datetime|Formato [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+X|Coordenada X (longitud) de la ubicación del accidente|float|Coordenadas en Magna Medellín. Ver nota. 
+Y|Coordenada Y (latitud) de la ubicación del accidente|float|Coordenadas en Magna Medellín. Ver nota. 
+DIA_NOMBRE|Nombre del día de la semana de la ocurrencia del accidente|string|Sin
+PERIODO|Año de la ocurrencia del accidente|integer|Sin
+CLASE|Tipo de accidente|string|Opciones entre: Atropello, caída del ocupante, choque, incendio, volcamiento y otro.
+GRAVEDAD|Gravedad del accidente|string|Opciones entre: Herido, muerto y solo daños
+DISENO|Tipo de entramado de la ubicación de la ocurrencia del accidente|string|Opciones entre: ciclo ruta, glorieta. intersección, lote o predio, paso a nivel, paso elevado, paso inferior, pontón, puente, tramo vía, túnel o vía peatonal
+MES|Número del mes de la ocurrencia del accidente|integer|Sin
+DIA|Día del mes de la ocurrencia del accidente|integer|Sin
+COMUNA_BARRIO|Identificador de la comuna y el barrio en el sistema de información de la Alcaldía|string|Sin
+BARRIO|Barrio de la ubicación de la ocurrencia del accidente|string|Sin
+COMUNA|Comuna de la ubicación de la ocurrencia del accidente|string|Sin
+FESTIVO|Indicador de si el día es festivo o no|boolean|Opciones: Si o No
+MADRE|Indicador de si el día es día de la madre o no|boolean|Opciones: Si o No
+NAVIDAD|Indicador de si el día pertenece a las festividades de navidad o no|boolean|Opciones: Si o No
+BRUJITOS|Indicador de si el día es el 31 de octubre o no|boolean|Opciones: Si o No
+SEMSANTA|Indicador de si el día pertenece a la Semana Santa o no|boolean|Opciones: Si o No
+ESCOLAR|Indicador de si el día pertenece a la época de vacaciones escolares o no|boolean|Opciones: Si o No
+
+#### **2.3.2. Análisis**
 
 Primero realizaremos un análisis descriptivo univariado de las variables por el número de accidentes registrados 
-# Accidentes por comuna
+
+##### Accidentes por comuna
 ```{r}
 acc_comuna <- acc %>% 
               group_by(COMUNA) %>% 
@@ -282,9 +390,10 @@ ggplot(data=acc_comuna, aes(x=COMUNA, y=total_registros)) +
 
 
 ```
+
 El mayor número de accidentes ocurre en La candelaria, seguido por Laureles y Castilla.
 
-## Número de accidentes por mes
+##### Número de accidentes por mes
 ```{r}
 acc_mes <- acc %>% 
               group_by(MES) %>% 
@@ -295,10 +404,13 @@ p1 <- ggplot(data=acc_mes, aes(x=MES, y=total_registros)) +
     xlab("Mes")+ # eje x
     ylab("Total registros")+ # eje y
     ggtitle("Número de accidentes por mes") #título del gráfico
+
+p1
 ```
+
 En el mes donde mayor cantidad de accidentes ocurre es en Agosto.
 
-# Accidentalidad por día
+##### Accidentalidad por día
 ```{r}
 acc_nombredia <- acc %>% 
               group_by(DIA_NOMBRE) %>% 
@@ -311,11 +423,13 @@ p2 <- ggplot(data=acc_nombredia, aes(x=DIA_NOMBRE, y=total_registros)) +
     xlab("Días")+ # eje x
     ylab("Total registros")+ # eje y
     ggtitle("Número de accidentes por días de la semana") #título del gráfico
+
+p2
 ```
 
 Los viernes son los días que mayor accidentalidad presenta y el día con menos accidentalidad es el domingo.
 
-# Accidentalidad por año
+##### Accidentalidad por año
 ```{r}
 acc_ano <- acc %>% 
               group_by(PERIODO) %>% 
@@ -326,10 +440,13 @@ p3 <- ggplot(data=acc_ano, aes(x=PERIODO, y=total_registros)) +
     xlab("Año")+ # eje x
     ylab("Total registros")+ # eje y
     ggtitle("Número de accidentes por año") #título del gráfico
+
+p3
 ```
+
 El año 2016 fue el año con mayor accidentalidad mientras que 2018 tuvo menos accidentes.
 
-# Accidentalidad por tipo de accidente
+##### Accidentalidad por tipo de accidente
 ```{r}
 acc_clase <- acc %>% 
               group_by(CLASE) %>% 
@@ -340,13 +457,13 @@ p4 <- ggplot(data=acc_clase, aes(x=CLASE, y=total_registros)) +
     xlab("Tipo de accidente")+ # eje x
     ylab("Total registros")+ # eje y
     ggtitle("Número de accidentes por tipo de accidente") #título del gráfico
+
+p4
 ```
+
 El menor número de accidentes ocurre por incendio mientras que los choques son los que generan mayores accidentes de tránsito.
 
-
-
-
-# Accidentes por gravedad
+##### Accidentes por gravedad
 ```{r}
 acc_gravedad <- acc %>% 
               group_by(GRAVEDAD) %>% 
@@ -358,9 +475,10 @@ ggplot(data=acc_gravedad, aes(x=GRAVEDAD, y=total_registros)) +
     ylab("Total registros")+ # eje y
     ggtitle("Número de accidentes por gravedad del accidente") #título del gráfico
 ```
+
 Desde el 2014 hasta el 2018 se tuvieron un número mayor de heridos que de daños.
 
-# Accidentes por diseño
+##### Accidentes por diseño
 ```{r}
 acc_diseno <- acc %>% 
               group_by(DISENO) %>% 
@@ -373,11 +491,12 @@ ggplot(data=acc_diseno, aes(x=DISENO, y=total_registros)) +
     ggtitle("Número de accidentes por tipo de vía")+ #título del gráfico
     coord_flip()
 ```
+
 La mayor cantidad de accidentes se presentan en los tramos de vía seguidos por las intersecciones.
 
-Ahora analizaremos las variables agrupadas por la clase de accidente.
+##### **Ahora analizaremos las variables agrupadas por la clase de accidente.**
 
-# Agrupar Clase-Gravedad
+##### Agrupar Clase-Gravedad
 ```{r}
 acc_group_clase<- acc %>% group_by(CLASE, GRAVEDAD) %>% summarize(conteo = n())
 
@@ -385,26 +504,28 @@ ggplot(data=acc_group_clase, aes(x=CLASE, y=conteo, fill=GRAVEDAD)) +
     geom_bar(stat="identity", position="dodge")+
     coord_flip()
 ```
+
 De acuerdo al tipo de accidente, vemos que los choques generan una mayor cantidad de daños y la mayor cantidad de heridos.
 
-# Agrupar clase-Mes
+##### Agrupar clase-Mes
 ```{r}
 acc_group_mes<- acc %>% group_by(MES,CLASE) %>% summarize(conteo = n()) 
 ggplot(data=acc_group_mes, aes(x=CLASE, y=conteo, fill=MES)) + 
     geom_bar(stat="identity", position="dodge")
 ```
+
 La mayor cantidad de choques se presenta en agosto.
 
-# Agrupar Clase-Periodo
+##### Agrupar Clase-Periodo
 ```{r}
 acc_group_year<- acc %>% group_by(CLASE, PERIODO) %>% summarize(conteo = n()) 
-ggplot(data=acc_group_year, aes(x=CLASE, y=conteo, fill=PERIODO)) + 
+ggplot(data=acc_group_year, aes(x=CLASE, y=conteo, fill=as.factor(PERIODO))) + 
     geom_bar(stat="identity", position="dodge")+
     scale_fill_manual(values=c("#d0d1e6", "#bdc9e1","#74a9cf","#2b8cbe","#045a8d"))
 
 ```
 
-# Gráfica Clase-Periodo
+##### Gráfica Clase-Periodo
 ```{r}
 acc_group_dia<- acc %>% group_by(CLASE, DIA_NOMBRE) %>% summarize(conteo = n()) 
 
@@ -414,7 +535,7 @@ ggplot(data=acc_group_dia, aes(x=CLASE, y=conteo, fill=DIA_NOMBRE)) +
   coord_flip()
 ```
 
-# Gráfica Clase-festivo
+##### Gráfica Clase-festivo
 ```{r}
 acc_group_festivo<- acc %>% group_by(CLASE, FESTIVO) %>% summarize(conteo = n()) 
 
@@ -422,7 +543,7 @@ ggplot(data=acc_group_festivo, aes(x=CLASE, y=conteo, fill=FESTIVO)) +
     geom_bar(stat="identity", position="dodge")
 ```
 
-# Registro de accidentalidad por día
+##### Registro de accidentalidad por día
 ```{r}
 acc_fecha <- acc %>% 
               group_by(FECHA) %>% 
@@ -439,8 +560,7 @@ plot_ly (data=subset(acc_fecha,subset = (FECHA<="2018-12-31")),
 
 ```
 
-# Accidentalidad por año
-
+##### Accidentalidad por año
 ```{r}
 acc_fecha$year<-format(acc_fecha$FECHA,"%Y")
 plot_ly (data=subset(acc_fecha,subset = (FECHA<="2018-12-31")),
@@ -454,11 +574,12 @@ plot_ly (data=subset(acc_fecha,subset = (FECHA<="2018-12-31")),
          yaxis=list(title="Total registros"))
 ```
    
-Utilicemos la función aggregate para obtener el promedio diario para cada año de registros de accidentes:
+##### Utilicemos la función aggregate para obtener el promedio diario para cada año de registros de accidentes:
 ```{r}
 aggregate(total_registros~year,data=acc_fecha,FUN=mean)
 ```
-Ahora obtengamos el promedio diario para cada mes y cada año:
+
+##### Ahora obtengamos el promedio diario para cada mes y cada año: **OJO CON ESTO**
 ```{r}
 acc_fecha$Fecha<-as.Date(acc_fecha$FECHA,"%d/%m/%Y")
 acc_fecha$mes<-format(acc_fecha$Fecha,"%m")
@@ -477,8 +598,7 @@ aggregate(total_registros~year*mes,data=acc_fecha,FUN=mean)%>%
          yaxis=list(title="Total registros"))
 ```
 
-Ahora utilicemos el diagrama de caja y bigotes para explorar relaciones:
-
+##### Ahora utilicemos el diagrama de caja y bigotes para explorar relaciones:
 ```{r}
 plot_ly (data=subset(acc_fecha,subset = (Fecha<="2018-12-31")),
          x = ~year,
@@ -491,8 +611,7 @@ plot_ly (data=subset(acc_fecha,subset = (Fecha<="2018-12-31")),
 
 Ahora, hacemos algo similar a lo anterior para los meses del año y los días de la semana:
 
-Veamos el diagrama de caja y bigotes para cada mes:
-
+##### Veamos el diagrama de caja y bigotes para cada mes:
 ```{r}
 acc_fecha$diames<-format(acc_fecha$Fecha,"%d")
 plot_ly (data=subset(acc_fecha,subset = (Fecha<="2018-12-31")),
@@ -503,8 +622,8 @@ plot_ly (data=subset(acc_fecha,subset = (Fecha<="2018-12-31")),
          xaxis=list(title="Mes"),
          yaxis=list(title="Total registros"))
 ```
-Para cada día de la semana:
 
+##### Para cada día de la semana:
 ```{r}
 acc_fecha$dia_semana<-weekdays(acc_fecha$Fecha)
 acc_fecha$dia_semana<-ordered(acc_fecha$dia_semana,levels=c( "lunes", "martes", "miércoles", "jueves", "viernes", "sábado","domingo"))
@@ -520,14 +639,19 @@ plot_ly (data=subset(acc_fecha,subset = (Fecha<="2018-12-31")),
 
 #### **2.3.3. Datos atípicos o nulos**
 
-**FALTA**
+El manejo de datos nulos se dio en la [sección 2.3.1.](#limpieza-y-resumen-de-los-datos) donde se tomaron las siguientes decisiones:
 
+* Si *CLASE* era nulo, se eliminaba por la naturaleza del objetivo.
+* Si *DISENO* era nulo, se eliminaba por la naturaleza del objetivo.
+* Si *COMUNA_BARRIO* era nulo o no estaba en la tabla de barrios, se eliminaba ya que posiblemente corresponda a un dato difícil de medir.
+
+Después de realizar el análisis, se concluye que ningún dato atípico será eliminado ya que corresponden a los datos de las tablas originales, a los cuales se les aplicaron transformaciones mínimas.  
 
 [Regresar](#tabla-de-contenido)
 
 ### **2.4. Modelación de los datos**
-#se escogen tres agruoamientos para verificar el modelo.
 
+Se escogen tres agrupamientos para verificar el modelo.
 ```{r}
 acc_agrupado_0 <- acc%>%group_by(FECHA,CLASE,DISENO,DIA_NOMBRE,DIA,PERIODO,FESTIVO,MADRE,NAVIDAD,BRUJITOS,SEMSANTA,ESCOLAR)%>%summarise(ACCIDENTES=n())%>%arrange(FECHA)
 acc_agrupado_0$DIA <- as.integer(acc_agrupado_0$DIA)
@@ -543,69 +667,71 @@ acc_agrupado_2$DIA <- as.integer(acc_agrupado_2$DIA)
 acc_agrupado_2$PERIODO <- as.integer(acc_agrupado_2$PERIODO)
 ```
 
-#Elección del modelo de regresion
+##### **Elección del modelo de regresión**
 
-
+##### Modelo grupo 0
 ```{r}
 #acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
 modelo_lm_0<-lm(ACCIDENTES~FECHA+CLASE+DISENO+DIA_NOMBRE+PERIODO+FESTIVO+MADRE+NAVIDAD+BRUJITOS+SEMSANTA+ESCOLAR,data=acc_agrupado_0, subset = (FECHA<="2017-12-31"))
-summary(modelo_lm)
+summary(modelo_lm_0)
 ```
 
-
+##### Modelo grupo 1
 ```{r}
 #acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
 modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+DIA+PERIODO+FESTIVO+MADRE+NAVIDAD+BRUJITOS+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
 summary(modelo_lm_1)
 ```
-#al verificar los valores P, se opta por retirar la variable brujitos
+
+Al verificar los valores P, se opta por retirar la variable *BRUJITOS*.
 ```{r}
 #acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
 modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+DIA+PERIODO+FESTIVO+MADRE+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
 summary(modelo_lm_1)
 ```
-#No se observa nigun cambio en el R cuadrado ajustado. se opta por quitar DIA. 
+
+No se observa nigun cambio en el R cuadrado ajustado. se opta por quitar *DIA*. 
 ```{r}
 #acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
 modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+MADRE+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
 summary(modelo_lm_1)
 ```
-#No se observa nigun cambio en el R cuadrado ajustado. se opta por quitar MADRE. 
 
+
+No se observa nigun cambio en el R cuadrado ajustado. se opta por quitar *MADRE*. 
 ```{r}
 #acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
 modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
 summary(modelo_lm_1)
 ```
-#No se observa nigun cambio en el R cuadrado ajustado. se opta por quitar ESCOLAR. 
-#acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
 
+No se observa nigun cambio en el R cuadrado ajustado. se opta por quitar 
+*ESCOLAR*. 
 ```{r}
 modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+NAVIDAD+SEMSANTA,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
 summary(modelo_lm_1)
 ```
-#dado que al quitar la variable anterior el R cuadrado ajustado bajo 0.0001, por lo cual se opta por dejar el modelo con la variable ESCOLAR.
 
 
+Dado que al quitar la variable anterior el R cuadrado ajustado bajo 0.0001, por lo cual se opta por dejar el modelo con la variable *ESCOLAR*.
 ```{r}
 #acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
 modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
 summary(modelo_lm_1)
 ```
 
-#Se escoge el agrupado 2 para determinar si este tiene un mejor ajuste.
 
+##### Se evalúa el agrupado 2 para determinar si este tiene un mejor ajuste.
 ```{r}
 #acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
 modelo_lm_2<-lm(ACCIDENTES~FECHA+DIA_NOMBRE+PERIODO+CLASE+MES+DIA+COMUNA+FESTIVO+MADRE+NAVIDAD+BRUJITOS+SEMSANTA+ESCOLAR,data=acc_agrupado_2, subset = (FECHA<="2017-12-31"))
 summary(modelo_lm_2)
 ```
 
-#agregandola variable de comunas, vemos que el modelo es menos significativo que e agrupado 1 por lo que optamos por hacer la validacion con el modelo del agrupado 1.
 
+Agregando la variable de comunas, vemos que el modelo es menos significativo que e agrupado 1 por lo que se opta por hacer la validacion con el modelo del agrupado 1.
 
-
-#Calculo de $R^2$ Manual de la regresion para comprobar con el función 
+##### Calculo de $R^2$ Manual de la regresion para comprobar con el función 
 ```{r}
 y0_tr<-mean(acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"])
 r0_tr<-acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"]-y0_tr
@@ -617,34 +743,35 @@ R2_lm<-1-R_tr_lm/R0_tr
 
 print(R2_lm)
 ```
-#este da igual.
+
+este da igual.
 
 
-#se procede a hacer un ajuste del modelo Poisson, para esto de calcula un Pseudo $R^2$
-
+##### se procede a hacer un ajuste del modelo Poisson, para esto de calcula un Pseudo $R^2$
 ```{r}
-
-y_pred_tr_glm<-predict(modelo_glm,type="response")
-r_tr_glm<-acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"]-y_pred_tr_glm
-R_tr_glm<-mean(r_tr_glm^2)
-R2_tr_glm<-1-R_tr_glm/R0_tr
-print(R2_tr_glm)
+# ERROR DE AQUI EN ADELANTE
+#y_pred_tr_glm<-predict(modelo_glm,type="response")
+#r_tr_glm<-acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"]-y_pred_tr_glm
+#R_tr_glm<-mean(r_tr_glm^2)
+#R2_tr_glm<-1-R_tr_glm/R0_tr
+#print(R2_tr_glm)
 
 ```
-#este modelo muestra un $R^2$ superior por lo cuál se usará para hacer las comparaciones de modelos.
 
-#Se elabora un DataFrame para poder graficar predichos y observados de los modelos
+Este modelo muestra un $R^2$ superior por lo cuál se usará para hacer las comparaciones de modelos.
+
+##### Se elabora un DataFrame para poder graficar predichos y observados de los modelos
 
 ```{r}
-resultados_lm_glm<-data.frame(FECHA=  acc_agrupado_1$FECHA[acc_agrupado_1$FECHA<="2017-12-31"],ACCIDENTES=acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"],
-                              pred_lm=y_pred_tr_lm,
-                              pred_glm=y_pred_tr_glm,
-                            res_lm=r_tr_lm,
-                            res_glm=r_tr_glm)
+# resultados_lm_glm<-data.frame(FECHA=  acc_agrupado_1$FECHA[acc_agrupado_1$FECHA<="2017-12-31"],ACCIDENTES=acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"],
+#                               pred_lm=y_pred_tr_lm,
+#                               pred_glm=y_pred_tr_glm,
+#                             res_lm=r_tr_lm,
+#                             res_glm=r_tr_glm)
 ```
 
 
-#Modelo Arboles Decision BASE 0
+##### Modelo Arboles Decision BASE 0
 ```{r}
 library(rpart)
 modelo_rpart_0<-rpart(ACCIDENTES~FECHA+CLASE+DISENO+DIA_NOMBRE+PERIODO+FESTIVO+MADRE+NAVIDAD+BRUJITOS+SEMSANTA+ESCOLAR,data=acc_agrupado_0, subset = (FECHA<="2017-12-31"))
@@ -673,7 +800,7 @@ print(R2_tr_rpart)
 ```
 
 
-#Modelo Arboles Decision BASE 1
+##### Modelo Arboles Decision BASE 1
 ```{r}
 library(rpart)
 modelo_rpart_1<-rpart(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
@@ -701,7 +828,7 @@ R2_tr_rpart_1<-1-R_tr_rpart_1/R0_tr_1
 print(R2_tr_rpart_1)
 ```
 
-#Modelo Arboles Decision BASE 2
+##### Modelo Arboles Decision BASE 2
 ```{r}
 library(rpart)
 modelo_rpart_2<-rpart(ACCIDENTES~FECHA+DIA_NOMBRE+PERIODO+CLASE+MES+DIA+COMUNA+FESTIVO+MADRE+NAVIDAD+BRUJITOS+SEMSANTA+ESCOLAR,data=acc_agrupado_2, subset = (FECHA<="2017-12-31"))
@@ -767,6 +894,30 @@ print(R2_tr_rpart_2)
 
 + [API de *Plotly*](https://plot.ly/r/reference/)
 
++ [API de *Plotly*, parte 2](https://plot.ly/r/reference/#Layout_and_layout_style_objects)
+
++ [Gráfico de área en *Plotly*](https://plot.ly/r/filled-area-plots/)
+
++ [Aplicar color a barra vertical en *Plotly*](https://stackoverflow.com/questions/33891362/r-shiny-background-of-sidebar-panel)
+
++ [Ajustar tamaño en *Plotly*](https://plot.ly/r/setting-graph-size/)
+
++ [Descripción emergente en *Plotly*](https://plot.ly/r/hover-text-and-formatting/)
+
+---
+
+**LeafLet y archivos espaciales**
+
++ [Introducción a los archivos espaciales en *R*](https://datacarpentry.org/r-raster-vector-geospatial/06-vector-open-shapefile-in-r/)
+
++ [Lectura de archivos espaciales usando *ST* en *R*](https://r-spatial.github.io/sf/reference/st_read.html)
+
++ [API de *LeafLet* en *R*](https://rstudio.github.io/leaflet/map_widget.html)
+
++ [Etiquetas y descripción emergente en *LeafLet* para *R*](https://stackoverflow.com/questions/48147282/how-to-add-labels-on-top-of-polygons-in-leaflet)
+
++ [Opciones de resaltar en *LeafLet* para *R*](https://stackoverflow.com/questions/46209309/r-leaflet-highlight-options)
+
 ---
 
 **Shiny**
@@ -783,11 +934,33 @@ print(R2_tr_rpart_2)
 
 + [Lista desplegable en Shiny](https://shiny.rstudio.com/reference/shiny/latest/selectInput.html)
 
++ [*Plotly* en *Shiny*](https://stackoverflow.com/questions/41255810/r-shinyapp-not-showing-plot-ly-in-browser-but-show-only-graph-in-viewer-pane)
+
++ [Barra deslizable y rango en *Shiny*](http://shiny.rstudio.com/gallery/slider-bar-and-slider-range.html)
+
++ [Embeber imágen en *Shiny*](https://stackoverflow.com/questions/21996887/embedding-image-in-shiny-app)
+
++ [Ajustar posición en *Shiny*](https://stackoverflow.com/questions/42913364/center-plotly-plot-in-r-shiny?rq=1)
+
++ [Fecha y rango de fechas en *Shiny*](https://shiny.rstudio.com/gallery/date-and-date-range.html)
+
++ [*LeafLet* en *Shiny*](https://spatialanalysis.github.io/workshop-notes/interactive-maps-with-shiny.html)
+
++ [Lista de pestañas en *Shiny*](https://shiny.rstudio.com/reference/shiny/1.0.2/navlistPanel.html)
+
 ---
 
 **Demás**
 
 + [link aquí](https://wikipedia.com)
+
++ [Paleta de colores para mapas](http://colorbrewer2.org/#type=diverging&scheme=RdYlBu&n=7)
+
++ [Redes neuronales con *neuralnet*](https://www.datacamp.com/community/tutorials/neural-network-models-r)
+
++ [Agrupar por vector de caracteres en *dplyr*](https://stackoverflow.com/questions/36660152/concatenating-words-without-quotes-in-r-for-groupby-in-dplyr)
+
++ [Reordenar factores en *R*](https://www.r-bloggers.com/reorder-factor-levels/)
 
 ---
 

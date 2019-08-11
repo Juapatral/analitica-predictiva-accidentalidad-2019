@@ -9,9 +9,9 @@
 
 A continuación puede acceder a los resultados trabajo final de la materia *Analítica Predictiva* a través de las diferentes pestañas:
 
-* En *`Resumen`* encontrará un breve resumen del informe técnico.
+* En *`Inicio`*, la pestaña actualmente activa, encontrará el mapa del sitio y la información de contacto.
 
-    * El *`informe`* puede ser consultado [aquí.](https://juapatral.github.io/analitica-predictiva-accidentalidad-2019/app/accidentalidad-2014-2018.html)
+* En *`Resumen`* encontrará un breve resumen del informe técnico, que puede ser consultado [aquí.](https://juapatral.github.io/analitica-predictiva-accidentalidad-2019/app/accidentalidad-2014-2018.html)
 
 * En *`Mapa`* encontrará un mapa de Medellín interactivo con información histórica sobre los accidentes. 
 
@@ -21,12 +21,12 @@ A continuación puede acceder a los resultados trabajo final de la materia *Anal
 
 ---
 
+## **Contacto**
+
 Para más información, visite el *GitHub* principal [aquí.](https://juapatral.github.io/analitica-predictiva-accidentalidad-2019/)
 
 ---
-
-## **Contacto**
-
+Autores: 
 * Juan Camilo Agudelo Marín: juagudelom@unal.edu.co
 * Lina María Grajales Vanegas: lgrajalesv@unal.edu.co
 * Jhon Anderson Londoño Herrera: jalondonh@unal.edu.co

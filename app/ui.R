@@ -50,7 +50,7 @@ fluidPage(
                    img(src = 'MoviliApp.png', height = "165px"),
 
                    # titulo
-                   titlePanel("Resumen y filtros:"),
+                   titlePanel("Resumen y filtros:", windowTitle = "MoviliApp"),
 
                    # texto
                    textOutput("texto_mapa"),

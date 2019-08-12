@@ -1,11 +1,12 @@
-function(input, output) {
+function(input, output, session) {
     ### ---- cargar liberias ----
-    require(leaflet, quietly = T)
-    require(sf, quietly = T)
-    require(data.table, quietly = T)
-    require(dplyr, quietly = T)
-    require(shiny, quietly = T)
-    require(lubridate, quietly = T)
+    library(leaflet, quietly = T)
+    library(sf, quietly = T)
+    library(data.table, quietly = T)
+    library(dplyr, quietly = T)
+    library(shiny, quietly = T)
+    library(lubridate, quietly = T)
+    library(plotly, quietly = T)
     
     ### ---- cargar archivos ----
     
@@ -44,6 +45,140 @@ function(input, output) {
     barrio <- read_sf("files/Limite_Barrio_Vereda_Catastral/Limite_Barrio_Vereda_Catastral.shp")
     
     ### ---- crear outputs ----
+    
+    # crear texto de version
+    output$version_mapa <- renderText({
+        "MoviliApp v.2019.08.11"
+    })
+    
+    # crear texto de version
+    output$version_grafica <- renderText({
+        "MoviliApp v.2019.08.11"
+    })
+    
+    # crear mapa
+    output$mapa <- renderLeaflet({
+        
+        # crear variables
+        tipo_accidente_mapa <- input$tipo_accidente_mapa
+        comuna_mapa <- input$comuna_mapa
+        
+        # crear nueva base dependiendo de las opciones elegidas
+        if(tipo_accidente_mapa == "TODOS" & comuna_mapa == "TODAS"){
+            
+            # se filtra por el periodo elegido, se agrupa por comuna,
+            # se calcula el total de accidentes
+            nueva_base <- acc %>%
+                filter(PERIODO >= input$anio_mapa[1] & 
+                           PERIODO <= input$anio_mapa[2]) %>%
+                group_by(COMUNA_BARRIO) %>%
+                summarize(accidentes = n()) %>%   
+                ungroup()
+            
+            # se unen las tablas
+            nuevo_mapa <- inner_join(barrio, nueva_base,
+                                     by = c("CODIGO" = "COMUNA_BARRIO"))
+            
+        }else if(comuna_mapa == "TODAS"){
+            
+            # se filtra por el periodo elegido, se agrupa por comuna y 
+            # tipo de accidente, se calcula el total de accidentes
+            nueva_base <- acc %>%
+                      filter(PERIODO >= input$anio_mapa[1] & 
+                                 PERIODO <= input$anio_mapa[2],
+                             CLASE == tipo_accidente_mapa) %>%
+                      group_by(COMUNA_BARRIO) %>%
+                      summarize(accidentes = n()) %>%
+                      ungroup() 
+            
+            # se unen las tablas
+            nuevo_mapa <- inner_join(barrio, nueva_base,
+                                     by = c("CODIGO" = "COMUNA_BARRIO"))
+            
+        }else if(tipo_accidente_mapa == "TODOS"){
+            
+            # se filtra por el periodo elegido, se agrupa por comuna,
+            # se calcula el total de accidentes
+            nueva_base <- acc %>%
+                      filter(PERIODO >= input$anio_mapa[1] & 
+                                 PERIODO <= input$anio_mapa[2]) %>%
+                      group_by(COMUNA_BARRIO) %>%
+                      summarize(accidentes = n()) %>%
+                      ungroup()
+            
+            # se unen las tablas y se filtra por comuna
+            nuevo_mapa <- inner_join(barrio, nueva_base,
+                                     by = c("CODIGO" = "COMUNA_BARRIO")) %>%
+                          filter(NOMBRE_COM == comuna_mapa)
+        }else{
+            
+            # se filtra por el periodo elegido, se agrupa por comuna y por 
+            # tipo de accidente, se calcula el total de accidentes
+            nueva_base <- acc %>%
+                      filter(PERIODO >= input$anio_mapa[1] & 
+                                 PERIODO <= input$anio_mapa[2],
+                             CLASE == tipo_accidente_mapa) %>%
+                      group_by(COMUNA_BARRIO) %>%
+                      summarize(accidentes = n()) %>%
+                      ungroup()
+            
+            # se unen las tablas y se filtra por comuna
+            nuevo_mapa <- inner_join(barrio, nueva_base,
+                                     by = c("CODIGO" = "COMUNA_BARRIO"))%>%
+                          filter(NOMBRE_COM == comuna_mapa)
+        }
+        
+        # establecer paleta
+        mypal <- colorNumeric(palette = "magma", 
+                               domain = nuevo_mapa$accidentes,
+                               reverse = TRUE)
+        
+        # crear mapa
+        leaflet() %>%
+            addPolygons(data = nuevo_mapa,
+                        color = "grey",
+                        opacity = 0.9,
+                        weight = 1, # grosor de la linea
+                        fillColor = ~mypal(nuevo_mapa$accidentes),
+                        fillOpacity = 0.6,
+                        label = ~NOMBRE_BAR,
+                        # ajustar sombreado de seleccion
+                        highlightOptions = highlightOptions(color = "black",
+                                                            weight = 3, 
+                                                            bringToFront = T, 
+                                                            opacity = 1),
+                        # ajustar descripcion emergente al darle click
+                        popup = paste("Barrio: ", 
+                                      nuevo_mapa$NOMBRE_BAR, 
+                                      "<br>",
+                                      "Accidentes: ", 
+                                      nuevo_mapa$accidentes, 
+                                      "<br>")
+                        ) %>%
+            
+            #establecer mapa de fondo
+            addProviderTiles(providers$OpenStreetMap) %>%
+            
+            # agregar leyenda
+            addLegend(position = "bottomright", 
+                      pal = mypal, 
+                      values = nuevo_mapa$accidentes,
+                      title = "Accidentes",
+                      opacity = 0.3)
+    })
+    
+    # crear texto mapa
+    output$texto_mapa <- renderText({
+        
+        "Se presenta el mapa de los accidentes de movilidad entre 2014 y 2018 por barrio, comuna y tipo de accidente. Seleccione los periodos, comuna y tipo de accidente."
+        
+    })
+    
+    # crear texto mapa explicacion
+    output$texto_mapa_explicacion <- renderText({
+        "Darle click al mapa para conocer el barrio y el total de accidentes."
+    })
+    
     # crear grafico 2019
     output$pronostico <- renderPlotly({
         
@@ -235,132 +370,4 @@ function(input, output) {
         
     })
     
-    # crear mapa
-    output$mapa <- renderLeaflet({
-        
-        # crear variables
-        tipo_accidente_mapa <- input$tipo_accidente_mapa
-        comuna_mapa <- input$comuna_mapa
-        
-        # crear nueva base dependiendo de las opciones elegidas
-        if(tipo_accidente_mapa == "TODOS" & comuna_mapa == "TODAS"){
-            
-            # se filtra por el periodo elegido, se agrupa por comuna,
-            # se calcula el total de accidentes
-            nueva_base <- acc %>%
-                filter(PERIODO >= input$anio_mapa[1] & 
-                           PERIODO <= input$anio_mapa[2]) %>%
-                group_by(COMUNA_BARRIO) %>%
-                summarize(accidentes = n()) %>%   
-                ungroup()
-            
-            # se unen las tablas
-            nuevo_mapa <- inner_join(barrio, nueva_base,
-                                     by = c("CODIGO" = "COMUNA_BARRIO"))
-            
-        }else if(comuna_mapa == "TODAS"){
-            
-            # se filtra por el periodo elegido, se agrupa por comuna y 
-            # tipo de accidente, se calcula el total de accidentes
-            nueva_base <- acc %>%
-                      filter(PERIODO >= input$anio_mapa[1] & 
-                                 PERIODO <= input$anio_mapa[2],
-                             CLASE == tipo_accidente_mapa) %>%
-                      group_by(COMUNA_BARRIO) %>%
-                      summarize(accidentes = n()) %>%
-                      ungroup() 
-            
-            # se unen las tablas
-            nuevo_mapa <- inner_join(barrio, nueva_base,
-                                     by = c("CODIGO" = "COMUNA_BARRIO"))
-            
-        }else if(tipo_accidente_mapa == "TODOS"){
-            
-            # se filtra por el periodo elegido, se agrupa por comuna,
-            # se calcula el total de accidentes
-            nueva_base <- acc %>%
-                      filter(PERIODO >= input$anio_mapa[1] & 
-                                 PERIODO <= input$anio_mapa[2]) %>%
-                      group_by(COMUNA_BARRIO) %>%
-                      summarize(accidentes = n()) %>%
-                      ungroup()
-            
-            # se unen las tablas y se filtra por comuna
-            nuevo_mapa <- inner_join(barrio, nueva_base,
-                                     by = c("CODIGO" = "COMUNA_BARRIO")) %>%
-                          filter(NOMBRE_COM == comuna_mapa)
-        }else{
-            
-            # se filtra por el periodo elegido, se agrupa por comuna y por 
-            # tipo de accidente, se calcula el total de accidentes
-            nueva_base <- acc %>%
-                      filter(PERIODO >= input$anio_mapa[1] & 
-                                 PERIODO <= input$anio_mapa[2],
-                             CLASE == tipo_accidente_mapa) %>%
-                      group_by(COMUNA_BARRIO) %>%
-                      summarize(accidentes = n()) %>%
-                      ungroup()
-            
-            # se unen las tablas y se filtra por comuna
-            nuevo_mapa <- inner_join(barrio, nueva_base,
-                                     by = c("CODIGO" = "COMUNA_BARRIO"))%>%
-                          filter(NOMBRE_COM == comuna_mapa)
-        }
-        
-        # establecer paleta
-        mypal <- colorNumeric(palette = "magma", 
-                               domain = nuevo_mapa$accidentes, 
-                               n = 5, 
-                               reverse = TRUE)
-        
-        # crear mapa
-        leaflet() %>%
-            addPolygons(data = nuevo_mapa,
-                        color = "grey",
-                        opacity = 0.9,
-                        weight = 1, # grosor de la linea
-                        fillColor = ~mypal(nuevo_mapa$accidentes),
-                        fillOpacity = 0.6,
-                        label = ~NOMBRE_BAR,
-                        # ajustar sombreado de seleccion
-                        highlightOptions = highlightOptions(color = "black",
-                                                            weight = 3, 
-                                                            bringToFront = T, 
-                                                            opacity = 1),
-                        # ajustar descripcion emergente al darle click
-                        popup = paste("Barrio: ", 
-                                      nuevo_mapa$NOMBRE_BAR, 
-                                      "<br>",
-                                      "Accidentes: ", 
-                                      nuevo_mapa$accidentes, 
-                                      "<br>")
-                        ) %>%
-            
-            #establecer mapa de fondo
-            addProviderTiles(providers$Wikimedia) %>%
-            
-            # agregar leyenda
-            addLegend(position = "bottomright", 
-                      pal = mypal, 
-                      values = nuevo_mapa$accidentes,
-                      title = "Accidentes",
-                      opacity = 0.3)
-    })
-    
-    # crear texto mapa
-    output$texto_mapa <- renderText({
-        
-        "Se presenta el mapa de los accidentes de movilidad entre 2014 y 2018 por barrio, comuna y tipo de accidente. Seleccione los periodos, comuna y tipo de accidente."
-        
-    })
-    
-    # crear texto mapa explicacion
-    output$texto_mapa_explicacion <- renderText({
-        "Darle click al mapa para conocer el barrio y el total de accidentes."
-    })
-    
-    # crear texto de version
-    output$version <- renderText({
-        "Version MoviliApp: 2019.08.11"
-    })
 }

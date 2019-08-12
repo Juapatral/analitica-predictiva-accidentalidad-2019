@@ -1,0 +1,12 @@
+name: MoviliApp
+title: MoviliApp
+username:
+account: juapatral
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1080368
+bundleId: 2310892
+url: https://juapatral.shinyapps.io/MoviliApp/
+when: 1565585203.78234
+asMultiple: FALSE
+asStatic: FALSE

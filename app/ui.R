@@ -1,11 +1,11 @@
 ### ---- carga de librerias ----
 # cargar libreria de markdown
-library(markdown)
-library(plotly)
+library(markdown, quietly = T)
+library(plotly, quietly = T)
 
 # cargar libreria de mapas
-library(leaflet)
-library(sf)
+library(leaflet, quietly = T)
+library(sf, quietly = T)
 
 ### ---- carga de archivos ----
 # vector de posibles accidentes
@@ -52,9 +52,9 @@ fluidPage(
                    img(src = 'MoviliApp.png', height = "165px"),
 
                    # titulo
-                   titlePanel("Resumen y filtros:", windowTitle = "MoviliApp"),
+                   titlePanel("Filtros:", windowTitle = "MoviliApp"),
 
-                   # texto
+                   # explicacion del mapa
                    textOutput("texto_mapa"),
 
                    # seleccion de anio
@@ -62,7 +62,7 @@ fluidPage(
                                "Periodos:",
                                min = 2014,
                                max = 2018,
-                               value = c(2014, 2018)),
+                               value = c(2017, 2018)),
 
                    # seleccion de tipo de accidentes
                    selectInput(inputId = "comuna_mapa",
@@ -75,7 +75,7 @@ fluidPage(
                                choices = accidentes),
 
                    # version
-                   textOutput("version")
+                   textOutput("version_mapa")
 
                    ),
 
@@ -84,7 +84,8 @@ fluidPage(
                    # titulo del mapa
                    titlePanel("Mapa de accidentalidad por barrios"),
 
-                   # explicacion del mapa
+
+                   # texto
                    textOutput("texto_mapa_explicacion"),
 
                    # crear mapa
@@ -94,7 +95,7 @@ fluidPage(
 
                  ),
 
-        ### ---- pestania de aplicacion ---- 
+        ### ---- pestania de aplicacion ----
         tabPanel("App",
 
                  # crear barra lateral
@@ -107,7 +108,7 @@ fluidPage(
                    img(src = 'MoviliApp.png', height = "165px"),
 
                    # titulo
-                   titlePanel("Resumen y filtros:"),
+                   titlePanel("Filtros:", windowTitle = "MoviliApp"),
 
                    # texto
                    textOutput("texto_descriptivo"),
@@ -115,7 +116,7 @@ fluidPage(
                    # seleccion de rango de fechas
                    dateRangeInput('dateRange',
                                   label = 'Ingrese rangos de fechas:',
-                                  start = as.Date("2019-01-01"),
+                                  start = Sys.Date() - 2,
                                   end = as.Date(ifelse(Sys.Date() > as.Date("2019-12-31"),
                                                as.Date("2019-12-31"),
                                                Sys.Date()),
@@ -137,14 +138,18 @@ fluidPage(
                    selectInput(inputId = "tipo_accidente",
                                label = "Tipo de accidente:",
                                choices = accidentes),
-                   
+
                    # version
-                   textOutput("version")
-                   
+                   textOutput("version_grafica")
+
                    ),
 
                  # crear panel principal
                  mainPanel(
+
+                   # titulo
+                   titlePanel("Datos observados y pronosticados",
+                              windowTitle = "MoviliApp"),
 
                    # mostrar grafico historico
                    plotlyOutput("historico", height = "350px"),
@@ -160,10 +165,10 @@ fluidPage(
         tabPanel("Video explicativo",
 
                  # video embebido
-                 HTML('<iframe width="813" height="457" src="https://www.youtube.com/embed/yK3SiymGsHs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'),
+                 HTML('<iframe width="813" height="457" src="https://www.youtube.com/embed/yK3SiymGsHs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>')
 
                  # version
-                 textOutput("version")
+                 #textOutput("version")
                  )
       )
     )

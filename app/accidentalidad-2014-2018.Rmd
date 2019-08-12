@@ -27,7 +27,7 @@ knitr::opts_chunk$set(message = F)
 ```
 ## **Resumen**
 
->*En cada instante se generan grandes volúmenes de datos y es de interés para los analístas obtener información valiosa y confiable de estos y así incidir en la toma de decisiones para mejorar los resultados económicos y sociales de la empresa, la entidad o la sociedad en general. Un ejemplo de estos datos masivos se reflan en la accidentalidad vial, que se ha ido posicionando año tras año como uno de los problemas que más costos sociales y económicos genera. Medellín no ha sido la excepción y en la actualidad buena parte de las políticas públicas se movilizan para mitigar este fenómeno. En este trabajo se decidió utilizar la información de la accidentalidad vehicular en el municipio de Medellín para los años 2014 a 2018 para pronosticar el total de accidentes por tipo de accidente para el año 2019. Se evaluaron tres tipos de modelos: la regresión lineal multivariada, regresión lineal generalizada con distribuación Poisson y árbol de decisiones. Algunos de los factores que tenían una influencia fuerte sobre el fenomeno de los accidentes son el tipo de accidente, el día del accidente y determinados días especiales (como festivos, semana santa). Se encontró que un modelo de regresión lineal generalizado de distribución Poisson se acerca más al comportamiento real del fenomeno.*
+>*En cada instante se generan grandes volúmenes de datos y es de interés para los analistas obtener información valiosa y confiable de estos y así incidir en la toma de decisiones para mejorar los resultados económicos y sociales de la empresa, la entidad o la sociedad en general. Un ejemplo de estos datos masivos se reflejan en la accidentalidad vial, que se han ido posicionando año tras año como uno de los problemas que más costos sociales y económicos genera. Medellín no ha sido la excepción y en la actualidad buena parte de las políticas públicas se movilizan para mitigar este fenómeno. En este trabajo se decidió utilizar la información de la accidentalidad vehicular en el municipio de Medellín para los años 2014 a 2018 para pronosticar el total de accidentes por tipo de accidente para el año 2019. Se evaluaron tres tipos de modelos: la regresión lineal multivariada, regresión lineal generalizada con distribuación Poisson y árbol de decisiones. Algunos de los factores que tenían una influencia fuerte sobre el fenómeno de los accidentes son el tipo de accidente, el día del accidente y determinados días especiales (como festivos, semana santa). Se encontró que un modelo de regresión lineal generalizado de distribución Poisson se acerca más al comportamiento real del fenómeno.*
 
 ## **Tabla de contenido**
  
@@ -62,7 +62,7 @@ knitr::opts_chunk$set(message = F)
 
 ## **1. Introducción**
 
-Cada día se generan cantidades enormes de datos que reposan en los sistemas de información y bases de datos públicas o privadas. Es de interés para los analístas de datos obtener la mayor cantidad de información valiosa y confiable de estos datos, generando valor agregado a las entidades y así incidir en la toma de decisiones para mejorar los procesos internos y, por ende, los resultados económicos y sociales de la entidad. 
+Cada día se generan cantidades enormes de datos que reposan en los sistemas de información y bases de datos públicas o privadas. Es de interés para los analistas de datos obtener la mayor cantidad de información valiosa y confiable de estos datos, generando valor agregado a las entidades y así incidir en la toma de decisiones para mejorar los procesos internos y, por ende, los resultados económicos y sociales de la entidad. 
 
 Por esta razón, los estudiantes de la materia Analítica Predictiva del Posgrado de Analítica de la Universidad Nacional de Colombia tienen como objetivo identificar y dar solución a un problema utilizando las técnicas estadísticas y de ciencia de datos que consideren óptimas. 
 
@@ -90,7 +90,7 @@ Los entregables del trabajo son:
 1. Código de ejecución del modelo. (disponible [aquí](https://juapatral.github.io/analitica-predictiva-accidentalidad-2019/app/accidentalidad-2014-2018.Rmd))
 2. Reporte que contenga el entendimiento desarrollado en el trabajo, bibliografía de soporte y la metodología seguida debidamente justificada. (este mismo informe, disponible [aquí](https://juapatral.github.io/analitica-predictiva-accidentalidad-2019/app/accidentalidad-2014-2018.html))
 3. Aplicativo web que permita visualizar los datos y la predicción del modelo. (disponible [aquí](https://google.com.co)).
-4. Video promocional del aplicativo web, explicando su funcionalidad. (disponible [aquí](https://youtu.be/yK3SiymGsHs) 
+4. Video promocional del aplicativo web, explicando su funcionalidad. (disponible [aquí](https://youtu.be/yK3SiymGsHs) )
 
 ### **1.2. Metodología**
 
@@ -557,7 +557,7 @@ p6
 
 Notamos que la principal causa de los accidentes viales es debido a choques y son pocos los accidentes donde se  termina con volcamiento de los vehículos.
 
-##### Accidentalidad por gravedad de
+##### Accidentalidad por gravedad ocasionada
 ```{r}
 acc_gravedad <- acc %>% 
               group_by(GRAVEDAD) %>% 
@@ -584,7 +584,8 @@ ggplot(data=acc_group_clase, aes(x=CLASE, y=conteo, fill=GRAVEDAD)) +
     geom_bar(stat="identity", position="dodge")+
     coord_flip()
 ```
-De acuerdo al tipo de accidente, vemos que los choques generan una mayor cantidad de daños y la mayor cantidad de heridos.
+
+ De acuerdo al tipo de accidente, vemos que los choques generan una mayor cantidad de daños y la mayor cantidad de heridos.
 
 ##### Clasificación de los tipos de accidentes por meses.
 ```{r}
@@ -592,7 +593,8 @@ acc_group_mes<- acc %>% group_by(MES,CLASE) %>% summarize(conteo = n())
 ggplot(data=acc_group_mes, aes(x=CLASE, y=conteo, fill=MES)) + 
     geom_bar(stat="identity", position="dodge")
 ```
-La mayor cantidad de choques se presenta en agosto.
+
+ La mayor cantidad de choques se presenta en agosto.
 
 ##### Agrupación de tipo de accidente por año
 ```{r}
@@ -615,6 +617,8 @@ ggplot(data=acc_group_dia, aes(x=CLASE, y=conteo, fill=DIA_NOMBRE)) +
   coord_flip()
 ```
 
+ Los viernes y los sábados son los días donde mayor cantidad de accidentes se presentan.
+
 ##### Tipo de accidente ocurrido en los días festivos.
 ```{r}
 acc_group_festivo<- acc %>% group_by(CLASE, FESTIVO) %>% summarize(conteo = n()) 
@@ -622,9 +626,10 @@ acc_group_festivo<- acc %>% group_by(CLASE, FESTIVO) %>% summarize(conteo = n())
 ggplot(data=acc_group_festivo, aes(x=CLASE, y=conteo, fill=FESTIVO)) + 
     geom_bar(stat="identity", position="dodge")
 ```
-Se observa que los accidentes ocurridos se presentan en los días ordinarios y que la accidentalidad en los días festivos es baja.
 
-#### Series temporales 
+  Se observa que los accidentes ocurridos se presentan en los días ordinarios y que la accidentalidad en los días festivos es baja.
+
+### Series temporales 
 Para guiar el análisis de la información resulta útil representar gráficamente los datos o una muestra de los mismos. En este caso, como la variable a predecir es el número de accidentes viales registrados diariamente en la secretaría de movilidad y esta variable depende del tiempo, se desea representarla como una serie temporal.
 
 ##### Serie temporal de accidentalidad por día
@@ -681,7 +686,7 @@ aggregate(total_registros~year*mes,data=acc_fecha,FUN=mean)%>%
          yaxis=list(title="Total registros"))
 ```
 
-##### Ahora utilicemos el diagrama de caja y bigotes para explorar relaciones:
+ Utilicemos el diagrama de caja y bigotes para explorar relaciones:
 
 #### Diagrama de caja y bigotes de número de accidentes por año:
 ```{r}
@@ -695,8 +700,7 @@ plot_ly (data=subset(acc_fecha,subset = (Fecha<="2018-12-31")),
 ```
 
 
-
-##### Diagrama de caja y bigotes para cada mes:
+#### Diagrama de caja y bigotes para cada mes:
 ```{r}
 acc_fecha$diames<-format(acc_fecha$Fecha,"%d")
 plot_ly (data=subset(acc_fecha,subset = (Fecha<="2018-12-31")),
@@ -776,7 +780,7 @@ modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+DIA+PERIODO+FESTIVO+MADRE+NAVI
 summary(modelo_lm_1)
 ```
 
-No se observa nigun cambio en el R cuadrado ajustado. se opta por quitar *DIA*. 
+No se observa ningún cambio en el R cuadrado ajustado, se opta por quitar *DIA*. 
 ```{r}
 #acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
 modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+MADRE+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
@@ -784,14 +788,14 @@ summary(modelo_lm_1)
 ```
 
 
-No se observa nigun cambio en el R cuadrado ajustado. se opta por quitar *MADRE*. 
+No se observa ningún cambio en el R cuadrado ajustado, se opta por quitar *MADRE*. 
 ```{r}
 #acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
 modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
 summary(modelo_lm_1)
 ```
 
-No se observa nigun cambio en el R cuadrado ajustado. se opta por quitar 
+No se observa ningún cambio en el R cuadrado ajustado, se opta por quitar 
 *ESCOLAR*. 
 ```{r}
 modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+NAVIDAD+SEMSANTA,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
@@ -799,7 +803,7 @@ summary(modelo_lm_1)
 ```
 
 
-Dado que al quitar la variable anterior el R cuadrado ajustado bajo 0.0001, por lo cual se opta por dejar el modelo con la variable *ESCOLAR*.
+Dado que al quitar la variable anterior el R cuadrado ajustado bajo 0.0001, por lo cual se dejará el modelo con la variable *ESCOLAR*.
 ```{r}
 #acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
 modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
@@ -815,7 +819,7 @@ summary(modelo_lm_2)
 ```
 
 
-Agregando la variable de comunas, vemos que el modelo es menos significativo que e agrupado 1 por lo que se opta por hacer la validacion con el modelo del agrupado 1.
+Agregando la variable de comunas, vemos que el modelo es menos significativo que el modelo agrupado 1 por lo que se opta por hacer la validación con el modelo agrupado 1.
 
 
 ##### Calculo de $R^2$ Manual de la regresion para comprobar con el función 
@@ -833,16 +837,15 @@ print(R2_lm)
 
 este da igual.
 
-#Modelo Poisson
+# Modelo Poisson
 ```{r}
 modelo_glm<-glm(ACCIDENTES ~ FECHA + CLASE + DIA_NOMBRE + PERIODO + 
     FESTIVO + NAVIDAD + SEMSANTA + ESCOLAR,data = acc_agrupado_1, 
     subset = (FECHA <= "2017-12-31"),family = "poisson")
 summary(modelo_glm)
 ```
-##### se procede a hacer un ajuste del modelo Poisson, para esto de calcula un Pseudo $R^2$
+##### Se procede a hacer un ajuste del modelo Poisson, para esto de calcula un Pseudo $R^2$
 ```{r}
-# ERROR DE AQUI EN ADELANTE
 y_pred_tr_glm<-predict(modelo_glm,type="response")
 r_tr_glm<-acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"]-y_pred_tr_glm
 R_tr_glm<-mean(r_tr_glm^2)
@@ -850,10 +853,10 @@ R2_tr_glm<-1-R_tr_glm/R0_tr
 print(R2_tr_glm)
 ```
 
-#Este modelo muestra un $R^2$ superior por lo cuál se usará para hacer las comparaciones de modelos.
+ Este modelo muestra un $R^2$ superior por lo cuál se usará para hacer las comparaciones de modelos.
 
-## GRAFICA JHON
 # Análisis de predichos versus observados
+
 Creación de un dataframe para usar con plotly:
 ##### Se elabora un DataFrame para poder graficar predichos y observados de los modelos
 
@@ -864,7 +867,7 @@ resultados_lm_glm<-data.frame(FECHA=  acc_agrupado_1$FECHA[acc_agrupado_1$FECHA<
                              res_lm=r_tr_lm,
                              res_glm=r_tr_glm)
 ```
-# Predichos y observados:
+##### Predichos y observados:
 
 ```{r}
 plot_ly (data=resultados_lm_glm,
@@ -885,7 +888,7 @@ plot_ly (data=resultados_lm_glm,
          legend = list(x = 0.75, y = 0.9))
 ```
 
-#Comparacion de modelo lineal y observados
+##### Comparación de modelo lineal y observados
 ```{r}
 plot_ly (data=resultados_lm_glm,
          x = ~FECHA,
@@ -902,7 +905,7 @@ plot_ly (data=resultados_lm_glm,
          legend = list(x = 0.75, y = 0.9))
 ```
 
-#Comparacion de modelo Poisson y observados
+##### Comparación de modelo Poisson y observados
 ```{r}
 plot_ly (data=resultados_lm_glm,
          x = ~FECHA,
@@ -919,10 +922,8 @@ plot_ly (data=resultados_lm_glm,
          legend = list(x = 0.75, y = 0.9))
 ```
 
-#se puede observar que los modelos logran describir las observaciones sin observar ningun comportamiento extraño.
 
-# HASTA ACÁ GRÁFICA JHON Y EMPIEZA LINA
-
+##### Se puede observar que los modelos logran describir las observaciones sin observar ningún comportamiento extraño.
 
 # Predichos vs observados:
 
@@ -977,7 +978,7 @@ r_vl_glm<-datos_val$ACCIDENTES-y_pred_vl_glm
 r0_vl<-datos_val$ACCIDENTES-y0_tr
 ```
 
-#Cálculo de los R2 de predicción:
+# Cálculo de los $R^2$ de predicción:
 ```{r}
 R_vl_lm<-mean(r_vl_lm^2)
 R_vl_glm<-mean(r_vl_glm^2)
@@ -1019,8 +1020,9 @@ plot_ly (data=resultados_lm_glm_val,
          legend = list(x = 0.75, y = 0.9))
 ```
 
-##### Modelo Arboles Decision BASE 1
-Entrenamiento del árbol
+##### Modelo árboles decisión modelo agrupado 1
+
+ Entrenamiento del árbol
 ```{r}
 library(rpart)
 modelo_rpart<-rpart(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
@@ -1096,7 +1098,7 @@ comparacion_vl<-data.frame(FECHA=datos_val$FECHA,
                            arbol=y_pred_vl_rpart)
 ```
 
-#Gráfica de todas las series en entrenamiento:
+# Gráfica de todas las series en entrenamiento:
 ```{r}
 plot_ly (data=comparacion_vl,
          x = ~FECHA,
@@ -1117,7 +1119,7 @@ plot_ly (data=comparacion_vl,
 ```
 
 
-#Comparación con los (pseudo) R2:
+# Comparación con los (pseudo) $R^2$:
 
 ```{r}
 Entrenamiento<-c(R2_lm,R2_tr_glm,R2_tr_rpart)
@@ -1134,7 +1136,7 @@ ResultadosR2
 
 ### **2.5. Evaluación del modelo**
 
-#el Modelo ajustado de Poisson es el que menor error cuadratico muestra:
+ El Modelo ajustado de Poisson es el que menor error cuadrático muestra:
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 print(ResultadosR2[which(ResultadosR2$MSE==min(ResultadosR2$MSE)),3])
 ```
@@ -1144,7 +1146,8 @@ Por lo que a partir de estas evidencias lo escogemos como el modelo más conveni
 [Regresar](#tabla-de-contenido)
 
 ### **2.6. Implementación**
-#Se prepara el modelo para hacer la prediccion del año 2019, se importa el correspondiente archivo de entrada para ser la predicción.
+ 
+ Se prepara el modelo para hacer la predicción del año 2019, se importa el correspondiente archivo de entrada para ser la predicción.
 
 ```{r}
 matriz_2019 <- fread("files/matriz-2019-pronostico.csv",sep = ";",colClasses = "character")
@@ -1152,32 +1155,29 @@ matriz_2019$FECHA <- as.Date(matriz_2019$FECHA)
 matriz_2019$PERIODO <- as.numeric(matriz_2019$PERIODO)
 ```
 
-#Se crea el nuevo vector de predicciones
+##### Se crea el nuevo vector de predicciones
 ```{r}
 ACCIDENTES_PRED <- predict(modelo_glm, newdata = matriz_2019, type = "response")
 ```
 
-se guarda junto el conjunto de datos nuevo para ser visualizado en la aplicación
+Se guarda junto el conjunto de datos nuevo para ser visualizado en la aplicación
 ```{r}
 ACCIDENTES_PRED <- matriz_2019%>%mutate(ACCIDENTES= round(predict(modelo_glm, newdata = matriz_2019, type = "response"),0))
 
 fwrite(ACCIDENTES_PRED,"files/matriz-2019-pronosticada.csv", sep = ";")
 ```
 
-
-**FALTA**
-
 [Regresar](#tabla-de-contenido)
 
 ## **3. Conclusiones**
 
-En este trabajo se analizó un conjunto de datos relacionados con accidentes de tráfico donde se busca un modelo que se acerque a la condicción actual del fenomeno que presentan los datos reales. Las técnicas de análisis descriptivo de grandes cantidades de datos a partir de la analítica permitieron encontrar tendencias y patrones ocultos de los datos. La comparación de estos patrones con los resultados del modelo de accidentalidad vial planteado ayuda a la validación del modelo pues fundamenta la selección de las variables que se enfatizan como las más incidentes a partir de la visualización de su ocurrencia en los registros actuales.
+En este trabajo se analizó un conjunto de datos relacionados con accidentes de tráfico donde se busca un modelo que se acerque a la condicción actual del fenómeno que presentan los datos reales. Las técnicas de análisis descriptivo de grandes cantidades de datos a partir de la analítica permitieron encontrar tendencias y patrones ocultos de los datos. La comparación de estos patrones con los resultados del modelo de accidentalidad vial planteado ayuda a la validación del modelo pues fundamenta la selección de las variables que se enfatizan como las más incidentes a partir de la visualización de su ocurrencia en los registros actuales.
 
 Se evaluaron tres tipos de modelos: la regresión lineal multivariada, regresión lineal generalizada con distribuación Poisson y árbol de decisiones. Se encontró que los factores que más influencian los accidentes de tránsito corresponden a la clase de accidente, día del accidente y un fuerte impacto en determinados días especiales a lo largo del año, como los días festivos, las vacaciones colectivas, entre otros.
 
 El modelo de regresión generalizado con regresión Poisson mostró ser efectivo en este caso porque el fenomeno se define como un conteo influenciado por un conjunto de variables predictoras, obteniendo un $R^2$ más cercano a uno, después de eliminar variables que no son estadísticamente significativas para la muestra examinada.
 
-En la  verificación del modelo se evidencian ciertos compartamientos en la predicción del 2019 como en los datos reales, algunos de éstos fueron:
+En la  verificación del modelo se evidencian ciertos comportamientos en la predicción del 2019 como en los datos reales, algunos de éstos fueron:
 
 + Los accidentes son más propensos a ocurrir en forma de choque, esto contextualizandolo por ser un entorno urbano.
 

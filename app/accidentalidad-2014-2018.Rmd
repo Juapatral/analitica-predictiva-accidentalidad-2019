@@ -1171,17 +1171,21 @@ fwrite(ACCIDENTES_PRED,"files/matriz-2019-pronosticada.csv", sep = ";")
 
 ## **3. Conclusiones**
 
-En este trabajo se analizó un conjunto de datos relacionados con accidentes de tráfico donde se busca un modelo que se acerque a la condicción actual del fenomeno que presentan los datos reales.
+En este trabajo se analizó un conjunto de datos relacionados con accidentes de tráfico donde se busca un modelo que se acerque a la condicción actual del fenomeno que presentan los datos reales. Las técnicas de análisis descriptivo de grandes cantidades de datos a partir de la analítica permitieron encontrar tendencias y patrones ocultos de los datos. La comparación de estos patrones con los resultados del modelo de accidentalidad vial planteado ayuda a la validación del modelo pues fundamenta la selección de las variables que se enfatizan como las más incidentes a partir de la visualización de su ocurrencia en los registros actuales.
 
-Se evaluaron tres tipos de modelos: la regresión lineal multivariada, regresión lineal generalizada con distribuación Poisson y árbol de decisiones. Después de examinar cuáles factores tenían una influencia fuerte sobre el fenomeno de los accidentes se encontró que un modelo de regresión lineal generalizado de distribución Poisson era el que mostraba tener una predicción más acercaba al fenomeno real.
-
-Se encontró que los factores que más influencian los accidentes de tránsito corresponden a la clase de accidente, día del accidente y un fuerte impacto en determinados días especiales a lo largo del año, como los días festivos, las vacaciones colectivas, entre otros.
+Se evaluaron tres tipos de modelos: la regresión lineal multivariada, regresión lineal generalizada con distribuación Poisson y árbol de decisiones. Se encontró que los factores que más influencian los accidentes de tránsito corresponden a la clase de accidente, día del accidente y un fuerte impacto en determinados días especiales a lo largo del año, como los días festivos, las vacaciones colectivas, entre otros.
 
 El modelo de regresión generalizado con regresión Poisson mostró ser efectivo en este caso porque el fenomeno se define como un conteo influenciado por un conjunto de variables predictoras, obteniendo un $R^2$ más cercano a uno, después de eliminar variables que no son estadísticamente significativas para la muestra examinada.
 
-Los Accidentes son más propensos a ocurrir en forma de choque, esto contextualizandolo por ser un entorno urbano.
+En la  verificación del modelo se evidencian ciertos compartamientos en la predicción del 2019 como en los datos reales, algunos de éstos fueron:
 
-Se encuentran ciertas situaciones con el modelo y su predicción. Se puede observar que el día mas traumático mostrado por los datos reales es el viernes. Para una ciudad como Medellín es coherente, ya que finaliza jornada laboral, semana de trabajo y la gente opta por salir a divertirse o llegar rapido a sus casas, por lo que el contexto hace que se generen más siniestros de lo normal. En la otra mano, los días más tranquilos son los domingos y lunes por ser inicio de semana, donde la gente está menos cansada y con la rutina apenas comenzando. Estas conclusiones se pueden evidenciar igualmente en el modelo de predicciones para 2019.
++ Los accidentes son más propensos a ocurrir en forma de choque, esto contextualizandolo por ser un entorno urbano.
+
++ El día más traumático en movilidad es el viernes. En efecto, es un día de mucho tráfico para una ciudad como Medellín ya que se finaliza la jornada laboral, semana de trabajo y la gente opta por salir a divertirse o llegar rápido a sus casas, por lo que el contexto hace que se generen más siniestros de lo normal.
+
++ Los días más tranquilo son el domingo, por ser día de descanso para estudiantes y trabajadores, y el lunes, por ser inicio de semana la gente está menos cansada y por lo tanto más alerta y está comenzando con la rutina.
+
+Para el uso de técnicas de analítica predictiva, tuvimos en cuenta que la calidad del resultado depende de la calidad de los datos y de cómo estos se hayan recogido, organizado y depurado. Esto es esencial para la construcción de un modelo hipotético acerca de cómo se comporta el fenómeno a analizar y, con ello, de cómo podrá comportarse en el futuro.
 
 [Regresar](#tabla-de-contenido)
 

@@ -1122,6 +1122,15 @@ fwrite(ACCIDENTES_PRED,"files/matriz-2019-pronosticada.csv", sep = ";")
 
 **FALTA**
 
+#Este trabajo trata de analizar un conjunto de datos relacionados con accidentes de tráfico donde se busca un modelo que se acerque a la condicción actual del fenomeno que presentan los datos reales. se encontró que un modelo de regresión lineal generalizado de distribución Poisson, después de examinar cuáles factores tenían una influencia fuerte sobre el fenomeno de los accidentes, era el qué  mostraba tener una prediccón más acercaba al fenomeno real.
+#se encontró una gran influencia en los Accidentes de trafico de los factores de clase de accidente, dia del accidente y un fuerte impacto en determinados días especiales a lo largo del año.
+#el modelo de regresión generalizado con regresión Poisson, mostró ser efectivo en este caso porque el fenomeno se define como un conteo influenciado por un conjunto de variables predictoras. dando un $R^2$ más cercano a uno, después de eliminar variables no importantes para la muestra examinada.
+#los Accidentes son mas propensos a ocurrir en forma de choque esto contextualizandolo por ser un entorno urbano.
+#se encuentran ciertas situaciones con el modelo y su predicción. se puede observar que el día mas traumatico mostrado por los datos reales es el viernes. Este es el día más traumatico. para una ciudad como Medellín esto es coherente, ya que finaliza jornada laboral, semana de trabajo y la gente opta por salir a divertirse o llegar rapido a sus casas, por lo que el contexto hace que se generen más siniestros de lo normal.
+#los días más tranquilos son los domingos y lunes por ser inicio de semana, donde la gente está menos cansada y con la rutina apenas comenzando. estas conclusiones se pueden evidenciar igualmente en el modelo de predicciones para 2019.
+
+
+
 [Regresar](#tabla-de-contenido)
 
 ## **4. Bibliografía**
@@ -1217,6 +1226,8 @@ fwrite(ACCIDENTES_PRED,"files/matriz-2019-pronosticada.csv", sep = ";")
 + [Agrupar por vector de caracteres en *dplyr*](https://stackoverflow.com/questions/36660152/concatenating-words-without-quotes-in-r-for-groupby-in-dplyr)
 
 + [Reordenar factores en *R*](https://www.r-bloggers.com/reorder-factor-levels/)
+
++ [Ejemplo de una regresion Poisson en *R*](https://www.dataquest.io/blog/tutorial-poisson-regression-in-r/)
 
 ---
 

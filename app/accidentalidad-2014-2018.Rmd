@@ -1,7 +1,7 @@
 ---
 title: <b><center>Análisis y pronóstico de la información accidentalidad vehicular en el municipio de Medellín para los años 2014 a 2018</center></b>
 
-author: <center>Lina María Grajales Vanegas <br> Juan Camilo Agudelo Marín <br> Jhon Anderson Lonoño Herrera <br> Juan Pablo Trujillo Alviz <br><br> Estudiantes del Posgrado en Analítica <br> Universidad Nacional de Colombia, Medellín</center>
+author: <center>Lina María Grajales Vanegas <br> Juan Camilo Agudelo Marín <br> Jhon Anderson Lonoño Herrera <br> Juan Pablo Trujillo Alviz <br><br> Estudiantes del Posgrado en Ingeniería Analítica <br> Universidad Nacional de Colombia, Medellín</center>
 
 date: "11 de agosto de 2019"
 
@@ -27,7 +27,9 @@ knitr::opts_chunk$set(message = F)
 ```
 ## **Resumen**
 
->*En cada instante se generan grandes volúmenes de datos y es de interés para los analistas obtener información valiosa y confiable de estos y así incidir en la toma de decisiones para mejorar los resultados económicos y sociales de la empresa, la entidad o la sociedad en general. Un ejemplo de estos datos masivos se reflejan en la accidentalidad vial, que se han ido posicionando año tras año como uno de los problemas que más costos sociales y económicos genera. Medellín no ha sido la excepción y en la actualidad buena parte de las políticas públicas se movilizan para mitigar este fenómeno. En este trabajo se decidió utilizar la información de la accidentalidad vehicular en el municipio de Medellín para los años 2014 a 2018 para pronosticar el total de accidentes por tipo de accidente para el año 2019. Se evaluaron tres tipos de modelos: la regresión lineal multivariada, regresión lineal generalizada con distribuación Poisson y árbol de decisiones. Algunos de los factores que tenían una influencia fuerte sobre el fenómeno de los accidentes son el tipo de accidente, el día del accidente y determinados días especiales (como festivos, semana santa). Se encontró que un modelo de regresión lineal generalizado de distribución Poisson se acerca más al comportamiento real del fenómeno.*
+>*En cada instante se generan grandes volúmenes de datos y es de interés para los analístas obtener información valiosa y confiable de estos y así incidir en la toma de decisiones para mejorar los resultados económicos y sociales de una empresa, institución o la sociedad en general. Un ejemplo de estos datos masivos se reflan en la accidentalidad vial, que se ha posicionado año tras año como uno de los problemas que más costos sociales y económicos genera. Medellín no ha sido la excepción y en la actualidad buena parte de las políticas públicas se movilizan para mitigar este fenómeno.* 
+
+>*En este trabajo se decidió utilizar la información de la accidentalidad vehicular en el municipio de Medellín para los años 2014 a 2018 con el fin de pronosticar la frecuencia de accidentes agrupada según su tipo para el año 2019. Se evaluaron tres tipos de modelos: la regresión lineal multivariada, regresión lineal generalizada con distribuación Poisson y árbol de decisiones. Algunos de los factores que tenían una influencia fuerte sobre el fenomeno son el tipo de accidente, la fecha y si esta corresponde a un día especial (como festivo o semana santa). Se encontró que un modelo de regresión lineal generalizado de distribución Poisson se acerca más al comportamiento real del fenomeno.*
 
 ## **Tabla de contenido**
  
@@ -68,7 +70,7 @@ Por esta razón, los estudiantes de la materia Analítica Predictiva del Posgrad
 
 ### **1.1. Motivación**
 
-La materia de Analítica Predictiva en el Posgrado de Analítica de la Universidad Nacional de Colombia enseña algunas técnicas estadísticas para el pronóstico y clasificación de datos, utilizando los conceptos de la estadística descriptiva y probabilística como cálculo de probabilidades, Teorema de Bayes, medidas de tendencia, funciones de distribuciones de probabilidad, pruebas de hipótesis, entre otros. Algunos de los modelos vistos en clase fueron:
+En la materia de Analítica Predictiva se enseñan algunas técnicas estadísticas para el pronóstico y clasificación de datos, utilizando los conceptos de la estadística descriptiva y probabilística como cálculo de probabilidades, Teorema de Bayes, medidas de tendencia, funciones de distribuciones de probabilidad, pruebas de hipótesis, entre otros. Algunos de los modelos vistos en clase fueron:
 
 * K vecinos cercanos (k-nearest-neighbors)
 * Regresión lineal (univariada y multivariada) 
@@ -114,13 +116,13 @@ Se propone utilizar la metodología [CRISP-DM](https://jdvelasq.github.io/ruta-n
 
 ### **2.1. Identificación del problema**
 
-La accidentalidad vial en las ciudades se ha ido posicionando año tras año como uno de los problemas que más costos sociales y económicos genera hasta llegar a denominarse como “pandemia”. Medellín no ha sido la excepción y en la actualidad buena parte de las políticas públicas se movilizan para mitigar este fenómeno. Se estima que anualmente los costos totales por accidentalidad solo para Medellín son cerca de $ 1,8 billones, así que este es un problema cuya minimización puede dejar muchas ganancias.
+La accidentalidad vial en las ciudades se ha ido posicionando año tras año como uno de los problemas que más costos sociales y económicos genera hasta llegar a denominarse como “pandemia”. Medellín no ha sido la excepción y en la actualidad buena parte de las políticas públicas se movilizan para mitigar este fenómeno. Se estima que anualmente los costos totales por accidentalidad solo para Medellín son cerca de $ 1,8 billones, así que este es un problema cuya minimización puede significar invertir recursos públicos en otros sectores.
 
 Una herramienta importante y base para la toma de decisiones es una estimación precisa que explique el problema y que permita predecir cuándo y dónde puede suceder determinado tipo de accidente.   
 
 Esta estimación es útil para diferentes actores. Los hacedores de política podrán determinar cuáles zonas son susceptibles de reestructuración de la malla vial, dónde deben enfocar los esfuerzos de capacitación o en cuáles lugares deben disponer de más servidores para la prevención y atención de los accidentes. Para el público en general le resultará de interés para tomar decisiones de movilidad, cuándo transitar y en qué; o en decisiones de vivienda, que sectores se deben evitar cuando se tienen hijos, por ejemplo.
 
-En este trabajo se pretende responder a estas preguntas y brindarle a la ciudad la posibilidad de visibilizar la información de los accidentes vehiculares, sus riesgos asociados y con ello mitigarlos, a través de una única plataforma pública donde se realice un pronóstico del total de accidentes por tipo de accidente para el año 2019.
+En este trabajo se pretende responder a estas preguntas y brindarle a la ciudad la posibilidad de visibilizar la información de los accidentes vehiculares, sus riesgos asociados y así mitigarlos, a través de una única plataforma pública donde se realice un pronóstico del total de accidentes por tipo de accidente para el año 2019.
 
 [Regresar](#tabla-de-contenido)
 
@@ -396,7 +398,7 @@ ESCOLAR|Indicador de si el día pertenece a la época de vacaciones escolares o 
 
 Se realiza un análisis descriptivo para identificar las variables asociadas a la accidentalidad vial en la ciudad de Medellín a través del análisis y la interpretación de las cifras de accidentes registrados en la Secretaría de Movilidad.
 
-Se crea una funcion para crear gráficos compuestos de varios subgráficos, la cual se llamará *multiplot*.
+Se crea una función para crear gráficos compuestos de varios subgráficos, la cual se llamará *multiplot*.
 ```{r funcion_subgraficos}
 ## funcion multiplot
 
@@ -445,7 +447,7 @@ multiplot <- function(..., plotlist = NULL, file, cols = 1, layout = NULL) {
 
 ##### Accidentalidad por día, mes y año
 La siguiente gráfica muestra el registro de accidentes por día, mes y año.
-```{r}
+```{r grafica_dia_mes_anio, message=FALSE, warning=FALSE}
 ## grafica dia, mes y anio
 
 # agrupar por nombre del dia
@@ -459,7 +461,7 @@ acc_nombredia$DIA_NOMBRE <- ordered(acc_nombredia$DIA_NOMBRE,
                                                 "JUEVES", "VIERNES","SABADO",
                                                 "DOMINGO")
                                     )
-# grafico dia
+# grafica dia
 p2 <- ggplot(data = acc_nombredia, aes(x = DIA_NOMBRE, y = total_registros)) + 
       geom_bar(stat = "identity", 
                position="dodge", 
@@ -470,7 +472,7 @@ p2 <- ggplot(data = acc_nombredia, aes(x = DIA_NOMBRE, y = total_registros)) +
       ylab("Total registros") + # eje y
       # Girar label eje x
       theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5)) + 
-      ggtitle("Número de accidentes por días de la semana") #título del gráfico
+      ggtitle("Número de accidentes por días de la semana") # titulo del grafico
 
 # agrupar por mes
 acc_mes <- acc %>% 
@@ -486,14 +488,14 @@ p1 <- ggplot(data = acc_mes, aes(x = MES, y = total_registros)) +
                alpha = 0.8) +
       xlab("Mes") + # eje x
       ylab("Total registros") + # eje y
-      ggtitle("Número de accidentes por mes") #título del gráfico
+      ggtitle("Número de accidentes por mes") # titulo del grafico
 
 # agrupar por anio
 acc_ano <- acc %>% 
            group_by(PERIODO) %>% 
            summarize(total_registros = n())
 
-# grafico anio
+# grafica anio
 p3 <- ggplot(data = acc_ano, aes(x = PERIODO, y = total_registros)) + 
       geom_bar(stat = "identity", 
                position = "dodge", 
@@ -502,227 +504,337 @@ p3 <- ggplot(data = acc_ano, aes(x = PERIODO, y = total_registros)) +
                alpha = 0.8) +
       xlab("Año") + # eje x
       ylab("Total registros") + # eje y
-      ggtitle("Número de accidentes por año") #título del gráfico
+      ggtitle("Número de accidentes por año") # titulo del grafico
 
 # crear multigrafico
 multiplot(p1, p2, p3, cols = 2)
 ```
 
-En está gráfica se puede observar que la mayor accidentalidad se presenta en los días viernes, durante el mes de agosto también hay un mayor número de accidentes y en el 2016 fue el año con más accidentes durante el periodo de análisis (2014-2018), mientras que los días domingo, el mes de enero y en el año 2018 se registra una accidentalidad menor.
+En está gráfica se puede observar que la mayor accidentalidad se presenta en el día viernes, durante el mes de agosto también hay un mayor número de accidentes y el 2016 fue el año con más accidentes durante el periodo de análisis (2014-2018), mientras que los días domingo, el mes de enero y en el año 2018 se registra una accidentalidad menor.
 
 ##### Accidentalidad por comuna y tipo de vía
-```{r}
+```{r grafica_comuna_disenio}
+## grafica comuna y disenio
 
-# Accidentes por comuna
+# agrupar por comuna
 acc_comuna <- acc %>% 
               group_by(COMUNA) %>% 
               summarize(total_registros = n())
-p4 <- ggplot(data=acc_comuna, aes(x=COMUNA, y=total_registros)) + 
-    geom_bar(stat="identity", position="dodge", fill = "dodgerblue3", color = "grey48", alpha = .8)+
-    xlab("Comuna")+ # eje x
-    ylab("Total registros")+ # eje y
-    ggtitle("Comuna")+ #título del gráfico
-    coord_flip()
 
-# accidente por diseño de via
+# crear grafica comuna
+p4 <- ggplot(data = acc_comuna, aes(x = COMUNA, y = total_registros)) +
+      geom_bar(stat = "identity", 
+               position = "dodge", 
+               fill = "dodgerblue3", 
+               color = "grey48", 
+               alpha = 0.8) +
+      xlab("Comuna") + # eje x
+      ylab("Total registros") + # eje y
+      ggtitle("Comuna") + # titulo del grafico
+      coord_flip()
+
+# agrupar por disenio de via
 acc_diseno <- acc %>% 
               group_by(DISENO) %>% 
               summarize(total_registros = n())
-p5 <- ggplot(data=acc_diseno, aes(x=DISENO, y=total_registros)) + 
-    geom_bar(stat="identity", position="dodge", fill = "dodgerblue3", color = "grey48", alpha = 
-    .8)+
-    xlab("Diseño de la vía")+ # eje x
-    ylab("Total registros")+ # eje y
-    ggtitle("Tipo de vía")+ #título del gráfico
-    coord_flip()
+
+# crear grafica disenio 
+p5 <- ggplot(data = acc_diseno, aes(x = DISENO, y = total_registros)) +
+      geom_bar(stat = "identity", 
+               position = "dodge", 
+               fill = "dodgerblue3", 
+               color = "grey48",
+               alpha = 0.8) +
+      xlab("Diseño de la vía") + # eje x
+      ylab("Total registros") + # eje y
+      ggtitle("Tipo de vía") + # titulo del grafico
+      coord_flip()
+
+# crear multigrafico
 multiplot(p4, p5, cols = 2)
 ```
 
-El mayor número de accidentes ocurre en La candelaria, seguido por Laureles y Castilla.
-Los tramos en la vía es donde se presentan la mayor parte de los accidentes seguidos por las intersecciones.
+El mayor número de accidentes ocurre en La Candelaria, seguido por Laureles-Estadio y Castilla. Los tramos en la vía es donde se presentan la mayor parte de los accidentes seguidos por las intersecciones.
 
 ##### Accidentalidad por tipo de accidente
-```{r}
+```{r grafica_tipo, message=FALSE, warning=FALSE}
+## grafica tipo de accidente
+
+# agrupar por tipo de accidente
 acc_clase <- acc %>% 
               group_by(CLASE) %>% 
               summarize(total_registros = n())
-p6 <- ggplot(data=acc_clase, aes(x=CLASE, y=total_registros)) + 
-    geom_bar(stat="identity", position="dodge", fill = "dodgerblue3", color = "grey48", alpha = 
-    .8)+
-    xlab("Tipo de accidente")+ # eje x
-    ylab("Total registros")+ # eje y
-    ggtitle("Número de accidentes por tipo de accidente") #título del gráfico
+
+# crear grafica
+p6 <- ggplot(data = acc_clase, aes(x = CLASE, y = total_registros)) +
+      geom_bar(stat = "identity", 
+               position = "dodge", 
+               fill = "dodgerblue3", 
+               color = "grey48", 
+               alpha =0.8) +
+      xlab("Tipo de accidente") + # eje x
+      ylab("Total registros") + # eje y
+      ggtitle("Número de accidentes por tipo de accidente") # titulo del gráfico
+
+# visualizar grafica
 p6
 ```
 
-Notamos que la principal causa de los accidentes viales es debido a choques y son pocos los accidentes donde se  termina con volcamiento de los vehículos.
+Se observa que la principal causa de los accidentes viales es debido a choques y son pocos los accidentes donde se termina con volcamiento de los vehículos.
 
 ##### Accidentalidad por gravedad ocasionada
-```{r}
+```{r grafica_gravedad, message=FALSE, warning=FALSE}
+## grafica gravedad
+
+# agrupar por gravedad
 acc_gravedad <- acc %>% 
               group_by(GRAVEDAD) %>% 
               summarize(total_registros = n())
-p7 <- ggplot(data=acc_gravedad, aes(x=GRAVEDAD, y=total_registros)) + 
-    geom_bar(stat="identity", position="dodge", fill = "dodgerblue3", color = "grey48", alpha = 
-    .8)+
-    xlab("Gravedad del accidente")+ # eje x
-    ylab("Total registros")+ # eje y
-    ggtitle("Número de accidentes por gravedad del accidente") #título del gráfico
+
+# crear grafica
+p7 <- ggplot(data = acc_gravedad, aes(x = GRAVEDAD, y = total_registros)) + 
+      geom_bar(stat = "identity",
+               position = "dodge", 
+               fill = "dodgerblue3", 
+               color = "grey48", 
+               alpha = 0.8) +
+      xlab("Gravedad del accidente") + # eje x
+      ylab("Total registros")+ # eje y
+      # titulo del grafico
+      ggtitle("Número de accidentes por gravedad del accidente") 
+
+# visualizar grafica
 p7
 ```
 
-Desde el 2014 hasta el 2018 se tuvieron un número mayor de heridos que de daños.
+Desde el 2014 hasta el 2018 se tuvo un número mayor de heridos que de daños.
 
-
-##### **Ahora analizaremos las variables agrupadas por la clase de accidente.**
+##### **A continuación se analizan las variables agrupadas por la clase de accidente.**
 
 ##### Gráfico de gravedad de acuerdo al tipo de accidente
-```{r}
-acc_group_clase<- acc %>% group_by(CLASE, GRAVEDAD) %>% summarize(conteo = n())
+```{r grafica_clase_gravedad, message=FALSE, warning=FALSE}
+## grafica tipo de accidente y gravedad
 
-ggplot(data=acc_group_clase, aes(x=CLASE, y=conteo, fill=GRAVEDAD)) + 
-    geom_bar(stat="identity", position="dodge")+
+# agrupar por clase y gravedad
+acc_group_clase <- acc %>% group_by(CLASE, GRAVEDAD) %>% summarize(conteo = n())
+
+# graficar
+ggplot(data = acc_group_clase, aes(x = CLASE, y = conteo, fill = GRAVEDAD)) +
+  geom_bar(stat = "identity", position = "dodge") +
     coord_flip()
 ```
 
- De acuerdo al tipo de accidente, vemos que los choques generan una mayor cantidad de daños y la mayor cantidad de heridos.
+De acuerdo al tipo de accidente, se observa que los choques generan una mayor cantidad de daños y la mayor cantidad de heridos.
 
 ##### Clasificación de los tipos de accidentes por meses.
-```{r}
-acc_group_mes<- acc %>% group_by(MES,CLASE) %>% summarize(conteo = n()) 
-ggplot(data=acc_group_mes, aes(x=CLASE, y=conteo, fill=MES)) + 
-    geom_bar(stat="identity", position="dodge")
+```{r grafica_clase_mes, message=FALSE, warning=FALSE}
+## grafica tipo de accidente por mes
+
+# agrupar por clase y mes
+acc_group_mes <- acc %>% group_by(MES,CLASE) %>% summarize(conteo = n()) 
+
+# graficar
+ggplot(data = acc_group_mes, aes(x = CLASE, y = conteo, fill = MES)) + 
+    geom_bar(stat = "identity", position = "dodge")
 ```
 
- La mayor cantidad de choques se presenta en agosto.
+La mayor cantidad de choques se presenta en agosto.
 
 ##### Agrupación de tipo de accidente por año
-```{r}
-acc_group_year<- acc %>% group_by(CLASE, PERIODO) %>% summarize(conteo = n()) 
-acc_group_year$PERIODO<- as.factor(acc_group_year$PERIODO)
-ggplot(data=acc_group_year, aes(x=CLASE, y=conteo, fill=PERIODO)) + 
-    geom_bar(stat="identity", position="dodge")+
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5))+
-    scale_fill_manual(values=c("#d0d1e6", "#bdc9e1","#74a9cf","#2b8cbe","#045a8d"))
+```{r grafica_clase_anio, message=FALSE, warning=FALSE}
+## grafica por tipo de accidente por anio
+
+# agrupar por clase y periodo
+acc_group_year <- acc %>% group_by(CLASE, PERIODO) %>% summarize(conteo = n()) 
+
+# convertir periodo a categoria
+acc_group_year$PERIODO <- as.factor(acc_group_year$PERIODO)
+
+# graficar
+ggplot(data = acc_group_year, aes(x = CLASE, y = conteo, fill = PERIODO)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))+
+    scale_fill_manual(values = c("#d0d1e6",
+                                 "#bdc9e1",
+                                 "#74a9cf",
+                                 "#2b8cbe",
+                                 "#045a8d"))
 
 ```
 
 ##### Agrupación de tipo de accidente por día de la semana.
-```{r}
-acc_group_dia<- acc %>% group_by(CLASE, DIA_NOMBRE) %>% summarize(conteo = n()) 
+```{r grafica_clase_dia, message=FALSE, warning=FALSE}
+## grafica por tipo de accidente por dia de la semana
 
-ggplot(data=acc_group_dia, aes(x=CLASE, y=conteo, fill=DIA_NOMBRE)) + 
-    geom_bar(stat="identity", position="dodge")+
-    scale_fill_manual(values=c("#eff3ff", "#c6dbef", "#9ecae1", "#6baed6", "#4292c6", "#2171b5", "#084594"))+
-  coord_flip()
+# agrupar por clase y dia_nombre
+acc_group_dia <- acc %>% group_by(CLASE, DIA_NOMBRE) %>% summarize(conteo = n()) 
+
+# graficar
+ggplot(data = acc_group_dia, aes(x = CLASE, y = conteo, fill = DIA_NOMBRE)) + 
+    geom_bar(stat = "identity", position = "dodge") +
+    scale_fill_manual(values = c("#eff3ff", 
+                                 "#c6dbef", 
+                                 "#9ecae1",
+                                 "#6baed6", 
+                                 "#4292c6", 
+                                 "#2171b5", 
+                                 "#084594")) +
+    coord_flip()
 ```
 
- Los viernes y los sábados son los días donde mayor cantidad de accidentes se presentan.
+Los viernes y los sábados son los días donde mayor cantidad de accidentes se presentan.
 
 ##### Tipo de accidente ocurrido en los días festivos.
-```{r}
-acc_group_festivo<- acc %>% group_by(CLASE, FESTIVO) %>% summarize(conteo = n()) 
+```{r grafica_clase_festivo, message=FALSE, warning=FALSE}
+## grafica por tipo de accidente los dias festivoos
 
-ggplot(data=acc_group_festivo, aes(x=CLASE, y=conteo, fill=FESTIVO)) + 
-    geom_bar(stat="identity", position="dodge")
+# agrupar por clase y festivo
+acc_group_festivo <- acc %>% 
+                     group_by(CLASE, FESTIVO) %>% 
+                     summarize(conteo = n()) 
+
+# graficar
+ggplot(data = acc_group_festivo, aes(x = CLASE, y = conteo, fill = FESTIVO)) + 
+    geom_bar(stat = "identity", position = "dodge")
 ```
 
-  Se observa que los accidentes ocurridos se presentan en los días ordinarios y que la accidentalidad en los días festivos es baja.
+Se observa que los accidentes ocurridos se presentan en los días ordinarios y que la accidentalidad en los días festivos es baja.
 
-### Series temporales 
-Para guiar el análisis de la información resulta útil representar gráficamente los datos o una muestra de los mismos. En este caso, como la variable a predecir es el número de accidentes viales registrados diariamente en la secretaría de movilidad y esta variable depende del tiempo, se desea representarla como una serie temporal.
+##### **Series temporales**
+
+Para guiar el análisis de la información resulta útil representar gráficamente los datos o una muestra de los mismos. En este caso, la variable a predecir es el número de accidentes viales registrados diariamente en la Secretaría de Movilidad y esta variable depende del tiempo, se desea representarla como una serie temporal.
 
 ##### Serie temporal de accidentalidad por día
-```{r}
-acc_fecha <- acc %>% 
-              group_by(FECHA) %>% 
-              summarize(total_registros = n())
+```{r grafica_diaria, message=FALSE, warning=FALSE}
+## grafica accidentes diarios
 
-plot_ly (data=subset(acc_fecha,subset = (FECHA<="2018-12-31")),
+# agrupar
+acc_fecha <- acc %>% 
+             group_by(FECHA) %>% 
+             summarize(total_registros = n())
+
+# graficar
+plot_ly (data = subset(acc_fecha,subset = (FECHA <= "2018-12-31")),
          x = ~FECHA,
          y = ~total_registros,
-         type = "scatter" ,mode = "lines",
-         line=list(width=1,color='rgb(205, 12, 24)'))%>%
-         layout(title='Registros de accidentalidad',
-         xaxis=list(title="Día"),
-         yaxis=list(title="Total registros"))
-
+         type = "scatter",
+         mode = "lines",
+         line = list(width = 1, color = 'rgb(205, 12, 24)'))%>%
+  layout(title = 'Registros de accidentalidad',
+         xaxis = list(title = "Día"),
+         yaxis = list(title = "Total registros"))
 ```
 
 ##### Serie temporal de accidentalidad por año
-```{r}
-acc_fecha$year<-format(acc_fecha$FECHA,"%Y")
-plot_ly (data=subset(acc_fecha,subset = (FECHA<="2018-12-31")),
+```{r grafica_anio, message=FALSE, warning=FALSE}
+## grafica accidentes por anio
+
+# crear columna de anio
+acc_fecha$year <- format(acc_fecha$FECHA,"%Y")
+
+# graficar
+plot_ly (data = subset(acc_fecha, subset = (FECHA <= "2018-12-31")),
          x = ~FECHA,
          y = ~total_registros,
-         type = "scatter" ,mode = "lines",
+         type = "scatter",
+         mode = "lines",
          split = ~year,
-         line=list(width=1))%>%
-  layout(title='Registros de accidentalidad',
-         xaxis=list(title="Día"),
-         yaxis=list(title="Total registros"))
+         line = list(width = 1))%>%
+  layout(title = 'Registros de accidentalidad',
+         xaxis = list(title = "Día"),
+         yaxis = list(title = "Total registros"))
 ```
-   
-##### Usando la función aggregate obtenemos el promedio diario para cada año de registros de accidentes:
-```{r}
-aggregate(total_registros~year,data=acc_fecha,FUN=mean)
+ 
+Usando la función *aggregate* se obtiene el promedio diario para cada año de registros de accidentes
+```{r agregar_promedio_diario, message=FALSE, warning=FALSE}
+## promedio diario
+
+# agregar datos por promedio
+aggregate(total_registros ~ year, data = acc_fecha, FUN = mean)
 ```
 
-##### Ahora obtenemos el promedio diario para cada mes y cada año: 
-```{r}
-acc_fecha$Fecha<-as.Date(acc_fecha$FECHA,"%d/%m/%Y")
-acc_fecha$mes<-format(acc_fecha$Fecha,"%m")
-acc_fecha$mes<-strftime(acc_fecha$Fecha, format = "%B")
-acc_fecha$mes<-ordered(acc_fecha$mes,levels=c( "enero", "febrero", "marzo", 
-"abril", "mayo", "junio","julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"))
-aggregate(total_registros~year*mes,data=acc_fecha,FUN=mean)%>%
+##### Promedio diario para cada mes y cada año
+```{r grafica_promedio_diario, message=FALSE, warning=FALSE}
+## grafica del promedio diario por mes y por anio
+
+# crear columna mes
+acc_fecha$Fecha <- as.Date(acc_fecha$FECHA, "%d/%m/%Y")
+acc_fecha$mes <- format(acc_fecha$Fecha, "%m")
+acc_fecha$mes <- strftime(acc_fecha$Fecha, format = "%B")
+
+# ordenar columna mes 
+acc_fecha$mes <- ordered(acc_fecha$mes, levels = c( "enero", "febrero", "marzo",
+                                                    "abril", "mayo","junio",
+                                                    "julio", "agosto",
+                                                    "septiembre", "octubre",
+                                                    "noviembre", "diciembre"))
+
+# agregar datos por promedio mes y anio y graficar
+aggregate(total_registros ~ year*mes, data = acc_fecha, FUN = mean) %>%
   plot_ly(x = ~mes,
-         y = ~total_registros,
-         type = "scatter" ,mode = "lines",
-         split = ~year,
-         line=list(width=1))%>%
-  layout(title='Promedio diario mensual de accidentes registrados',
-         xaxis=list(title="Día"),
-         yaxis=list(title="Total registros"))
+          y = ~total_registros,
+          type = "scatter",
+          mode = "lines",
+          split = ~year,
+          line = list(width = 1)) %>%
+  layout(title = 'Promedio diario mensual de accidentes registrados',
+         xaxis = list(title="Día"),
+         yaxis = list(title="Total registros"))
 ```
 
- Utilicemos el diagrama de caja y bigotes para explorar relaciones:
+Se utilizará el diagrama de caja y bigotes para explorar relaciones y encontrar datos atípicos.
 
-#### Diagrama de caja y bigotes de número de accidentes por año:
-```{r}
-plot_ly (data=subset(acc_fecha,subset = (Fecha<="2018-12-31")),
+##### Diagrama de caja y bigotes de número de accidentes por año
+```{r caja_anio, message=FALSE, warning=FALSE}
+## grafica de caja y bigotes por anio
+
+# graficar
+plot_ly (data = subset(acc_fecha, subset = (Fecha <= "2018-12-31")),
          x = ~year,
          y = ~total_registros,
          type = "box")%>%
-  layout(title='Registros de accidentes',
-         xaxis=list(title="Año"),
-         yaxis=list(title="Total registros"))
+  layout(title = 'Registros de accidentes',
+         xaxis = list(title = "Año"),
+         yaxis = list(title = "Total registros"))
 ```
 
 
-#### Diagrama de caja y bigotes para cada mes:
-```{r}
-acc_fecha$diames<-format(acc_fecha$Fecha,"%d")
-plot_ly (data=subset(acc_fecha,subset = (Fecha<="2018-12-31")),
+##### Diagrama de caja y bigotes para cada mes
+```{r caja_mes, message=FALSE, warning=FALSE}
+## grafica de caja y bigotes por mes
+
+# crear columna de mes
+acc_fecha$diames <- format(acc_fecha$Fecha, "%d")
+
+# graficar
+plot_ly (data = subset(acc_fecha, subset = (Fecha <= "2018-12-31")),
          x = ~mes,
          y = ~total_registros,
          type = "box")%>%
-  layout(title='Registros de accidentes',
-         xaxis=list(title="Mes"),
-         yaxis=list(title="Total registros"))
+  layout(title = 'Registros de accidentes',
+         xaxis = list(title = "Mes"),
+         yaxis = list(title = "Total registros"))
 ```
 
-##### Diagrama de caja y bigotes para cada día de la semana:
-```{r}
-acc_fecha$dia_semana<-weekdays(acc_fecha$Fecha)
-acc_fecha$dia_semana<-ordered(acc_fecha$dia_semana,levels=c( "lunes", "martes", "miércoles", "jueves", "viernes", "sábado","domingo"))
-plot_ly (data=subset(acc_fecha,subset = (Fecha<="2018-12-31")),
+##### Diagrama de caja y bigotes para cada día de la semana
+```{r caja_semana, message=FALSE, warning=FALSE}
+## grafica de caja y bigotes por dia de semana
+
+# crear dia de semana
+acc_fecha$dia_semana <- weekdays(acc_fecha$Fecha)
+acc_fecha$dia_semana <- ordered(acc_fecha$dia_semana, 
+                                levels = c( "lunes", "martes", "miércoles",
+                                            "jueves", "viernes", "sábado",
+                                            "domingo"))
+
+# graficar
+plot_ly (data = subset(acc_fecha, subset = (Fecha <= "2018-12-31")),
          x = ~dia_semana,
          y = ~total_registros,
          type = "box")%>%
-  layout(title='Registros de accidentes',
-         xaxis=list(title="Mes"),
-         yaxis=list(title="Total registros"))
+  layout(title = 'Registros de accidentes',
+         xaxis = list(title = "Mes"),
+         yaxis = list(title = "Total registros"))
 ```
 
 [Regresar](#tabla-de-contenido)
@@ -741,441 +853,704 @@ Después de realizar el análisis, se concluye que ningún dato atípico será e
 
 ### **2.4. Modelación de los datos**
 
-Se escogen tres agrupamientos para verificar el modelo.
-```{r}
-acc_agrupado_0 <- acc%>%group_by(FECHA,CLASE,DISENO,DIA_NOMBRE,DIA,PERIODO,FESTIVO,MADRE,NAVIDAD,BRUJITOS,SEMSANTA,ESCOLAR)%>%summarise(ACCIDENTES=n())%>%arrange(FECHA)
+Con el fin de realizar el mejor pronóstico, se evaluarán tres tipos de modelos: la regresión lineal multivariada, regresión lineal generalizada con distribuación Poisson y árbol de decisiones. 
+
+Además, es importante conocer cuáles variables entrarán en cada modelo, por lo que se escogen tres agrupamientos para verificar el modelo.
+
+Estos grupos son:
+
++ **Grupo 0:** se toman en cuenta las variables de fecha, tipo de accidente, diseño de la vía y días especiales.
+
++ **Grupo 1:** se toman en cuenta las variables de fecha, tipo de accidente y dias especiales.
+
++ **Grupo 2:** se toman en cuenta las variables de fecha, tipo de accidente, comuna y días especiales.
+
+Se crean los grupos:
+```{r agrupamientos_modelos, message=FALSE, warning=FALSE}
+## agrupamientos para los diferentes modelos
+
+# grupo 0: fecha, tipo de accidente, diseno de via, dias especiales 
+acc_agrupado_0 <- acc %>%
+                  group_by(FECHA, CLASE, DISENO, DIA_NOMBRE, DIA,PERIODO,
+                          FESTIVO, MADRE, NAVIDAD, BRUJITOS, SEMSANTA, 
+                          ESCOLAR) %>%
+                  summarise(ACCIDENTES = n()) %>% 
+                  arrange(FECHA) # organizar por fecha
+
+# convertir dia y periodo a enteros
 acc_agrupado_0$DIA <- as.integer(acc_agrupado_0$DIA)
 acc_agrupado_0$PERIODO <- as.integer(acc_agrupado_0$PERIODO)
 
+# grupo 1: fecha, tipo de accidente, dias especiales
+acc_agrupado_1 <- acc %>%
+                  group_by(FECHA, CLASE, DIA_NOMBRE, DIA, PERIODO, FESTIVO, 
+                           MADRE, NAVIDAD, BRUJITOS, SEMSANTA, ESCOLAR) %>%
+                  summarise(ACCIDENTES = n()) %>%
+                  arrange(FECHA) # organizar por fecha
 
-acc_agrupado_1<-acc%>%group_by(FECHA,CLASE,DIA_NOMBRE,DIA,PERIODO,FESTIVO,MADRE,NAVIDAD,BRUJITOS,SEMSANTA,ESCOLAR)%>%summarise(ACCIDENTES=n())%>%arrange(FECHA)
+# convertir dia y periodo a enteros
 acc_agrupado_1$DIA <- as.integer(acc_agrupado_1$DIA)
 acc_agrupado_1$PERIODO <- as.integer(acc_agrupado_1$PERIODO)
 
-acc_agrupado_2 <-acc%>%group_by(FECHA,DIA_NOMBRE,PERIODO,CLASE,MES,DIA,COMUNA,FESTIVO,MADRE,NAVIDAD,BRUJITOS,SEMSANTA,ESCOLAR)%>%summarise(ACCIDENTES=n())%>%arrange(FECHA)
+# grupo 2: fecha, clase, ubicacion, dias especiales, 
+acc_agrupado_2 <- acc %>%
+                  group_by(FECHA, DIA_NOMBRE, PERIODO, CLASE, MES, DIA, COMUNA,
+                           FESTIVO, MADRE, NAVIDAD, BRUJITOS, SEMSANTA, 
+                           ESCOLAR) %>%
+                  summarise(ACCIDENTES = n()) %>%
+                  arrange(FECHA) # organizar por fecha
+
+# convertir dia y periodo a enteros
 acc_agrupado_2$DIA <- as.integer(acc_agrupado_2$DIA)
 acc_agrupado_2$PERIODO <- as.integer(acc_agrupado_2$PERIODO)
 ```
 
 ##### **Elección del modelo de regresión**
 
-##### Modelo grupo 0
-```{r}
+##### Modelo lineal grupo 0
+```{r lm_grupo0, message=FALSE, warning=FALSE}
+## regresion lineal grupo 0
+
+# crear modelo
 #acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
-modelo_lm_0<-lm(ACCIDENTES~FECHA+CLASE+DISENO+DIA_NOMBRE+PERIODO+FESTIVO+MADRE+NAVIDAD+BRUJITOS+SEMSANTA+ESCOLAR,data=acc_agrupado_0, subset = (FECHA<="2017-12-31"))
+modelo_lm_0 <- lm(ACCIDENTES ~ FECHA + CLASE + DISENO + DIA_NOMBRE + PERIODO +
+                    FESTIVO + MADRE + NAVIDAD + BRUJITOS + SEMSANTA + ESCOLAR,
+                  data = acc_agrupado_0, 
+                  subset = (FECHA <= "2017-12-31"))
+
+# ver resultados del modelo
 summary(modelo_lm_0)
 ```
 
-##### Modelo grupo 1
-```{r}
+##### Modelo lineal grupo 1
+```{r lm_grupo1, message=FALSE, warning=FALSE}
+## regresion lineal grupo 1
+
+# crear modelo
 #acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
-modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+DIA+PERIODO+FESTIVO+MADRE+NAVIDAD+BRUJITOS+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
+modelo_lm_1 <- lm(ACCIDENTES ~ FECHA + CLASE + DIA_NOMBRE + DIA + PERIODO +
+                    FESTIVO + MADRE + NAVIDAD + BRUJITOS + SEMSANTA + ESCOLAR,
+                  data = acc_agrupado_1, 
+                  subset = (FECHA <= "2017-12-31"))
+
+# ver resultados del modelo
 summary(modelo_lm_1)
 ```
 
 Al verificar los valores P, se opta por retirar la variable *BRUJITOS*.
-```{r}
+```{r lm_grupo1_nobruj, message=FALSE, warning=FALSE}
+## regresion lineal grupo 1 sin brujitos
+
+# crear modelo
 #acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
-modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+DIA+PERIODO+FESTIVO+MADRE+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
+modelo_lm_1 <- lm(ACCIDENTES ~ FECHA + CLASE + DIA_NOMBRE + DIA + PERIODO +
+                    FESTIVO + MADRE + NAVIDAD + SEMSANTA + ESCOLAR,
+                  data = acc_agrupado_1, 
+                  subset = (FECHA <= "2017-12-31"))
+
+# ver resultados del modelo
 summary(modelo_lm_1)
 ```
 
-No se observa ningún cambio en el R cuadrado ajustado, se opta por quitar *DIA*. 
-```{r}
+Como no se observa ningún cambio en el R cuadrado ajustado, se opta por retirar *DIA*. 
+```{r lm_grupo1_sinbruj_sindia, message=FALSE, warning=FALSE}
+## regresion lineal grupo 1 sin brujitos ni dia
+
+# crear modelo
 #acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
-modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+MADRE+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
+modelo_lm_1 <- lm(ACCIDENTES ~ FECHA + CLASE + DIA_NOMBRE + PERIODO + 
+                    FESTIVO + MADRE + NAVIDAD + SEMSANTA + ESCOLAR,
+                  data = acc_agrupado_1, 
+                  subset = (FECHA <= "2017-12-31"))
+
+# ver resultados del modelo
 summary(modelo_lm_1)
 ```
 
+Como no se observa ningún cambio en el R cuadrado ajustado, se opta por retirar *MADRE*. 
+```{r lm_grupo1_sinbruj_sindia_sinmad, message=FALSE, warning=FALSE}
+## regresion lineal grupo 1 sin brujitos, dia, madre
 
-No se observa ningún cambio en el R cuadrado ajustado, se opta por quitar *MADRE*. 
-```{r}
+# crear modelo
 #acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
-modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
+modelo_lm_1 <- lm(ACCIDENTES ~ FECHA + CLASE + DIA_NOMBRE + PERIODO + FESTIVO +
+                    NAVIDAD + SEMSANTA + ESCOLAR,
+                  data = acc_agrupado_1, 
+                  subset = (FECHA <= "2017-12-31"))
+
+# ver resultados del modelo
 summary(modelo_lm_1)
 ```
 
-No se observa ningún cambio en el R cuadrado ajustado, se opta por quitar 
+Como no se observa ningún cambio en el R cuadrado ajustado, se opta por retirar 
 *ESCOLAR*. 
-```{r}
-modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+NAVIDAD+SEMSANTA,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
+```{r lm_grupo1_sinbruj_sindia_sinmad_sinesc, message=FALSE, warning=FALSE}
+## regresion lineal grupo 1 sin brujitos, dia, madre, escolar
+
+# crear modelo
+modelo_lm_1 <- lm(ACCIDENTES ~ FECHA + CLASE + DIA_NOMBRE + PERIODO + FESTIVO + 
+                    NAVIDAD + SEMSANTA,
+                  data = acc_agrupado_1, 
+                  subset = (FECHA <= "2017-12-31"))
+
+# ver resultados del modelo
 summary(modelo_lm_1)
 ```
 
+Dado que al retirar la variable anterior el R cuadrado ajustado bajó 0.0001, por lo cual se dejará el modelo con la variable *ESCOLAR*.
+```{r lm_grupo1_final, message=FALSE, warning=FALSE}
+## regresion lineal grupo 1
 
-Dado que al quitar la variable anterior el R cuadrado ajustado bajo 0.0001, por lo cual se dejará el modelo con la variable *ESCOLAR*.
-```{r}
+# crear modelo
 #acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
-modelo_lm_1<-lm(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
+modelo_lm_1 <- lm(ACCIDENTES ~ FECHA + CLASE + DIA_NOMBRE + PERIODO + FESTIVO + 
+                    NAVIDAD + SEMSANTA + ESCOLAR,
+                  data = acc_agrupado_1, 
+                  subset = (FECHA <= "2017-12-31"))
+
+# ver resultados del modelo
 summary(modelo_lm_1)
 ```
 
+##### Modelo lineal grupo 2
+```{r lm_grupo2, message=FALSE, warning=FALSE}
+## regresion lineal grupo 2
 
-##### Se evalúa el agrupado 2 para determinar si este tiene un mejor ajuste.
-```{r}
+# crear modelo
 #acc_year$PERIODO <- as.numeric(acc_year$PERIODO)
-modelo_lm_2<-lm(ACCIDENTES~FECHA+DIA_NOMBRE+PERIODO+CLASE+MES+DIA+COMUNA+FESTIVO+MADRE+NAVIDAD+BRUJITOS+SEMSANTA+ESCOLAR,data=acc_agrupado_2, subset = (FECHA<="2017-12-31"))
+modelo_lm_2 <- lm(ACCIDENTES ~ FECHA + DIA_NOMBRE + PERIODO + CLASE + MES + 
+                    DIA + COMUNA + FESTIVO + MADRE + NAVIDAD + BRUJITOS + 
+                    SEMSANTA + ESCOLAR,
+                  data = acc_agrupado_2, 
+                  subset = (FECHA <= "2017-12-31"))
+
+# ver resultados del modelo
 summary(modelo_lm_2)
 ```
 
+Agregando la variable de comunas se observa que el modelo es menos significativo que el modelo agrupado 1, por lo que se opta por hacer la validación con el modelo agrupado 1.
 
-Agregando la variable de comunas, vemos que el modelo es menos significativo que el modelo agrupado 1 por lo que se opta por hacer la validación con el modelo agrupado 1.
+##### Calculo de $R^2$ manual de la regresión lineal
+```{r lm_r2, message=FALSE, warning=FALSE}
+## calcular r2 del modelo lineal
 
+# promedio variable observada de entrenamiento
+y0_tr <- mean(acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA <= "2017-12-31"])
 
-##### Calculo de $R^2$ Manual de la regresion para comprobar con el función 
-```{r}
-y0_tr<-mean(acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"])
-r0_tr<-acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"]-y0_tr
+# calcular distancia variable observada al promedio 
+r0_tr <- acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA <= "2017-12-31"] - y0_tr
+
+# calcular la suma cuadratica total (TSS)
 R0_tr<-mean(r0_tr^2)
+
+# hallar variable estimada
 y_pred_tr_lm<-predict(modelo_lm_1)
-r_tr_lm<-acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"]-y_pred_tr_lm
+
+# calcular distancia variable observaa y variable estimada
+r_tr_lm <- acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA <= "2017-12-31"] -
+           y_pred_tr_lm
+
+# calcular suma cuadratica de la regresion (ESS)
 R_tr_lm<-mean(r_tr_lm^2)
+
+# calculo del r2 (r2 = 1 - (ESS/TSS))
 R2_lm<-1-R_tr_lm/R0_tr
 
+# ver r2
 print(R2_lm)
 ```
 
-este da igual.
+##### Modelo Poisson
 
-# Modelo Poisson
-```{r}
-modelo_glm<-glm(ACCIDENTES ~ FECHA + CLASE + DIA_NOMBRE + PERIODO + 
-    FESTIVO + NAVIDAD + SEMSANTA + ESCOLAR,data = acc_agrupado_1, 
-    subset = (FECHA <= "2017-12-31"),family = "poisson")
+Se procede a evaluar el modelo lineal generalizado de una distribución *Poisson* en el grupo 1.
+```{r glm_grupo1, message=FALSE, warning=FALSE}
+## regresion lineal poisson grupo 1
+
+# crear modelo
+modelo_glm <- glm(ACCIDENTES ~ FECHA + CLASE + DIA_NOMBRE + PERIODO +
+                    FESTIVO + NAVIDAD + SEMSANTA + ESCOLAR,
+                  data = acc_agrupado_1,
+                  subset = (FECHA <= "2017-12-31"),
+                  family = "poisson")
+
+# ver resultados del modelo
 summary(modelo_glm)
 ```
-##### Se procede a hacer un ajuste del modelo Poisson, para esto de calcula un Pseudo $R^2$
-```{r}
-y_pred_tr_glm<-predict(modelo_glm,type="response")
-r_tr_glm<-acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"]-y_pred_tr_glm
-R_tr_glm<-mean(r_tr_glm^2)
-R2_tr_glm<-1-R_tr_glm/R0_tr
+
+##### Cálculo del Pseudo $R^2$ del modelo lineal general de Poisson
+```{r pseudor2_glm, message=FALSE, warning=FALSE}
+## calcular el pseudo r2 del modelo poisson
+
+# calcular variable estimada
+y_pred_tr_glm <- predict(modelo_glm, type = "response")
+
+# calcular diferencia variable observada y variable estimada
+r_tr_glm <- acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA <= "2017-12-31"] -
+            y_pred_tr_glm
+
+# hallar la proxy de la suma cuadratica de la regresion (ESS)
+R_tr_glm <- mean(r_tr_glm^2)
+
+# calcular el pseudo r2 (pseudor2 = 1 - (proxy(ESS)/TSS))
+R2_tr_glm <- 1 - R_tr_glm/R0_tr
+
+# ver pseudo r2
 print(R2_tr_glm)
 ```
 
- Este modelo muestra un $R^2$ superior por lo cuál se usará para hacer las comparaciones de modelos.
+Este modelo muestra un pseudo-$R^2$ que se usará para hacer las comparaciones entre los modelos.
 
-# Análisis de predichos versus observados
+##### Análisis de predichos versus observados
 
-Creación de un dataframe para usar con plotly:
-##### Se elabora un DataFrame para poder graficar predichos y observados de los modelos
+Se elabora un DataFrame para poder graficar predichos y observados de los modelos.
+```{r df_predichos_observados, message=FALSE, warning=FALSE}
+## crear dataframe predichos y observados
 
-```{r}
-resultados_lm_glm<-data.frame(FECHA=  acc_agrupado_1$FECHA[acc_agrupado_1$FECHA<="2017-12-31"],ACCIDENTES=acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"],
-                               pred_lm=y_pred_tr_lm,
-                               pred_glm=y_pred_tr_glm,
-                             res_lm=r_tr_lm,
-                             res_glm=r_tr_glm)
+# crear dataframe
+resultados_lm_glm <- data.frame(
+  FECHA =   acc_agrupado_1$FECHA[acc_agrupado_1$FECHA <= "2017-12-31"],
+  ACCIDENTES = acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"],
+  pred_lm = y_pred_tr_lm,
+  pred_glm = y_pred_tr_glm,
+  res_lm = r_tr_lm,
+  res_glm = r_tr_glm)
 ```
-##### Predichos y observados:
 
-```{r}
-plot_ly (data=resultados_lm_glm,
+##### Gráfica de predichos y observados
+```{r grafica_predichos_observados, message=FALSE, warning=FALSE}
+## crear grafica de predichos y observados
+
+# crear grafica
+plot_ly (data = resultados_lm_glm,
          x = ~FECHA,
          y = ~ACCIDENTES,
-         type = "scatter" ,mode = "lines",
+         type = "scatter",
+         mode = "lines",
          name='Real',
-         line=list(width=1,color='rgb(205, 12, 24)')) %>%
+         line = list(width = 1, color = 'rgb(205, 12, 24)')) %>%
   add_trace(y= ~pred_lm,
-            name='Modelo lineal general',
-            line=list(width=1,color='rgb(22, 96, 167)')) %>%
-  add_trace(y= ~pred_glm,
-            name='Modelo Poisson',
-            line=list(width=1,color='rgb(255, 51, 0)')) %>%
-  layout(title='Registros DE ACCIDENTES ',
-         xaxis=list(title="Fecha"),
-         yaxis=list(title="ACCIDENTES"),
+            name = 'Modelo lineal general',
+            line = list(width = 1, color = 'rgb(22, 96, 167)')) %>%
+  add_trace(y = ~pred_glm,
+            name = 'Modelo Poisson',
+            line = list(width = 1, color = 'rgb(255, 51, 0)')) %>%
+  layout(title = 'Registros DE ACCIDENTES ',
+         xaxis = list(title = "Fecha"),
+         yaxis = list(title = "ACCIDENTES"),
          legend = list(x = 0.75, y = 0.9))
 ```
 
-##### Comparación de modelo lineal y observados
-```{r}
-plot_ly (data=resultados_lm_glm,
+##### Comparativo entre modelo lineal y observados
+```{r grafica_lm_predichos_observados, message=FALSE, warning=FALSE}
+## crear grafica de predichos y observados para el modelo lineal
+
+# crear grafica
+plot_ly (data = resultados_lm_glm,
          x = ~FECHA,
          y = ~ACCIDENTES,
-         type = "scatter" ,mode = "lines",
-         name='Real',
-         line=list(width=1,color='rgb(205, 12, 24)'))%>%
-  add_trace(y= ~pred_lm,
-            name='Modelo lineal general',
-            line=list(width=1,color='rgb(22, 96, 167)'))%>%
-  layout(title='Registros de Accidentes',
-         xaxis=list(title="Fecha"),
-         yaxis=list(title="Accidentes"),
+         type = "scatter",
+         mode = "lines",
+         name = 'Real',
+         line = list(width = 1, color = 'rgb(205, 12, 24)')) %>%
+  add_trace(y = ~pred_lm,
+            name = 'Modelo lineal general',
+            line = list(width = 1, color = 'rgb(22, 96, 167)')) %>%
+  layout(title = 'Registros de Accidentes',
+         xaxis = list(title="Fecha"),
+         yaxis = list(title="Accidentes"),
          legend = list(x = 0.75, y = 0.9))
 ```
 
-##### Comparación de modelo Poisson y observados
-```{r}
-plot_ly (data=resultados_lm_glm,
+##### Comparativo entre modelo Poisson y observados
+```{r grafica_glm_predichos_observados, message=FALSE, warning=FALSE}
+## crear grafica de predichos y observados para el modelo poisson
+
+# crear grafica
+plot_ly (data = resultados_lm_glm,
          x = ~FECHA,
          y = ~ACCIDENTES,
-         type = "scatter" ,mode = "lines",
-         name='Real',
-         line=list(width=1,color='rgb(205, 12, 24)'))%>%
-  add_trace(y= ~pred_glm,
-            name='Modelo Ajustado Poisson',
-            line=list(width=1,color='rgb(22, 96, 167)'))%>%
-  layout(title='Registros de Accidentes',
-         xaxis=list(title="Fecha"),
-         yaxis=list(title="Accidentes"),
+         type = "scatter",
+         mode = "lines",
+         name = 'Real',
+         line = list(width = 1, color = 'rgb(205, 12, 24)')) %>%
+  add_trace(y = ~pred_glm,
+            name = 'Modelo Ajustado Poisson',
+            line = list(width = 1, color = 'rgb(22, 96, 167)')) %>%
+  layout(title = 'Registros de Accidentes',
+         xaxis = list(title="Fecha"),
+         yaxis = list(title="Accidentes"),
          legend = list(x = 0.75, y = 0.9))
 ```
 
+Se puede observar que los modelos logran describir las observaciones sin observar ningún comportamiento extraño.
 
-##### Se puede observar que los modelos logran describir las observaciones sin observar ningún comportamiento extraño.
+##### Predichos vs observados en el modelo Poisson
+```{r grafica_glm_predichos_vs_observados, message=FALSE, warning=FALSE}
+## crear grafica de predichos vs observados para el modelo poisson
 
-# Predichos vs observados:
-
-```{r}
-plot_ly (data=resultados_lm_glm,
+# crear grafica
+plot_ly (data = resultados_lm_glm,
          x = ~ACCIDENTES,
          y = ~pred_lm,
          text = ~FECHA,
-         type = "scatter" ,mode="markers",
-         name='Modelo lineal general',
-         marker=list(size=3,color='rgb(22, 96, 167)'))%>%
-  add_trace(y= ~pred_glm,
+         type = "scatter",
+         mode = "markers",
+         name = 'Modelo lineal general',
+         marker = list(size = 3, color = 'rgb(22, 96, 167)')) %>%
+  add_trace(y = ~pred_glm,
             text = ~FECHA,
-            name='Modelo lineal Poisson',
-            marker=list(size=3,color='rgb(255, 51, 0)'))%>%
-  add_trace(x=c(0:200),y=c(0:200),
-            mode="lines",text=rep(NA,201),
-            name="Identidad")%>%
-  layout(title='Registros ACCIDENTALIDAD',
-         xaxis=list(title="Observados"),
-         yaxis=list(title="Predichos"),
+            name = 'Modelo lineal Poisson',
+            marker = list(size = 3, color = 'rgb(255, 51, 0)')) %>%
+  add_trace(x = c(0:150), y = c(0:150),
+            mode = "lines",
+            text = rep(NA, 151),
+            name = "Identidad") %>%
+  layout(title = 'Registros ACCIDENTALIDAD',
+         xaxis = list(title = "Observados"),
+         yaxis = list(title = "Predichos"),
          legend = list(x = 0.75, y = 0.9))
 ```
 
-# Residuales vs observados:
-```{r}
-plot_ly (data=resultados_lm_glm,
+##### Residuales vs observados:
+```{r grafica_glm_residuales_vs_observados, message=FALSE, warning=FALSE}
+## crear grafica de residuales vs observados para el modelo poisson
+
+# crear grafica
+plot_ly (data = resultados_lm_glm,
          x = ~ACCIDENTES,
          y = ~res_lm,
-         type = "scatter" ,mode="markers",
-         name='Modelo lineal general',
+         type = "scatter",
+         mode = "markers",
+         name = 'Modelo lineal general',
          text = ~FECHA,
-         marker=list(size=3,color='rgb(22, 96, 167)'))%>%
-  add_trace(y= ~res_glm,
-            name='Modelo Poisson',
+         marker = list(size = 3, color = 'rgb(22, 96, 167)')) %>%
+  add_trace(y = ~res_glm,
+            name = 'Modelo Poisson',
             text = ~FECHA,
-            marker=list(size=3,color='rgb(255, 51, 0)'))%>%
-  layout(title='Registros ACCIDENTES',
-         xaxis=list(title="Observados"),
-         yaxis=list(title="Residuales"),
+            marker = list(size = 3, color = 'rgb(255, 51, 0)')) %>%
+  layout(title = 'Registros ACCIDENTES',
+         xaxis = list(title="Observados"),
+         yaxis = list(title="Residuales"),
          legend = list(x = 0.75, y = 0.9))
 ```
 
-# Predicción del 2018
-Cálculo de las predicciones:
-```{r}
-datos_val<-subset(acc_agrupado_1,subset=(FECHA>="2018-01-01" & FECHA<="2018-12-31"))
-y_pred_vl_lm<-predict(modelo_lm_1,newdata = datos_val)
-y_pred_vl_glm<-predict(modelo_glm,type="response",newdata = datos_val)
-r_vl_lm<-datos_val$ACCIDENTES-y_pred_vl_lm
-r_vl_glm<-datos_val$ACCIDENTES-y_pred_vl_glm
-r0_vl<-datos_val$ACCIDENTES-y0_tr
+##### Predicción del 2018
+
+Se calculan las predicciones para el modelo lineal y el modelo Poisson
+```{r validacion_lm_glm_2018, message=FALSE, warning=FALSE}
+## calcular valores pronosticados para los datos de validacion
+
+# crear subconjunto de los datos de validacion
+datos_val <- subset(acc_agrupado_1,
+                    subset = (FECHA >= "2018-01-01" & FECHA <= "2018-12-31"))
+
+# calcular media de datos de validacion
+yo_vl <- mean(datos_val$ACCIDENTES)
+
+# calcular valores pronosticados modelo lineal
+y_pred_vl_lm <- predict(modelo_lm_1, newdata = datos_val)
+
+# calcular valores pronosticados modelo poisson
+y_pred_vl_glm <- predict(modelo_glm, type = "response", newdata = datos_val)
+
+# calcular diferencias entre observados y pronosticados en validacion
+r_vl_lm <- datos_val$ACCIDENTES - y_pred_vl_lm
+r_vl_glm <- datos_val$ACCIDENTES - y_pred_vl_glm
+
+# calcular distancia entre datos observados y su media en la validacion
+r0_vl <- datos_val$ACCIDENTES - yo_vl
 ```
 
-# Cálculo de los $R^2$ de predicción:
-```{r}
-R_vl_lm<-mean(r_vl_lm^2)
-R_vl_glm<-mean(r_vl_glm^2)
+Se calculan los $R^2$ de predicción en la validación
+```{r r2_validacion, message=FALSE, warning=FALSE}
+## calculo del r2 en los datos de validacion
+
+# calcular suma cuadratica de la regresion para modelo lineal y poisson
+R_vl_lm <- mean(r_vl_lm^2)
+R_vl_glm <- mean(r_vl_glm^2)
+
+# calcular suma cuadratica total
 R0_vl<-mean(r0_vl^2)
-R2_vl_lm<-1-R_vl_lm/R0_vl
-R2_vl_glm<-1-R_vl_glm/R0_vl
-print(R2_vl_lm)
-```
 
-```{r}
+# calcular r2 y pseudo r2 en la validacion
+R2_vl_lm <- 1-R_vl_lm/R0_vl
+R2_vl_glm <- 1-R_vl_glm/R0_vl
+
+# visualizar resultados
+print(R2_vl_lm)
 print(R2_vl_glm)
 ```
 
-# Gráfico de los residuales en validación:
-```{r}
-resultados_lm_glm_val<-data.frame(FECHA=datos_val$FECHA,                            ACCIDENTES=datos_val$ACCIDENTES,
-                              pred_lm=y_pred_vl_lm,
-                              pred_glm=y_pred_vl_glm,
-                              res_lm=r_vl_lm,
-                              res_glm=r_vl_glm)
-```
+Se crea una gráfica de los residuales en validación
+```{r grafica_residuales_validacion, message=FALSE, warning=FALSE}
+## grafica de los residuales de los modelos lineales y poisson 
+## para los datos de validacion
 
-```{r}
-plot_ly (data=resultados_lm_glm_val,
+# crear dataframe
+resultados_lm_glm_val <- data.frame( FECHA = datos_val$FECHA,
+                                     ACCIDENTES = datos_val$ACCIDENTES,
+                                     pred_lm = y_pred_vl_lm,
+                                     pred_glm = y_pred_vl_glm,
+                                     res_lm = r_vl_lm,
+                                     res_glm = r_vl_glm)
+
+# crear grafica
+plot_ly (data = resultados_lm_glm_val,
          x = ~FECHA,
          y = ~ACCIDENTES,
-         type = "scatter" ,mode = "lines",
-         name='Real',
-         line=list(width=1,color='rgb(205, 12, 24)'))%>%
-  add_trace(y= ~pred_lm,
-            name='Modelo lineal general',
-            line=list(width=1,color='rgb(22, 96, 167)'))%>%
-  add_trace(y= ~pred_glm,
-            name='Modelo Poisson',
-            line=list(width=1,color='rgb(255, 51, 0)'))%>%
-  layout(title='Registros ACCIDENTES (Validación)',
-         xaxis=list(title="FECHA"),
-         yaxis=list(title="ACCIDENTES"),
+         type = "scatter",
+         mode = "lines",
+         name = 'Real',
+         line = list(width = 1, color = 'rgb(205, 12, 24)')) %>%
+  add_trace(y = ~pred_lm,
+            name = 'Modelo lineal general',
+            line = list(width = 1, color = 'rgb(22, 96, 167)')) %>%
+  add_trace(y = ~pred_glm,
+            name = 'Modelo Poisson',
+            line = list(width = 1, color = 'rgb(255, 51, 0)')) %>%
+  layout(title = 'Registros ACCIDENTES (Validación)',
+         xaxis = list(title="FECHA"),
+         yaxis = list(title="ACCIDENTES"),
          legend = list(x = 0.75, y = 0.9))
 ```
 
-##### Modelo árboles decisión modelo agrupado 1
+##### Modelo árbol de decisión para el grupo 1
 
- Entrenamiento del árbol
-```{r}
+Para entrenar árboles de decisiones se utilizará el grupo 1 y el paquete *rpart*.
+
+Entrenamiento del árbol
+```{r arbol_grupo1, message=FALSE, warning=FALSE}
+## ajustar un modelo de arboles de decision para el grupo 1
+
+# cargar paquete
 library(rpart)
-modelo_rpart<-rpart(ACCIDENTES~FECHA+CLASE+DIA_NOMBRE+PERIODO+FESTIVO+NAVIDAD+SEMSANTA+ESCOLAR,data=acc_agrupado_1, subset = (FECHA<="2017-12-31"))
-```
-# Visualización del resultado
 
-```{r}
+# crear el modelo
+modelo_rpart <- rpart(ACCIDENTES ~ FECHA + CLASE + DIA_NOMBRE + PERIODO + 
+                        FESTIVO + NAVIDAD + SEMSANTA + ESCOLAR,
+                      data = acc_agrupado_1, 
+                      subset = (FECHA <= "2017-12-31"))
+```
+
+##### Visualización del resultado del modelo
+```{r resultado_arbol, message=FALSE, warning=FALSE}
+## visualizar arbol
+
+# imprimir resultados
 print(modelo_rpart)
 ```
 
-Con la función rpart.plot():
-```{r}
+Se puede visualizar de una forma más cómoda para el usuario con la función *rpart.plot()* del paquete *rpart.plot*:
+```{r resultado_arbol_rpart, message=FALSE, warning=FALSE}
+## visualizar arbol
+
+# cargar paquete
 library(rpart.plot)
-rpart.plot(modelo_rpart,tweak = 1.1)
+
+# visualizar resultados
+rpart.plot(modelo_rpart, tweak = 1.1)
 ```
 
 Visualización de la importancia de las variables:
-```{r}
+```{r arbol_variables, message=FALSE, warning=FALSE}
+## visualizar el impacto de las variables en el modelo
+
+# ver resultados del modelo
 summary(modelo_rpart)
 ```
 
-# Cálculo de los $R^2$ de predicción y entrenamiento para el árbol:
-```{r}
-y_pred_tr_rpart<-predict(modelo_rpart)
-y_pred_vl_rpart<-predict(modelo_rpart,newdata = datos_val)
-r_tr_rpart<-acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"]-y_pred_tr_rpart
-r_vl_rpart<-datos_val$ACCIDENTES-y_pred_vl_rpart
-R_tr_rpart<-mean(r_tr_rpart^2)
-R_vl_rpart<-mean(r_vl_rpart^2)
-R2_tr_rpart<-1-R_tr_rpart/R0_tr
-R2_vl_rpart<-1-R_vl_rpart/R0_vl
-print(R2_tr_rpart)
-```
+Se procede con el cálculo de los $R^2$ de predicción y entrenamiento para el árbol:
+```{r r2_arbol, message=FALSE, warning=FALSE}
+## calcular el pseudo r2 del modelo de arbol para entramiento y validacion
 
-```{r}
+# hallar valores estimados y predichos
+y_pred_tr_rpart <- predict(modelo_rpart)
+y_pred_vl_rpart <- predict(modelo_rpart,newdata = datos_val)
+
+# calcular diferencia entre variable observada y variable estimada
+r_tr_rpart <- acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA <= "2017-12-31"] -
+              y_pred_tr_rpart
+r_vl_rpart <- datos_val$ACCIDENTES - y_pred_vl_rpart
+
+# calcular la suma cuadratica de la estimacion 
+R_tr_rpart <- mean(r_tr_rpart^2)
+R_vl_rpart <- mean(r_vl_rpart^2)
+
+# calcular los pseudo r2
+R2_tr_rpart <- 1 - R_tr_rpart/R0_tr
+R2_vl_rpart <- 1 - R_vl_rpart/R0_vl
+
+# ver resultados
+print(R2_tr_rpart)
 print(R2_vl_rpart)
 ```
 
-# Comparación de todos los modelos
-Comparación en el entrenamiento
-```{r}
-comparacion_tr<-data.frame(FECHA=acc_agrupado_1$FECHA[acc_agrupado_1$FECHA<="2017-12-31"],
-                           ACCIDENTES=acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA<="2017-12-31"],
-                           glm=y_pred_tr_glm,
-                           arbol=y_pred_tr_rpart)
+#### Comparación de todos los modelos
+
+Se crea una nueva tabla que permita comparar los modelos en el entrenamiento:
+```{r comparar_modelos_entrenamiento, message=FALSE, warning=FALSE}
+## crear dataframe de resultados en entrenamiento
+
+# crear dataframe
+comparacion_tr <- data.frame(
+  FECHA = acc_agrupado_1$FECHA[acc_agrupado_1$FECHA <= "2017-12-31"],
+  ACCIDENTES = acc_agrupado_1$ACCIDENTES[acc_agrupado_1$FECHA <= "2017-12-31"],
+  glm = y_pred_tr_glm,
+  arbol = y_pred_tr_rpart)
 ```
 
-# Gráfica de todas las series en entrenamiento:
-```{r}
-plot_ly (data=comparacion_tr,
+Se grafican todas las series en entrenamiento:
+```{r grafica_modelos_entrenamiento, message=FALSE, warning=FALSE}
+## graficas de los 3 modelos en entrenamiento y datos observados
+
+# graficar
+plot_ly (data = comparacion_tr,
          x = ~FECHA,
          y = ~ACCIDENTES,
-         type = "scatter" ,mode = "lines",
-         name='Real',
-         line=list(width=1,color='rgb(205, 12, 24)'))%>%
-  add_trace(y= ~glm,
-            name='Modelo Poisson',
-            line=list(width=1,color='rgb(22, 96, 167)'))%>%
-  add_trace(y= ~arbol,
-            name='Árbol',
-            line=list(width=1,color='rgb(255, 51, 0)'))%>%
-  layout(title='Registros ACCIDENTES (Entrenamiento)',
-         xaxis=list(title="FECHA"),
-         yaxis=list(title="ACCIDENTES"),
+         type = "scatter",
+         mode = "lines",
+         name = 'Real',
+         line = list(width = 1, color = 'rgb(205, 12, 24)')) %>%
+  add_trace(y = ~glm,
+            name = 'Modelo Poisson',
+            line = list(width = 1, color = 'rgb(22, 96, 167)')) %>%
+  add_trace(y = ~arbol,
+            name ='Árbol',
+            line = list(width = 1, color = 'rgb(255, 51, 0)')) %>%
+  layout(title = 'Registros ACCIDENTES (Entrenamiento)',
+         xaxis = list(title = "FECHA"),
+         yaxis = list(title = "ACCIDENTES"),
          legend = list(x = 0.75, y = 0.9))
 ```
 
-# Comparación en la validación
-```{r}
-comparacion_vl<-data.frame(FECHA=datos_val$FECHA,
-                           ACCIDENTES=datos_val$ACCIDENTES,
-                           glm=y_pred_vl_glm,
-                           arbol=y_pred_vl_rpart)
+Se crea una nueva tabla que permita comparar los modelos en la validación:
+```{r comparar_modelos_validacion, message=FALSE, warning=FALSE}
+## crear dataframe de resultados en validacion
+
+# crear dataframe
+comparacion_vl <- data.frame(FECHA = datos_val$FECHA,
+                             ACCIDENTES = datos_val$ACCIDENTES,
+                             glm = y_pred_vl_glm,
+                             arbol = y_pred_vl_rpart)
 ```
 
-# Gráfica de todas las series en entrenamiento:
-```{r}
-plot_ly (data=comparacion_vl,
+Se grafican todas las series en validación:
+```{r grafica_modelos_validacion, message=FALSE, warning=FALSE}
+## graficas de los 3 modelos en entrenamiento y datos observados
+
+# graficar
+plot_ly (data = comparacion_vl,
          x = ~FECHA,
          y = ~ACCIDENTES,
-         type = "scatter" ,mode = "lines",
-         name='Real',
-         line=list(width=1,color='rgb(205, 12, 24)'))%>%
+         type = "scatter",
+         mode = "lines",
+         name = 'Real',
+         line = list(width = 1, color = 'rgb(205, 12, 24)')) %>%
   add_trace(y= ~glm,
-            name='Modelo Poisson',
-            line=list(width=1,color='rgb(22, 96, 167)'))%>%
-  add_trace(y= ~arbol,
-            name='Árbol',
-            line=list(width=1,color='rgb(255, 51, 0)'))%>%
-  layout(title='Registros ACCIDENTES (Validación)',
-         xaxis=list(title="FECHA"),
-         yaxis=list(title="ACCIDENTES"),
+            name = 'Modelo Poisson',
+            line = list(width = 1, color = 'rgb(22, 96, 167)')) %>%
+  add_trace(y = ~arbol,
+            name = 'Árbol',
+            line = list(width = 1, color = 'rgb(255, 51, 0)')) %>%
+  layout(title = 'Registros ACCIDENTES (Validación)',
+         xaxis = list(title = "FECHA"),
+         yaxis = list(title = "ACCIDENTES"),
          legend = list(x = 0.75, y = 0.9))
 ```
-
-
-# Comparación con los (pseudo) $R^2$:
-
-```{r}
-Entrenamiento<-c(R2_lm,R2_tr_glm,R2_tr_rpart)
-Validacion<-c(R2_vl_lm,R2_vl_glm,R2_vl_rpart)
-MSE_acc <- c(R_vl_lm,R_vl_glm,R_vl_rpart)
-nombres<-c("lm","glm","árbol")
-ResultadosR2<-data.frame(Entrenamiento=Entrenamiento,Validacion=Validacion,MSE=MSE_acc)
-rownames(ResultadosR2)<-nombres
-ResultadosR2
-```
-
 
 [Regresar](#tabla-de-contenido)
 
 ### **2.5. Evaluación del modelo**
 
- El Modelo ajustado de Poisson es el que menor error cuadrático muestra:
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-print(ResultadosR2[which(ResultadosR2$MSE==min(ResultadosR2$MSE)),3])
+Se crea una tabla con la información de los $R^2$ y los errores cuadráticos medios (*MSE*) para elegir el modelo que mejor ajusta el comportamiento de los datos.
+```{r tabla_r2_modelos, message=FALSE, warning=FALSE}
+## crear tabla informativa de los r2 para los 3 modelos
+
+# r2 de entrenamiento
+Entrenamiento <- c(R2_lm, R2_tr_glm, R2_tr_rpart)
+
+# r2 de validacion
+Validacion <- c(R2_vl_lm, R2_vl_glm, R2_vl_rpart)
+
+# error cuadratico medio
+MSE_acc <- c(R_vl_lm, R_vl_glm, R_vl_rpart)
+
+# vector de nombres
+nombres <- c("lm", "glm", "árbol")
+
+# crear dataframe
+ResultadosR2 <- data.frame(Entrenamiento = Entrenamiento,
+                           Validacion = Validacion,
+                           MSE = MSE_acc)
+
+# cambiar nombre de filas
+rownames(ResultadosR2) <- nombres
+
+# ver resultados
+ResultadosR2
 ```
 
-Por lo que a partir de estas evidencias lo escogemos como el modelo más conveniente para hacer la predicción.
+El criterio de selección será el Error Cuadrático Medio y el modelo que tiene el mínimo es:
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+print(ResultadosR2[which(ResultadosR2$MSE == min(ResultadosR2$MSE)),])
+```
+
+A partir de estas evidencias se escoge el modelo lineal general con distribución de Poisson como el modelo más conveniente para hacer la predicción.
 
 [Regresar](#tabla-de-contenido)
 
 ### **2.6. Implementación**
  
- Se prepara el modelo para hacer la predicción del año 2019, se importa el correspondiente archivo de entrada para ser la predicción.
+Se prepara el modelo para hacer la predicción del año 2019, se importa el correspondiente archivo de entrada para realizar la predicción.
 
-```{r}
-matriz_2019 <- fread("files/matriz-2019-pronostico.csv",sep = ";",colClasses = "character")
+```{r lectura_matriz_2019, message=FALSE, warning=FALSE}
+## lectura de los datos a utilizar para pronosticar 2019
+
+# lectura
+matriz_2019 <- fread("files/matriz-2019-pronostico.csv",
+                     sep = ";",
+                     colClasses = "character")
+
+# organizar fecha y periodo
 matriz_2019$FECHA <- as.Date(matriz_2019$FECHA)
 matriz_2019$PERIODO <- as.numeric(matriz_2019$PERIODO)
 ```
 
-##### Se crea el nuevo vector de predicciones
-```{r}
+Se crea el nuevo vector de predicciones
+```{r prediccion_2019, message=FALSE, warning=FALSE}
+## calcular la prediccion para el 2019
+
+# calcular prediccion
 ACCIDENTES_PRED <- predict(modelo_glm, newdata = matriz_2019, type = "response")
 ```
 
 Se guarda junto el conjunto de datos nuevo para ser visualizado en la aplicación
-```{r}
-ACCIDENTES_PRED <- matriz_2019%>%mutate(ACCIDENTES= round(predict(modelo_glm, newdata = matriz_2019, type = "response"),0))
+```{r guardar_prediccion_2019, message=FALSE, warning=FALSE}
+## guardar nuevas predicciones
 
-fwrite(ACCIDENTES_PRED,"files/matriz-2019-pronosticada.csv", sep = ";")
+# organizar nuevas predicciones en matriz_2019
+ACCIDENTES_PRED <- matriz_2019 %>% 
+                   mutate(ACCIDENTES = round(predict(modelo_glm, 
+                                                     newdata = matriz_2019, 
+                                                     type = "response"),
+                                             0)
+                          )
+
+# guardar nuevo conjunto de datos
+fwrite(ACCIDENTES_PRED, "files/matriz-2019-pronosticada.csv", sep = ";")
 ```
+
+El pronóstico de los datos es utilizado para crear una aplicación en línea, totalmente abierta al público y puede consultarse en [este enlace](https://juapatral.shinyapps.io/MoviliApp/)).
 
 [Regresar](#tabla-de-contenido)
 
 ## **3. Conclusiones**
 
-En este trabajo se analizó un conjunto de datos relacionados con accidentes de tráfico donde se busca un modelo que se acerque a la condicción actual del fenómeno que presentan los datos reales. Las técnicas de análisis descriptivo de grandes cantidades de datos a partir de la analítica permitieron encontrar tendencias y patrones ocultos de los datos. La comparación de estos patrones con los resultados del modelo de accidentalidad vial planteado ayuda a la validación del modelo pues fundamenta la selección de las variables que se enfatizan como las más incidentes a partir de la visualización de su ocurrencia en los registros actuales.
+En este trabajo se analizó un conjunto de datos relacionados con accidentes de tráfico, donde se busca un modelo que se acerque a la condicción actual del fenómeno que presentan los datos reales. Las técnicas de análisis descriptivo de grandes cantidades de datos a partir de la analítica permitieron encontrar tendencias y patrones ocultos de los datos. La comparación de estos patrones con los resultados del modelo de accidentalidad vial planteado ayuda a la validación del modelo dado que fundamenta la selección de las variables que se enfatizan como las más incidentes a partir de la visualización de su ocurrencia en los registros actuales.
 
 Se evaluaron tres tipos de modelos: la regresión lineal multivariada, regresión lineal generalizada con distribuación Poisson y árbol de decisiones. Se encontró que los factores que más influencian los accidentes de tránsito corresponden a la clase de accidente, día del accidente y un fuerte impacto en determinados días especiales a lo largo del año, como los días festivos, las vacaciones colectivas, entre otros.
 
-El modelo de regresión generalizado con regresión Poisson mostró ser efectivo en este caso porque el fenomeno se define como un conteo influenciado por un conjunto de variables predictoras, obteniendo un $R^2$ más cercano a uno, después de eliminar variables que no son estadísticamente significativas para la muestra examinada.
+El modelo de regresión generalizado con regresión Poisson mostró ser efectivo en este caso porque el fenómeno se define como un conteo influenciado por un conjunto de variables predictoras, obteniendo un $R^2$ más cercano a uno y un Error Cuadrático Medio menor, después de eliminar variables que no son estadísticamente significativas para la muestra examinada.
 
 En la  verificación del modelo se evidencian ciertos comportamientos en la predicción del 2019 como en los datos reales, algunos de éstos fueron:
 
@@ -1183,7 +1558,7 @@ En la  verificación del modelo se evidencian ciertos comportamientos en la pred
 
 + El día más traumático en movilidad es el viernes. En efecto, es un día de mucho tráfico para una ciudad como Medellín ya que se finaliza la jornada laboral, semana de trabajo y la gente opta por salir a divertirse o llegar rápido a sus casas, por lo que el contexto hace que se generen más siniestros de lo normal.
 
-+ Los días más tranquilo son el domingo, por ser día de descanso para estudiantes y trabajadores, y el lunes, por ser inicio de semana la gente está menos cansada y por lo tanto más alerta y está comenzando con la rutina.
++ Los días más tranquilo son el domingo, por ser día de descanso para estudiantes y trabajadores, y el lunes, que está influenciado por los días festivos que, en la mayoría de los casos, son lunes. 
 
 Para el uso de técnicas de analítica predictiva, tuvimos en cuenta que la calidad del resultado depende de la calidad de los datos y de cómo estos se hayan recogido, organizado y depurado. Esto es esencial para la construcción de un modelo hipotético acerca de cómo se comporta el fenómeno a analizar y, con ello, de cómo podrá comportarse en el futuro.
 
@@ -1191,15 +1566,23 @@ Para el uso de técnicas de analítica predictiva, tuvimos en cuenta que la cali
 
 ## **4. Bibliografía**
 
++ Alcaldia de Medellín. (2013) *Plan de movilidad segura de Medellín 2014-2020.*
+
++ Cabrera G., López A. (2017) *Epidemiología de incidentes viales en Medellín-Colombia, 2010-2015.  Revista Facultad Nacional de Salud Pública.*
+
 + Friedman, J., Hastie, T., & Tibshirani, R. (2001). *The elements of statistical learning (Vol. 1, No. 10). New York: Springer series in statistics.*
 
 + Hothorn, T., & Everitt, B. S. (2014). *A handbook of statistical analyses using R. Chapman and Hall/CRC.*
 
 + James, G., Witten, D., Hastie, T., & Tibshirani, R. (2013). *An introduction to statistical learning (Vol. 112, p. 18). New York: springer.*
 
++ Jaramillo C., Montoya S. (2017) *Movilidad Segura en Medellín, Observatorio de Políticas Públicas del Consejo de Medellin.*
+
 + McCullagh, P. (2019). *Generalized linear models. Routledge.*
 
 + Montgomery, D. C., & Runger, G. C. (2007). *Applied statistics and probability for engineers, (With CD). John Wiley & Sons.*
+
++ Ospina J. (2019) *Introducción a la analítica predictiva, Vehículos registrados en el RUNT. Material de clase especialización en Analítica Unal.*
 
 ---
 
@@ -1269,9 +1652,11 @@ Para el uso de técnicas de analítica predictiva, tuvimos en cuenta que la cali
 
 + [Lista de pestañas en *Shiny*](https://shiny.rstudio.com/reference/shiny/1.0.2/navlistPanel.html)
 
++ [Error en pestañas en *Shiny* (comentario de Natalie K)](https://groups.google.com/forum/#!topic/shiny-discuss/CzO8wb15RPI)
+
 ---
 
-**Demás**
+**Otras**
 
 + [Paleta de colores para mapas](http://colorbrewer2.org/#type=diverging&scheme=RdYlBu&n=7)
 

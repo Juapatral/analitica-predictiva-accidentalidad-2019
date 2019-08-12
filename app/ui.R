@@ -160,7 +160,7 @@ fluidPage(
         tabPanel("Video explicativo",
 
                  # video embebido
-                 HTML('<iframe width="813" height="457" src="https://www.youtube.com/embed/tAA_yWX8ycQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'),
+                 HTML('<iframe width="813" height="457" src="https://www.youtube.com/embed/yK3SiymGsHs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'),
 
                  # version
                  textOutput("version")

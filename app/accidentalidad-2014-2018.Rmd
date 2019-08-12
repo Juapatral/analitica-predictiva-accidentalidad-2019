@@ -22,7 +22,12 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = F)
+knitr::opts_chunk$set(message = F)
 ```
+## **Resumen**
+
+>*En cada instante se generan grandes volúmenes de datos y es de interés para los analístas obtener información valiosa y confiable de estos y así incidir en la toma de decisiones para mejorar los resultados económicos y sociales de la empresa, la entidad o la sociedad en general. Un ejemplo de estos datos masivos se reflan en la accidentalidad vial, que se ha ido posicionando año tras año como uno de los problemas que más costos sociales y económicos genera. Medellín no ha sido la excepción y en la actualidad buena parte de las políticas públicas se movilizan para mitigar este fenómeno. En este trabajo se decidió utilizar la información de la accidentalidad vehicular en el municipio de Medellín para los años 2014 a 2018 para pronosticar el total de accidentes por tipo de accidente para el año 2019. Se evaluaron tres tipos de modelos: la regresión lineal multivariada, regresión lineal generalizada con distribuación Poisson y árbol de decisiones. Algunos de los factores que tenían una influencia fuerte sobre el fenomeno de los accidentes son el tipo de accidente, el día del accidente y determinados días especiales (como festivos, semana santa). Se encontró que un modelo de regresión lineal generalizado de distribución Poisson se acerca más al comportamiento real del fenomeno.*
 
 ## **Tabla de contenido**
  
@@ -57,7 +62,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## **1. Introducción**
 
-Cada día se generan cantidades enormes de datos que reposan en los sistemas de información y bases de datos públicas o privadas. Es de interés para los analístas de datos obtener la mayor cantidad de información valiosa y confiable de estos datos, generando valor agregado a las entidades y así incidir en la toma de decisiones para mejorar los procesos internos y, por ende, los resultados económicos y sociales de la entidad. (**FALTA UNA REFERENCIA**)
+Cada día se generan cantidades enormes de datos que reposan en los sistemas de información y bases de datos públicas o privadas. Es de interés para los analístas de datos obtener la mayor cantidad de información valiosa y confiable de estos datos, generando valor agregado a las entidades y así incidir en la toma de decisiones para mejorar los procesos internos y, por ende, los resultados económicos y sociales de la entidad. 
 
 Por esta razón, los estudiantes de la materia Analítica Predictiva del Posgrado de Analítica de la Universidad Nacional de Colombia tienen como objetivo identificar y dar solución a un problema utilizando las técnicas estadísticas y de ciencia de datos que consideren óptimas. 
 
@@ -83,9 +88,9 @@ El objetivo de este trabajo es entrenar un modelo predictivo que permita encontr
 Los entregables del trabajo son:
 
 1. Código de ejecución del modelo. (disponible [aquí](https://juapatral.github.io/analitica-predictiva-accidentalidad-2019/app/accidentalidad-2014-2018.Rmd))
-2. Reporte que contenga el entendimiento desarrollado en el trabajo, bibliografía de soporte y la metodología seguida debidamente justificada. (disponible [aquí](https://juapatral.github.io/analitica-predictiva-accidentalidad-2019/app/accidentalidad-2014-2018.html))
+2. Reporte que contenga el entendimiento desarrollado en el trabajo, bibliografía de soporte y la metodología seguida debidamente justificada. (este mismo informe, disponible [aquí](https://juapatral.github.io/analitica-predictiva-accidentalidad-2019/app/accidentalidad-2014-2018.html))
 3. Aplicativo web que permita visualizar los datos y la predicción del modelo. (disponible [aquí](https://google.com.co)).
-4. Video promocional del aplicativo web, explicando su funcionalidad. (disponible [aquí](https://youtube.com)) 
+4. Video promocional del aplicativo web, explicando su funcionalidad. (disponible [aquí](https://youtu.be/yK3SiymGsHs) 
 
 ### **1.2. Metodología**
 
@@ -109,8 +114,7 @@ Se propone utilizar la metodología [CRISP-DM](https://jdvelasq.github.io/ruta-n
 
 ### **2.1. Identificación del problema**
 
-La accidentalidad vial en las ciudades se ha ido posicionando año tras año como uno de los problemas que más costos sociales y económicos genera hasta llegar a denominarse como “pandemia”. Medellín no ha sido la excepción y en la actualidad buena parte de las políticas públicas se movilizan para mitigar este fenómeno.
-Se estima que anualmente los costos totales por accidentalidad solo para Medellín son cerca de $ 1,8 billones, así que este es un problema cuya minimización puede dejar muchas ganancias.
+La accidentalidad vial en las ciudades se ha ido posicionando año tras año como uno de los problemas que más costos sociales y económicos genera hasta llegar a denominarse como “pandemia”. Medellín no ha sido la excepción y en la actualidad buena parte de las políticas públicas se movilizan para mitigar este fenómeno. Se estima que anualmente los costos totales por accidentalidad solo para Medellín son cerca de $ 1,8 billones, así que este es un problema cuya minimización puede dejar muchas ganancias.
 
 Una herramienta importante y base para la toma de decisiones es una estimación precisa que explique el problema y que permita predecir cuándo y dónde puede suceder determinado tipo de accidente.   
 
@@ -137,12 +141,12 @@ RADICADO|Identificación única del accidente ante la Secretaría de Movilidad|s
 HORA|Hora aproximada de la ocurrencia del accidente|datetime|Sin
 DIA_NOMBRE|Nombre del día de la semana de la ocurrencia del accidente|string|Sin
 PERIODO|Año de la ocurrencia del accidente|integer|Sin
-CLASE|Tipo de accidente|string|Opciones entre: Atropello, caída del ocupante, choque, incendio, volcamiento y otro.
+CLASE|Tipo de accidente|string|Opciones entre: atropello, caída del ocupante, choque, incendio, volcamiento y otro.
 DIRECCION|Dirección descriptiva de la ubicación de la ocurrencia del accidente|string|Sin
 DIRECCION_ENC|Dirección encasillada de la ubicación de la ocurrencia del accidente|string|Formato único de direcciones en el sistema de información de la Alcaldía de Medellín
 CBML|Identificación única del lote más cercano a la ubicación de la ocurrencia del accidente|string|Acrónimo de comuna, barrio, manzana, lote
 TIPO_GEOCOD|Tipo de ubicación según información catastral|string|Más información en el geocodificador de la Alcaldía disponible [aquí](https://www.medellin.gov.co/geomedellin/index.hyg#openModal)
-GRAVEDAD|Gravedad del accidente|string|Opciones entre: Herido, muerto y solo daños
+GRAVEDAD|Gravedad del accidente|string|Opciones entre: herido, muerto y solo daños
 BARRIO|Barrio de la ubicación de la ocurrencia del accidente|string|Sin
 COMUNA|Comuna de la ubicación de la ocurrencia del accidente|string|Sin
 DISENO|Tipo de entramado de la ubicación de la ocurrencia del accidente|string|Opciones entre: ciclo ruta, glorieta. intersección, lote o predio, paso a nivel, paso elevado, paso inferior, pontón, puente, tramo vía, túnel o vía peatonal
@@ -157,12 +161,12 @@ MES_NOMBRE|Nombre del mes de la ocurrencia del accidente|integer|Columna vacía
 
 ### **2.3. Descripción del conjunto de datos**
 
-Para el análisis de la información se utilizará el dialecto *Tidyverse*, los paquetes *data.table*, *plotly*, *rmarkdown*, *shiny* y *leaflet* para lectura y visualización de los datos y *stats*, *rpart* y *rpart.plot* para estimar los modelos.
+Para el análisis de la información se utilizará el dialecto *Tidyverse* para la limpieza de datos, los paquetes *data.table*, *plotly*, *rmarkdown*, *shiny* y *leaflet* para lectura y visualización y *stats*, *rpart* y *rpart.plot* para estimar los modelos.
 
-#### **2.3.1. Limpieza y resumen de los datos**
 ```{r Paquetes, message=FALSE, warning=FALSE}
-# se instalan los paquetes necesarios
+## se instalan y cargan los paquetes necesarios
 
+# instalar paquetes
 #install.packages("tidyverse")    # dialecto de ciencia de datos
 #install.packages("data.table")   # manejo de tablas
 #install.packages("ggplot2")      # manejo de graficas
@@ -176,7 +180,7 @@ Para el análisis de la información se utilizará el dialecto *Tidyverse*, los 
 #install.packages("rpart")        # arboles de decisiones
 #install.packages("rpart.plot")   # graficar arboles
 
-# cargar librerias
+# cargar paquetes
 library(data.table)   # manejo de tablas
 library(purrr)        # optimizacion de bucles
 library(dplyr)        # manejo de tablas
@@ -187,12 +191,15 @@ library(lubridate)    # limpieza de fechas
 library(sf)           # manejo de archivos espaciales
 ```
 
+#### **2.3.1. Limpieza y resumen de los datos**
 
 De manera inicial se leen los archivos.
 
 **Nota al ejecutador de código:** para algunos sistemas operativos o versiones de paquetes la limpieza no funciona correctamente, por lo que se recomienda volver a cargar el archivo a partir [aquí.](#nueva-lectura)
 
 ```{r lectura_consolidado, message=FALSE, warning=FALSE}
+## lectura de archivos
+
 # lista archivos
 lista <- list.files(pattern = "^Acc.*.csv", include.dirs = T, recursive = T)
 
@@ -218,9 +225,11 @@ Se identifica que se deben hacer las siguientes correcciones en la tabla *acc*:
 
 * Se crea la columna *COMUNA_BARRIO* a partir de la columna *CBML* con el objetivo de que sirva como clave foránea para la unión con el archivo espacial de barrios, disponible [aquí.](https://geomedellin-m-medellin.opendata.arcgis.com/datasets/limite-barrio-vereda-catastral) 
 ```{r primera_limpieza_acc, message=FALSE, warning=FALSE}
+## limpieza de la tabla
+
 # organizar fecha
 acc$FECHA <- ymd(gsub(pattern = "T.*", replacement = "", acc$FECHA),
-                  "%Y-%M-%D")[1:209426]
+                 "%Y-%M-%D")[1:209426]
 
 # eliminar datos nulos y corregir clase
 acc <- acc[-which(acc$CLASE == ""),]
@@ -252,6 +261,8 @@ Se procede a cargar el archivo espacial de barrios para identificar correctament
 
 * Se renombran las columnas de *NOMBRE_BAR* y *NOMBRE_COM* por *BARRIO* y *COMUNA* respectivamente.
 ```{r union_espacial, message=FALSE, warning=FALSE}
+## carga de archivo espacial de barrios
+
 # cargar archivo shp de barrios de medellin
 barrio <- read_sf("files/Limite_Barrio_Vereda_Catastral/Limite_Barrio_Vereda_Catastral.shp")
 
@@ -280,6 +291,8 @@ head(acc)
 
 Se realiza la lectura de la tabla de días especiales, se limpia y se realiza unión con la tabla de accidentes. Además, se cambia las columnas tal que si es un día especial tenga la marcación *Si*, de lo contrario será *No*.
 ```{r dias_especiales, message=FALSE, warning=FALSE}
+## carga de archivo de fechas especiales
+
 # lectura del archivo
 festivos <- fread("files/festivos_y_especiales.csv", header = T)
 
@@ -304,6 +317,8 @@ head(festivos)
 
 Se realiza la unión de las tablas y se convierten los datos de los días especiales a *No* en caso de que no haya encontrado coincidencia en la unión.
 ```{r union_dias_especiales, message=FALSE, warning=FALSE}
+# union las tablas de dias especiales y accidentes
+
 # union de tablas
 acc <- merge(x = acc, y = festivos, by = "FECHA", all.x = T)
 
@@ -322,6 +337,8 @@ head(acc)
 
 Se realiza la conversión a la codificación [*UTF-8*](https://en.wikipedia.org/wiki/UTF-8) y se guarda el nuevo archivo.
 ```{r conversion-guardado, message=FALSE, warning=FALSE}
+## guardar archivo definitivo 
+
 # convertir a utf8
 acc[,2:length(acc)] <- map(.x = acc[,2:length(acc)], .f = enc2utf8)
 
@@ -337,6 +354,8 @@ gc(reset = T)
 **Nota:** para algunos sistemas operativos o versiones de paquetes la limpieza no funciona correctamente, por lo que se recomienda volver a cargar el archivo a partir de este punto y no ejecutar el código anterior. 
 
 ```{r cargar-archivo, message=FALSE, warning=FALSE}
+## carga de archivo definitivo
+
 # volver a cargar el archivo
 acc <- fread("files/accidentalidad_georreferenciada_completa.csv",
              sep = ",",
@@ -358,8 +377,8 @@ X|Coordenada X (longitud) de la ubicación del accidente|float|Coordenadas en Ma
 Y|Coordenada Y (latitud) de la ubicación del accidente|float|Coordenadas en Magna Medellín. Ver nota. 
 DIA_NOMBRE|Nombre del día de la semana de la ocurrencia del accidente|string|Sin
 PERIODO|Año de la ocurrencia del accidente|integer|Sin
-CLASE|Tipo de accidente|string|Opciones entre: Atropello, caída del ocupante, choque, incendio, volcamiento y otro.
-GRAVEDAD|Gravedad del accidente|string|Opciones entre: Herido, muerto y solo daños
+CLASE|Tipo de accidente|string|Opciones entre: atropello, caída del ocupante, choque, incendio, volcamiento y otro.
+GRAVEDAD|Gravedad del accidente|string|Opciones entre: herido, muerto y solo daños
 DISENO|Tipo de entramado de la ubicación de la ocurrencia del accidente|string|Opciones entre: ciclo ruta, glorieta. intersección, lote o predio, paso a nivel, paso elevado, paso inferior, pontón, puente, tramo vía, túnel o vía peatonal
 MES|Número del mes de la ocurrencia del accidente|integer|Sin
 DIA|Día del mes de la ocurrencia del accidente|integer|Sin
@@ -375,42 +394,46 @@ ESCOLAR|Indicador de si el día pertenece a la época de vacaciones escolares o 
 
 #### **2.3.2. Análisis**
 
-Realizaremos un análisis descriptivo para buscar identificar las variables asociadas a la accidentalidad vial en la ciudad de Medellín a través del análisis y la interpretación de las cifras de accidentes registrados en la Secretaría de Movilidad.
+Se realiza un análisis descriptivo para identificar las variables asociadas a la accidentalidad vial en la ciudad de Medellín a través del análisis y la interpretación de las cifras de accidentes registrados en la Secretaría de Movilidad.
 
-##### Accidentalidad por día, mes y año
-La siguiente gráfica muestra el registro de accidentes por día, mes y año
+Se crea una funcion para crear gráficos compuestos de varios subgráficos, la cual se llamará *multiplot*.
+```{r funcion_subgraficos}
+## funcion multiplot
 
-```{r}
-#Para realizar la un gráfico con subgráficos creamos la función multiplots así:
+#librerias para graficos y subgraficos
 library(ggplot2)
 library(grid)
-multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 
-  # Make a list from the ... arguments and plotlist
+# crear funcion multiplot
+multiplot <- function(..., plotlist = NULL, file, cols = 1, layout = NULL) {
+
+  # hacer una lista de los argumentos en ... y plotlist
   plots <- c(list(...), plotlist)
 
   numPlots = length(plots)
 
-  # If layout is NULL, then use 'cols' to determine layout
+  # si layout es NULL, entonces use columnas para establecerlo
   if (is.null(layout)) {
-    # Make the panel
-    # ncol: Number of columns of plots
-    # nrow: Number of rows needed, calculated from # of cols
+    # crear el panel
+    # ncol: numero de columnas del grafico
+    # nrow: numero de filas, calculado del numero de columnas
     layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
-                    ncol = cols, nrow = ceiling(numPlots/cols))
+                     ncol = cols, 
+                     nrow = ceiling(numPlots/cols))
   }
 
  if (numPlots==1) {
     print(plots[[1]])
 
   } else {
-    # Set up the page
+    # configurar la pagina
     grid.newpage()
     pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
 
-    # Make each plot, in the correct location
+    # poner cada grafico en la posicion correcta
     for (i in 1:numPlots) {
-      # Get the i,j matrix positions of the regions that contain this subplot
+      # obtener la posicion i,j de la matriz de la region que va a contener 
+      # el subgrafico
       matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
 
       print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
@@ -420,44 +443,72 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 }
 ```
 
+##### Accidentalidad por día, mes y año
+La siguiente gráfica muestra el registro de accidentes por día, mes y año.
 ```{r}
+## grafica dia, mes y anio
+
+# agrupar por nombre del dia
 acc_nombredia <- acc %>% 
-              group_by(DIA_NOMBRE) %>% 
-              summarize(total_registros = n())
-acc_nombredia$DIA_NOMBRE<-ordered(acc_nombredia$DIA_NOMBRE,levels=c( "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO","DOMINGO"))
-# Gráfico día
-p2 <- ggplot(data=acc_nombredia, aes(x=DIA_NOMBRE, y=total_registros)) + 
-    geom_bar(stat="identity", position="dodge", fill = "dodgerblue3", color = "grey48", alpha = 
-    .8)+
-    xlab("Días")+ # eje x
-    ylab("Total registros")+ # eje y
-    theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5))+ # Girar label eje x
-    ggtitle("Número de accidentes por días de la semana") #título del gráfico
-#Gráfico mes
+                 group_by(DIA_NOMBRE) %>% 
+                 summarize(total_registros = n())
+
+# establecer orden de los dias
+acc_nombredia$DIA_NOMBRE <- ordered(acc_nombredia$DIA_NOMBRE, 
+                                    levels = c( "LUNES", "MARTES", "MIERCOLES",
+                                                "JUEVES", "VIERNES","SABADO",
+                                                "DOMINGO")
+                                    )
+# grafico dia
+p2 <- ggplot(data = acc_nombredia, aes(x = DIA_NOMBRE, y = total_registros)) + 
+      geom_bar(stat = "identity", 
+               position="dodge", 
+               fill = "dodgerblue3", 
+               color = "grey48", 
+               alpha = 0.8) +
+      xlab("Días") + # eje x
+      ylab("Total registros") + # eje y
+      # Girar label eje x
+      theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = .5)) + 
+      ggtitle("Número de accidentes por días de la semana") #título del gráfico
+
+# agrupar por mes
 acc_mes <- acc %>% 
-              group_by(MES) %>% 
-              summarize(total_registros = n())
-p1 <- ggplot(data=acc_mes, aes(x=MES, y=total_registros)) + 
-    geom_bar(stat="identity", position="dodge", fill = "dodgerblue3", color = "grey48", alpha = 
-    .8)+
-    xlab("Mes")+ # eje x
-    ylab("Total registros")+ # eje y
-    ggtitle("Número de accidentes por mes") #título del gráfico
-#Gráfico año
+           group_by(MES) %>% 
+           summarize(total_registros = n())
+
+# grafica mes
+p1 <- ggplot(data = acc_mes, aes(x = MES, y = total_registros)) + 
+      geom_bar(stat = "identity", 
+               position="dodge", 
+               fill = "dodgerblue3", 
+               color = "grey48", 
+               alpha = 0.8) +
+      xlab("Mes") + # eje x
+      ylab("Total registros") + # eje y
+      ggtitle("Número de accidentes por mes") #título del gráfico
+
+# agrupar por anio
 acc_ano <- acc %>% 
-              group_by(PERIODO) %>% 
-              summarize(total_registros = n())
-p3 <- ggplot(data=acc_ano, aes(x=PERIODO, y=total_registros)) + 
-    geom_bar(stat="identity", position="dodge", fill = "dodgerblue3", color = "grey48", alpha = 
-    .8)+
-    xlab("Año")+ # eje x
-    ylab("Total registros")+ # eje y
-    ggtitle("Número de accidentes por año") #título del gráfico
+           group_by(PERIODO) %>% 
+           summarize(total_registros = n())
 
-multiplot(p1, p2, p3, cols=2)
+# grafico anio
+p3 <- ggplot(data = acc_ano, aes(x = PERIODO, y = total_registros)) + 
+      geom_bar(stat = "identity", 
+               position = "dodge", 
+               fill = "dodgerblue3", 
+               color = "grey48", 
+               alpha = 0.8) +
+      xlab("Año") + # eje x
+      ylab("Total registros") + # eje y
+      ggtitle("Número de accidentes por año") #título del gráfico
 
+# crear multigrafico
+multiplot(p1, p2, p3, cols = 2)
 ```
-En está gráfica podemos observar que la mayor accidentalidad se presenta los días viernes, durante el mes de gasto también hay un mayor número de accidentes y en el 2016 fue el año con más accidentes durante el periodo de análisi 2014-2018, mientras que los días domingo, el mes de enero y en el año 2018 se registra una accidentalidad menor.
+
+En está gráfica se puede observar que la mayor accidentalidad se presenta en los días viernes, durante el mes de agosto también hay un mayor número de accidentes y en el 2016 fue el año con más accidentes durante el periodo de análisis (2014-2018), mientras que los días domingo, el mes de enero y en el año 2018 se registra una accidentalidad menor.
 
 ##### Accidentalidad por comuna y tipo de vía
 ```{r}
@@ -1120,32 +1171,33 @@ fwrite(ACCIDENTES_PRED,"files/matriz-2019-pronosticada.csv", sep = ";")
 
 ## **3. Conclusiones**
 
-**FALTA**
+En este trabajo se analizó un conjunto de datos relacionados con accidentes de tráfico donde se busca un modelo que se acerque a la condicción actual del fenomeno que presentan los datos reales.
 
-#Este trabajo trata de analizar un conjunto de datos relacionados con accidentes de tráfico donde se busca un modelo que se acerque a la condicción actual del fenomeno que presentan los datos reales. se encontró que un modelo de regresión lineal generalizado de distribución Poisson, después de examinar cuáles factores tenían una influencia fuerte sobre el fenomeno de los accidentes, era el qué  mostraba tener una prediccón más acercaba al fenomeno real.
-#se encontró una gran influencia en los Accidentes de trafico de los factores de clase de accidente, dia del accidente y un fuerte impacto en determinados días especiales a lo largo del año.
-#el modelo de regresión generalizado con regresión Poisson, mostró ser efectivo en este caso porque el fenomeno se define como un conteo influenciado por un conjunto de variables predictoras. dando un $R^2$ más cercano a uno, después de eliminar variables no importantes para la muestra examinada.
-#los Accidentes son mas propensos a ocurrir en forma de choque esto contextualizandolo por ser un entorno urbano.
-#se encuentran ciertas situaciones con el modelo y su predicción. se puede observar que el día mas traumatico mostrado por los datos reales es el viernes. Este es el día más traumatico. para una ciudad como Medellín esto es coherente, ya que finaliza jornada laboral, semana de trabajo y la gente opta por salir a divertirse o llegar rapido a sus casas, por lo que el contexto hace que se generen más siniestros de lo normal.
-#los días más tranquilos son los domingos y lunes por ser inicio de semana, donde la gente está menos cansada y con la rutina apenas comenzando. estas conclusiones se pueden evidenciar igualmente en el modelo de predicciones para 2019.
+Se evaluaron tres tipos de modelos: la regresión lineal multivariada, regresión lineal generalizada con distribuación Poisson y árbol de decisiones. Después de examinar cuáles factores tenían una influencia fuerte sobre el fenomeno de los accidentes se encontró que un modelo de regresión lineal generalizado de distribución Poisson era el que mostraba tener una predicción más acercaba al fenomeno real.
 
+Se encontró que los factores que más influencian los accidentes de tránsito corresponden a la clase de accidente, día del accidente y un fuerte impacto en determinados días especiales a lo largo del año, como los días festivos, las vacaciones colectivas, entre otros.
 
+El modelo de regresión generalizado con regresión Poisson mostró ser efectivo en este caso porque el fenomeno se define como un conteo influenciado por un conjunto de variables predictoras, obteniendo un $R^2$ más cercano a uno, después de eliminar variables que no son estadísticamente significativas para la muestra examinada.
+
+Los Accidentes son más propensos a ocurrir en forma de choque, esto contextualizandolo por ser un entorno urbano.
+
+Se encuentran ciertas situaciones con el modelo y su predicción. Se puede observar que el día mas traumático mostrado por los datos reales es el viernes. Para una ciudad como Medellín es coherente, ya que finaliza jornada laboral, semana de trabajo y la gente opta por salir a divertirse o llegar rapido a sus casas, por lo que el contexto hace que se generen más siniestros de lo normal. En la otra mano, los días más tranquilos son los domingos y lunes por ser inicio de semana, donde la gente está menos cansada y con la rutina apenas comenzando. Estas conclusiones se pueden evidenciar igualmente en el modelo de predicciones para 2019.
 
 [Regresar](#tabla-de-contenido)
 
 ## **4. Bibliografía**
 
-+ Friedman, J., Hastie, T., & Tibshirani, R. (2001). The elements of statistical learning (Vol. 1, No. 10). New York: Springer series in statistics.
++ Friedman, J., Hastie, T., & Tibshirani, R. (2001). *The elements of statistical learning (Vol. 1, No. 10). New York: Springer series in statistics.*
 
-+ Hothorn, T., & Everitt, B. S. (2014). A handbook of statistical analyses using R. Chapman and Hall/CRC.
++ Hothorn, T., & Everitt, B. S. (2014). *A handbook of statistical analyses using R. Chapman and Hall/CRC.*
 
-+ James, G., Witten, D., Hastie, T., & Tibshirani, R. (2013). An introduction to statistical learning (Vol. 112, p. 18). New York: springer.
++ James, G., Witten, D., Hastie, T., & Tibshirani, R. (2013). *An introduction to statistical learning (Vol. 112, p. 18). New York: springer.*
 
-+ McCullagh, P. (2019). Generalized linear models. Routledge.
++ McCullagh, P. (2019). *Generalized linear models. Routledge.*
 
-+ Montgomery, D. C., & Runger, G. C. (2007). Applied statistics and probability for engineers, (With CD). John Wiley & Sons.
++ Montgomery, D. C., & Runger, G. C. (2007). *Applied statistics and probability for engineers, (With CD). John Wiley & Sons.*
 
-**FALTA**
+---
 
 **R Markdown**
 
@@ -1216,8 +1268,6 @@ fwrite(ACCIDENTES_PRED,"files/matriz-2019-pronosticada.csv", sep = ";")
 ---
 
 **Demás**
-
-+ [link aquí](https://wikipedia.com)
 
 + [Paleta de colores para mapas](http://colorbrewer2.org/#type=diverging&scheme=RdYlBu&n=7)
 

@@ -1,7 +1,7 @@
 # **Informe técnico de Analítica Predictiva** 
-<font size = "4"> Posgrado en Ingeniería - Analítica
+<font size = "4"> Posgrado en Ingeniería - Analítica <br>
 
-Universidad Nacional de Colombia, sede Medellín
+Universidad Nacional de Colombia, sede Medellín <br>
 
 11 de agosto de 2019
 </font>
@@ -9,14 +9,14 @@ Universidad Nacional de Colombia, sede Medellín
 ---
 
 ## **Título del informe**
-<font size = "3">
+<font size = "3"> <i>
 
-### *Análisis y pronóstico de la información accidentalidad vehicular en el municipio de Medellín entre 2014 y 2018*
+Análisis y pronóstico de la información accidentalidad vehicular en el municipio de Medellín entre 2014 y 2018 <br>
 
-</font>
+</font></i>
 
 ## **Descripción**
-La materia de Analítica Predictiva en el Posgrado de Ingeniería - Analítica de la Universidad Nacional enseña algunas técnicas estadísticas del *Aprendizaje de Máquinas* [*Machine Learning*](https://en.wikipedia.org/wiki/Machine_learning) supervisado, no supervisado y reforzado, para el pronóstico (*forecast*), clasificación (*classification*) y agrupación (*clusters*) de datos, utilizando los conceptos de la estadística descriptiva y probabilística como cálculo de probabilidades, Teorema de Bayes, medidas de  tendencia, funciones de distribuciones de probabilidad, pruebas de hipótesis, entre otros. Algunos de los modelos vistos en clase fueron:
+La materia de Analítica Predictiva en el Posgrado de Ingeniería - Analítica de la Universidad Nacional enseña algunas técnicas estadísticas del *Aprendizaje de Máquinas* ([*Machine Learning*](https://en.wikipedia.org/wiki/Machine_learning)) supervisado, no supervisado y reforzado, para el pronóstico (*forecast*), clasificación (*classification*) y agrupación (*clusters*) de datos, utilizando los conceptos de la estadística descriptiva y probabilística como cálculo de probabilidades, Teorema de Bayes, medidas de  tendencia, funciones de distribuciones de probabilidad, pruebas de hipótesis, entre otros. Algunos de los modelos vistos en clase fueron:
 
 * K vecinos cercanos (*K-Nearest-Neighbors*)
 * Regresión lineal (univariada y multivariada) 
@@ -38,7 +38,7 @@ Los entregables del trabajo son:
 1. Código de ejecución del modelo. (disponible [aquí](https://juapatral.github.io/analitica-predictiva-accidentalidad-2019/app/accidentalidad-2014-2018.Rmd))
 2. Reporte que contenga el entendimiento desarrollado en el trabajo, bibliografía de soporte y la metodología seguida debidamente justificada. (disponible [aquí](https://juapatral.github.io/analitica-predictiva-accidentalidad-2019/app/accidentalidad-2014-2018.html))
 3. Aplicativo web que permita visualizar los datos y la predicción del modelo. (disponible [aquí](https://google.com.co))
-4. Video promocional del aplicativo web, explicando su funcionalidad. (disponible [aquí](https://youtube.com)) 
+4. Video promocional del aplicativo web, explicando su funcionalidad. (disponible [aquí](https://youtu.be/yK3SiymGsHs)) 
 
 ## **Contexto del conjunto de datos**
 
@@ -62,7 +62,7 @@ Para el desarrollo de este trabajo se utilizarán los softwares libres *R* y *R-
 
 ## **Resumen**
 
->Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+>*En cada instante se generan grandes volúmenes de datos y es de interés para los analístas obtener información valiosa y confiable de estos y así incidir en la toma de decisiones para mejorar los resultados económicos y sociales de la empresa, la entidad o la sociedad en general. Un ejemplo de estos datos masivos se reflan en la accidentalidad vial, que se ha ido posicionando año tras año como uno de los problemas que más costos sociales y económicos genera. Medellín no ha sido la excepción y en la actualidad buena parte de las políticas públicas se movilizan para mitigar este fenómeno. En este trabajo se decidió utilizar la información de la accidentalidad vehicular en el municipio de Medellín para los años 2014 a 2018 para pronosticar el total de accidentes por tipo de accidente para el año 2019. Se evaluaron tres tipos de modelos: la regresión lineal multivariada, regresión lineal generalizada con distribuación Poisson y árbol de decisiones. Algunos de los factores que tenían una influencia fuerte sobre el fenomeno de los accidentes son el tipo de accidente, el día del accidente y determinados días especiales (como festivos, semana santa). Se encontró que un modelo de regresión lineal generalizado de distribución Poisson se acerca más al comportamiento real del fenomeno.*
 
 ## **Contacto**
 
